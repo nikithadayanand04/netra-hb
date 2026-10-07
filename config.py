@@ -31,3 +31,10 @@ SEED = 42
 N_FOLDS = 5
 SENS_FLOOR = 0.80      # screening target
 N_BOOT = 1000
+
+# ---- Cleaning flags (report only unless noted) ----
+GLARE_MAX_FRAC = 0.05   # flag if glare pixels exceed this fraction of tissue
+BLUR_VAR_MIN = 3.0      # flag if Laplacian variance on eroded tissue is below this (~5th pct of CP-AnemiC)
+PIXEL_EQ_MAX = 0.30     # flag upscaling/pixelation if > this fraction of adjacent tissue pixels are identical
+DUP_HAMMING = 6         # pHash Hamming distance for duplicate candidates ...
+DUP_MAE = 6.0           # ... confirmed if mean abs RGB diff on 64x64 tissue composites is below this
