@@ -43,7 +43,18 @@ DUP_HB_TOL = 1.0        # duplicate groups whose Hb spans more than this (or who
 # ---- Model inputs ----
 # Raw colour features only. glare_frac, tissue_px, quality flags and gw_* stay in the CSV for EDA/ablations.
 _MED = ["R", "G", "B", "chrom_r", "chrom_g", "chrom_b", "lab_L", "lab_a", "lab_b",
-        "a_over_L", "hsv_h", "hsv_s", "hsv_v", "erythema_index"]
+        "a_over_L", "hsv_h", "hsv_s", "erythema_index"]          # hsv_v dropped: hsv_v_med == R_med / 255
 _PCT = ["chrom_r", "lab_a", "a_over_L", "erythema_index", "hsv_s"]
-MODEL_FEATURES = [f"{c}_med" for c in _MED] + [f"{c}_p{q}" for c in _PCT for q in (10, 90)]
+CANDIDATE_FEATURES = [f"{c}_med" for c in _MED] + [f"{c}_p{q}" for c in _PCT for q in (10, 90)]
+
+# Label-free redundancy pruning (scripts.prune_features): for every candidate pair with |Spearman rho| > REDUNDANCY_RHO,
+# drop the one later in INTERPRETABILITY. Uses no labels, so it cannot leak label information into feature choice.
+REDUNDANCY_RHO = 0.95
+INTERPRETABILITY = ["lab_a", "erythema_index", "chrom_r", "lab_L", "lab_b", "a_over_L",
+                    "R", "G", "B", "hsv_s", "hsv_h", "chrom_g", "chrom_b"]
+MODEL_FEATURES = [
+    "R_med", "B_med", "chrom_r_med", "chrom_g_med", "chrom_b_med", "lab_L_med", "lab_a_med", "lab_b_med",
+    "hsv_h_med", "erythema_index_med", "chrom_r_p10", "lab_a_p10", "lab_a_p90", "erythema_index_p10",
+    "erythema_index_p90",
+]
 EXCLUDED_FEATURES = ["glare_frac", "tissue_px"]

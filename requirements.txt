@@ -1,8 +1,8 @@
 altair==6.3.0
 anyio==4.15.1
 appnope==1.0.0
-argon2-cffi==25.1.0
 argon2-cffi-bindings==26.1.0
+argon2-cffi==25.1.0
 arrow==1.4.0
 asttokens==3.0.2
 async-lru==2.3.0
@@ -44,12 +44,12 @@ Jinja2==3.1.6
 joblib==1.6.0
 json5==0.15.0
 jsonpointer==3.2.0
-jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
-jupyter==1.1.1
+jsonschema==4.26.0
 jupyter-console==6.6.3
 jupyter-events==0.12.1
 jupyter-lsp==2.3.1
+jupyter==1.1.1
 jupyter_builder==1.2.3
 jupyter_client==8.10.0
 jupyter_core==5.9.1
@@ -63,8 +63,8 @@ kiwisolver==1.5.1
 lark==1.3.1
 lazy-loader==0.6
 MarkupSafe==3.0.4
-matplotlib==3.11.2
 matplotlib-inline==0.2.2
+matplotlib==3.11.2
 mistune==3.3.4
 narwhals==2.26.0
 nbclient==0.11.0
@@ -120,8 +120,9 @@ sklearn-compat==0.1.6
 soupsieve==2.10
 stack-data==0.6.3
 starlette==1.7.0
-streamlit==1.65.0
+statsmodels==0.15.0
 streamlit-image-coordinates==0.4.1
+streamlit==1.65.0
 terminado==0.18.1
 threadpoolctl==3.7.0
 tifffile==2026.3.3

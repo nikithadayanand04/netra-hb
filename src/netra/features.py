@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from skimage.color import rgb2lab
 
 EPS = 1e-6
@@ -54,3 +55,20 @@ def colour_features(rgb: np.ndarray, mask: np.ndarray) -> dict[str, float]:
 
 def image_features(rgb: np.ndarray, mask: np.ndarray, glare_frac: float) -> dict[str, float]:
     return {**colour_features(rgb, mask), "tissue_px": int(mask.sum()), "glare_frac": glare_frac}
+
+
+def _base(feature: str) -> str:
+    return feature.rsplit("_", 1)[0]
+
+
+def prune_redundant(X: pd.DataFrame, preference: list[str], thresh: float) -> tuple[list[str], list[tuple[str, str, float]]]:
+    rank = {b: i for i, b in enumerate(preference)}
+    corr = X.corr(method="spearman").abs()
+    pairs = corr.where(np.triu(np.ones(corr.shape, bool), 1)).stack().dropna()
+    keep, dropped = list(X.columns), []
+    for (a, b), r in pairs[pairs > thresh].sort_values(ascending=False).items():
+        if a in keep and b in keep:
+            loser = max(a, b, key=lambda f: (rank.get(_base(f), len(rank)), f))
+            keep.remove(loser)
+            dropped.append((loser, b if loser == a else a, float(r)))
+    return keep, dropped

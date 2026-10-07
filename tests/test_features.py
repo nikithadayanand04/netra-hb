@@ -1,7 +1,9 @@
 import numpy as np
 from skimage.color import rgb2lab
 
-from netra.features import feature_names, image_features
+import pandas as pd
+
+from netra.features import feature_names, image_features, prune_redundant
 from netra.normalise import grey_world, sclera_normalise
 
 
@@ -69,7 +71,26 @@ def test_sclera_normalise_neutralises_reference():
 
 def test_model_features_match_extracted_and_exclude_confounders():
     import config
-    names = feature_names()
-    assert set(config.MODEL_FEATURES) == set(names)
+    assert set(config.MODEL_FEATURES) <= set(config.CANDIDATE_FEATURES) <= set(feature_names())
+    assert "hsv_v_med" not in config.CANDIDATE_FEATURES
+    assert len(config.MODEL_FEATURES) <= 15
     assert not set(config.MODEL_FEATURES) & {"glare_frac", "tissue_px", "rg_ratio_med"}
     assert not any(f.startswith(("gw_", "flag_")) for f in config.MODEL_FEATURES)
+
+
+def test_prune_redundant_keeps_preferred_and_ignores_labels():
+    rng = np.random.default_rng(0)
+    x = rng.normal(size=200)
+    X = pd.DataFrame({"hsv_s_med": x, "lab_a_med": 2 * x + 1, "lab_b_med": rng.normal(size=200)})
+    keep, dropped = prune_redundant(X, ["lab_a", "lab_b", "hsv_s"], 0.95)
+    assert keep == ["lab_a_med", "lab_b_med"]
+    assert dropped[0][:2] == ("hsv_s_med", "lab_a_med")
+
+
+def test_model_features_reproduce_pruning():
+    import config
+    df = pd.read_csv(config.FEATURES_CSV) if config.FEATURES_CSV.exists() else None
+    if df is None:
+        return
+    keep, _ = prune_redundant(df[config.CANDIDATE_FEATURES], config.INTERPRETABILITY, config.REDUNDANCY_RHO)
+    assert keep == config.MODEL_FEATURES
