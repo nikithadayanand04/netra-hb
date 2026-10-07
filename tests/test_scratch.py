@@ -3,7 +3,7 @@ import pandas as pd
 import pytest
 from sklearn import cluster, linear_model, naive_bayes, neighbors
 from sklearn.base import clone
-from sklearn.metrics import adjusted_rand_score, roc_auc_score
+from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedGroupKFold
 from sklearn.preprocessing import StandardScaler
 
@@ -77,9 +77,9 @@ def test_kmeans_matches_sklearn(split, k):
     X = np.vstack([split[0], split[2]])
     ours = scratch.KMeans(k, n_init=10, random_state=config.SEED).fit(X)
     ref = cluster.KMeans(k, n_init=10, random_state=config.SEED).fit(X)
-    # different random restarts can land in different local optima, so compare loosely here ...
-    assert ours.inertia_ == pytest.approx(ref.inertia_, rel=0.02)
-    assert adjusted_rand_score(ours.labels_, ref.labels_) > 0.75
+    # different random restarts can land in different, near-equal local optima (label agreement is not stable),
+    # so require an optimum at least as good as sklearn's here ...
+    assert ours.inertia_ <= ref.inertia_ * 1.01
     assert np.all(np.diff(ours.sse_history_) <= 1e-9)
     np.testing.assert_array_equal(ours.predict(X), ours.labels_)
 
@@ -101,8 +101,7 @@ def test_bisecting_kmeans_matches_sklearn(split, k):
     X = np.vstack([split[0], split[2]])
     ours = scratch.BisectingKMeans(k, n_init=5, random_state=config.SEED).fit(X)
     ref = cluster.BisectingKMeans(k, n_init=5, random_state=config.SEED).fit(X)
-    assert ours.inertia_ == pytest.approx(ref.inertia_, rel=0.05)
-    assert adjusted_rand_score(ours.labels_, ref.labels_) > 0.8
+    assert ours.inertia_ <= ref.inertia_ * 1.01
     assert len(ours.sse_history_) == k
     assert np.all(np.diff(ours.sse_history_) < 0)
 

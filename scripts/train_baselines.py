@@ -14,26 +14,18 @@ from netra.models import IMBALANCE, LABELS, build_models
 
 RESULTS = config.OUT_DIR / "results"
 FIG_DIR = config.OUT_DIR / "figures" / "baselines"
-CLEANING_LOG = config.OUT_DIR / "cleaning_log.csv"
 SURFACE, INK, INK_2, GRID, SERIES = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df", "#2a78d6"
+PRIMARY = "primary"
 
 EXPERIMENTS = {
-    "main": {"features": config.MODEL_FEATURES, "subset": "all",
-             "note": "Headline baselines: all kept images, MODEL_FEATURES."},
-    "unflagged": {"features": config.MODEL_FEATURES, "subset": "unflagged",
-                  "note": "Sensitivity check: drops images with any quality flag (blur, upscaled, high glare)."},
-    "shortcut_ablation": {"features": config.MODEL_FEATURES + config.EXCLUDED_FEATURES, "subset": "all",
-                          "note": "NOT THE REAL MODEL. Adds glare_frac and tissue_px (image-acquisition shortcuts) "
-                                  "to show how much they inflate scores."},
+    PRIMARY: {"csv": config.FEATURES_CSV, "features": config.MODEL_FEATURES,
+              "note": "PRIMARY: quality-clean images (no blur / upscaled / high-glare flags), MODEL_FEATURES."},
+    "secondary_all": {"csv": config.FEATURES_ALL_CSV, "features": config.MODEL_FEATURES,
+                      "note": "Secondary analysis: all kept images, quality-flagged ones included, MODEL_FEATURES."},
+    "shortcut_ablation": {"csv": config.FEATURES_CSV, "features": config.MODEL_FEATURES + config.EXCLUDED_FEATURES,
+                          "note": "NOT THE REAL MODEL. Primary images plus glare_frac and tissue_px "
+                                  "(image-acquisition shortcuts) to show how much they inflate scores."},
 }
-
-
-def load() -> pd.DataFrame:
-    df = pd.read_csv(config.FEATURES_CSV)
-    log = pd.read_csv(CLEANING_LOG).set_index("id")
-    flags = [c for c in log.columns if c.startswith("flag_")]
-    df["flagged"] = df["patient_id"].map(log[flags].any(axis=1)).astype(bool)
-    return df
 
 
 def run_experiment(df: pd.DataFrame, features: list[str]) -> tuple[dict, pd.DataFrame]:
@@ -113,27 +105,26 @@ def plot_curves(oof: pd.DataFrame, results: dict, kind: str, path) -> None:
 
 
 def main() -> None:
-    df = load()
     RESULTS.mkdir(parents=True, exist_ok=True)
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     all_results, oofs = {}, []
     for exp, spec in EXPERIMENTS.items():
-        d = df[~df["flagged"]] if spec["subset"] == "unflagged" else df
+        d = pd.read_csv(spec["csv"])
         print(f"[{exp}] n={len(d)} ({int(d['label'].sum())} anaemic), {len(spec['features'])} features")
         results, oof = run_experiment(d.reset_index(drop=True), spec["features"])
         all_results[exp] = {"note": spec["note"], "n": len(d), "n_anaemic": int(d["label"].sum()),
                             "features": spec["features"], "models": results}
         oofs.append(oof.assign(experiment=exp))
-        if exp == "main":
-            best = max(r["pooled"]["roc_auc"]["value"] for r in results.values())
-            if best > 0.95:
-                print(f"  WARNING: main ROC-AUC {best:.3f} > 0.95, check for leakage")
-            plot_curves(oof, results, "roc", FIG_DIR / "roc_main.png")
-            plot_curves(oof, results, "pr", FIG_DIR / "pr_main.png")
+        best = max(r["pooled"]["roc_auc"]["value"] for r in results.values())
+        if best > 0.95:
+            print(f"  WARNING: {exp} ROC-AUC {best:.3f} > 0.95, check for leakage")
+        if exp == PRIMARY:
+            plot_curves(oof, results, "roc", FIG_DIR / "roc_primary.png")
+            plot_curves(oof, results, "pr", FIG_DIR / "pr_primary.png")
 
     meta = {"cv": f"StratifiedGroupKFold(n_splits={config.N_FOLDS}, shuffle=True, random_state={config.SEED}), "
                   "group = patient_id",
-            "threshold": 0.5, "n_boot": config.N_BOOT,
+            "primary": PRIMARY, "quality_exclude": config.QUALITY_EXCLUDE, "threshold": 0.5, "n_boot": config.N_BOOT,
             "ci": "95% percentile bootstrap over patients on pooled out-of-fold probabilities",
             "positive_class": "anaemic (Refer for Hb test)"}
     (RESULTS / "baselines.json").write_text(json.dumps({"meta": meta, "experiments": all_results}, indent=2))

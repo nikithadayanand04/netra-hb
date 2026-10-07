@@ -62,18 +62,24 @@ def main() -> None:
     log = cleaning.add_flags(log)
 
     df = pd.concat([meta.reset_index(drop=True), pd.DataFrame(feats)], axis=1)
-    df = df[~log["drop"].values].reset_index(drop=True)
+    all_df = df[~log["drop"].values].reset_index(drop=True)
+    df = df[~log["exclude"].values].reset_index(drop=True)
 
     config.OUT_DIR.mkdir(parents=True, exist_ok=True)
     df.to_csv(config.FEATURES_CSV, index=False)
+    all_df.to_csv(config.FEATURES_ALL_CSV, index=False)
     log.to_csv(config.OUT_DIR / "cleaning_log.csv", index=False)
     summarise(meta, df, log, dups.attrs["pairs"])
 
 
 def summarise(meta: pd.DataFrame, df: pd.DataFrame, log: pd.DataFrame, pairs: list) -> None:
-    print(f"images: {len(meta)}  kept: {len(df)}  dropped: {int(log['drop'].sum())}")
+    n_excl = int((log["exclude"] & ~log["drop"]).sum())
+    print(f"images: {len(meta)}  hard-dropped: {int(log['drop'].sum())}  quality-excluded: {n_excl}  "
+          f"primary: {len(df)}  secondary (all): {len(log) - int(log['drop'].sum())}")
     for _, r in log[log["drop"]].iterrows():
         print(f"  dropped {r['id']} (hb={r['hb']}): {r['drop_reason']}")
+    for _, r in log[log["exclude"] & ~log["drop"]].iterrows():
+        print(f"  excluded {r['id']} (hb={r['hb']}, label={r['label']}): {r['exclude_reason']}")
     n_pos = int(df["label"].sum())
     print(f"class balance: anaemic {n_pos} ({n_pos / len(df):.1%}) / normal {len(df) - n_pos}")
     print(f"severity: {df['severity'].value_counts().to_dict()}")

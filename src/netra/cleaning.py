@@ -99,4 +99,8 @@ def add_flags(log: pd.DataFrame) -> pd.DataFrame:
         ";".join(r for r, m in reasons.items() if m.iloc[i]) for i in range(len(log))
     ]
     log["drop"] = log["drop_reason"] != ""
+    log["exclude_reason"] = [
+        ";".join(q for q in config.QUALITY_EXCLUDE if log[f"flag_{q}"].iloc[i]) for i in range(len(log))
+    ]
+    log["exclude"] = log["drop"] | (log["exclude_reason"] != "")
     return log

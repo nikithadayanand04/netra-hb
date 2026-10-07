@@ -7,7 +7,8 @@ DATA_DIR = ROOT / "data" / "cp_anemic" / "All Categories"   # all 251 images; An
 METADATA_FILE = ROOT / "data" / "cp_anemic" / "Cp-Anaemic Dataset.xlsx"
 METADATA_SHEET = "Cp-Anaemic Dataset"         # main sheet; never use its Folder_Label column as the label
 OUT_DIR = ROOT / "outputs"
-FEATURES_CSV = OUT_DIR / "features_cp_anemic.csv"
+FEATURES_CSV = OUT_DIR / "features_cp_anemic.csv"           # PRIMARY: hard drops and quality exclusions removed
+FEATURES_ALL_CSV = OUT_DIR / "features_cp_anemic_all.csv"   # SECONDARY: hard drops removed, quality-flagged images kept
 
 # ---- Metadata columns (None = auto-detect by name) ----
 ID_COL = "Image_ID"   # equals the image file stem; one image per child, so this is also the patient_id
@@ -32,13 +33,16 @@ N_FOLDS = 5
 SENS_FLOOR = 0.80      # screening target
 N_BOOT = 1000
 
-# ---- Cleaning flags (report only unless noted) ----
+# ---- Cleaning flags ----
 GLARE_MAX_FRAC = 0.05   # flag if glare pixels exceed this fraction of tissue
 BLUR_VAR_MIN = 3.0      # flag if Laplacian variance on eroded tissue is below this (~5th pct of CP-AnemiC)
 PIXEL_EQ_MAX = 0.30     # flag upscaling/pixelation if > this fraction of adjacent tissue pixels are identical
 DUP_HAMMING = 6         # pHash Hamming distance for duplicate candidates ...
 DUP_MAE = 6.0           # ... confirmed if mean abs RGB diff on 64x64 tissue composites is below this
 DUP_HB_TOL = 1.0        # duplicate groups whose Hb spans more than this (or whose labels differ) are dropped entirely
+# Quality flags that exclude an image from the PRIMARY dataset (kept in the secondary all-images analysis).
+# low_tissue and conflicting duplicates are hard drops, removed from both.
+QUALITY_EXCLUDE = ["high_glare", "blur", "upscaled"]
 
 # ---- Model inputs ----
 # Raw colour features only. glare_frac, tissue_px, quality flags and gw_* stay in the CSV for EDA/ablations.

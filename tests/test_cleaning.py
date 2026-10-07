@@ -20,3 +20,15 @@ def test_conflicting_duplicates_dropped_with_reason():
     assert log["drop_reason"].tolist()[:2] == ["duplicate_conflicting_hb"] * 2
     assert log.loc[4, "drop_reason"] == "low_tissue"
     assert log.loc[3, "flag_duplicate"]
+
+
+def test_quality_flags_exclude_from_primary_only():
+    log = add_flags(_log([
+        ("a", 12.0, 0, 4000, 0.20, 10, 0.1, -1, ""),
+        ("b", 8.0, 1, 4000, 0.0, 1.0, 0.5, -1, ""),
+        ("c", 12.0, 0, 4000, 0.0, 10, 0.1, -1, ""),
+        ("d", 12.0, 0, 100, 0.0, 10, 0.1, -1, ""),
+    ]))
+    assert log["drop"].tolist() == [False, False, False, True]
+    assert log["exclude"].tolist() == [True, True, False, True]
+    assert log["exclude_reason"].tolist()[:3] == ["high_glare", "blur;upscaled", ""]
