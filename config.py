@@ -3,17 +3,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 
 # ---- Paths (edit these) ----
-DATA_DIR = ROOT / "data" / "cp_anemic"          # folder containing the CP-AnemiC images (searched recursively)
-METADATA_FILE = None                            # e.g. ROOT / "data" / "cp_anemic" / "Anemia_Data.xlsx"; None = auto-detect
+DATA_DIR = ROOT / "data" / "cp_anemic" / "All Categories"   # all 251 images; Anaemic/ and Non-Anaemic/ are duplicates, ignore them
+METADATA_FILE = ROOT / "data" / "cp_anemic" / "Cp-Anaemic Dataset.xlsx"
+METADATA_SHEET = "Cp-Anaemic Dataset"         # main sheet; never use its Folder_Label column as the label
 OUT_DIR = ROOT / "outputs"
 FEATURES_CSV = OUT_DIR / "features_cp_anemic.csv"
 
 # ---- Metadata columns (None = auto-detect by name) ----
-ID_COL = None     # column whose value matches the image file name (stem)
-HB_COL = None     # haemoglobin in g/dL
-AGE_COL = None
-SEX_COL = None
-AGE_IN_MONTHS = True   # CP-AnemiC ages are in months
+ID_COL = "Image_ID"   # equals the image file stem; one image per child, so this is also the patient_id
+HB_COL = "Hb_g_dl"   # haemoglobin in g/dL
+AGE_COL = None       # CP-AnemiC sheet has no age column
+SEX_COL = None       # ... and no sex column
+AGE_IN_MONTHS = True
+DEFAULT_AGE_MONTHS = 30   # used when AGE_COL is None: all children are 6–59 mo -> WHO cut-off Hb < 11
 
 DATASET_NAME = "cp_anemic"
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff"}
