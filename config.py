@@ -38,3 +38,12 @@ BLUR_VAR_MIN = 3.0      # flag if Laplacian variance on eroded tissue is below t
 PIXEL_EQ_MAX = 0.30     # flag upscaling/pixelation if > this fraction of adjacent tissue pixels are identical
 DUP_HAMMING = 6         # pHash Hamming distance for duplicate candidates ...
 DUP_MAE = 6.0           # ... confirmed if mean abs RGB diff on 64x64 tissue composites is below this
+DUP_HB_TOL = 1.0        # duplicate groups whose Hb spans more than this (or whose labels differ) are dropped entirely
+
+# ---- Model inputs ----
+# Raw colour features only. glare_frac, tissue_px, quality flags and gw_* stay in the CSV for EDA/ablations.
+_MED = ["R", "G", "B", "chrom_r", "chrom_g", "chrom_b", "lab_L", "lab_a", "lab_b",
+        "a_over_L", "hsv_h", "hsv_s", "hsv_v", "erythema_index"]
+_PCT = ["chrom_r", "lab_a", "a_over_L", "erythema_index", "hsv_s"]
+MODEL_FEATURES = [f"{c}_med" for c in _MED] + [f"{c}_p{q}" for c in _PCT for q in (10, 90)]
+EXCLUDED_FEATURES = ["glare_frac", "tissue_px"]

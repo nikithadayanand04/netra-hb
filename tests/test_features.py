@@ -65,3 +65,11 @@ def test_sclera_normalise_neutralises_reference():
     ref = sclera_normalise(sclera[None].astype(np.uint8), sclera)[0]
     assert np.allclose(ref, ref.mean())
     assert np.allclose(out[0, 0], np.array([180, 120, 90]) * 200 / np.array([220, 200, 180]))
+
+
+def test_model_features_match_extracted_and_exclude_confounders():
+    import config
+    names = feature_names()
+    assert set(config.MODEL_FEATURES) == set(names)
+    assert not set(config.MODEL_FEATURES) & {"glare_frac", "tissue_px", "rg_ratio_med"}
+    assert not any(f.startswith(("gw_", "flag_")) for f in config.MODEL_FEATURES)

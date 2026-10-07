@@ -56,9 +56,10 @@ def main() -> None:
         thumbs.append(cleaning.thumbnail(rgb, m.tissue))
 
     dups = cleaning.find_duplicates(list(meta["patient_id"]), hashes, thumbs)
-    log = cleaning.add_flags(pd.DataFrame(quality).merge(dups, on="id"))
+    log = pd.DataFrame(quality).merge(dups, on="id")
     log.insert(1, "hb", meta["hb"].values)
     log.insert(2, "label", meta["label"].values)
+    log = cleaning.add_flags(log)
 
     df = pd.concat([meta.reset_index(drop=True), pd.DataFrame(feats)], axis=1)
     df = df[~log["drop"].values].reset_index(drop=True)
@@ -71,7 +72,12 @@ def main() -> None:
 
 def summarise(meta: pd.DataFrame, df: pd.DataFrame, log: pd.DataFrame, pairs: list) -> None:
     print(f"images: {len(meta)}  kept: {len(df)}  dropped: {int(log['drop'].sum())}")
-    print(f"anaemic (WHO): {int(df['label'].sum())}/{len(df)}  severity: {df['severity'].value_counts().to_dict()}")
+    for _, r in log[log["drop"]].iterrows():
+        print(f"  dropped {r['id']} (hb={r['hb']}): {r['drop_reason']}")
+    n_pos = int(df["label"].sum())
+    print(f"class balance: anaemic {n_pos} ({n_pos / len(df):.1%}) / normal {len(df) - n_pos}")
+    print(f"severity: {df['severity'].value_counts().to_dict()}")
+    print(f"MODEL_FEATURES: {len(config.MODEL_FEATURES)} (excludes glare_frac, tissue_px, quality flags)")
     flags = [c for c in log.columns if c.startswith("flag_")]
     print("flags:", {c[5:]: int(log[c].sum()) for c in flags})
     print("flag rate by label:")

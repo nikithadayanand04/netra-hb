@@ -4,7 +4,7 @@ from skimage.color import rgb2lab
 EPS = 1e-6
 PCT_FEATURES = ("chrom_r", "lab_a", "a_over_L", "erythema_index", "hsv_s")
 COLOUR_FEATURES = (
-    "R", "G", "B", "chrom_r", "chrom_g", "chrom_b", "rg_ratio",
+    "R", "G", "B", "chrom_r", "chrom_g", "chrom_b",
     "lab_L", "lab_a", "lab_b", "a_over_L", "hsv_h", "hsv_s", "hsv_v", "erythema_index",
 )
 
@@ -25,7 +25,6 @@ def pixel_channels(px: np.ndarray) -> dict[str, np.ndarray]:
     return {
         "R": R, "G": G, "B": B,
         "chrom_r": R / tot, "chrom_g": G / tot, "chrom_b": B / tot,
-        "rg_ratio": (R + 1) / (G + 1),
         "lab_L": lab[:, 0], "lab_a": lab[:, 1], "lab_b": lab[:, 2],
         "a_over_L": lab[:, 1] / np.maximum(lab[:, 0], 1.0),
         "hsv_h": (hue + 180) % 360 - 180,  # red-centred so the circular median is well defined

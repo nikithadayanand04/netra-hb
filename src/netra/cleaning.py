@@ -91,6 +91,12 @@ def add_flags(log: pd.DataFrame) -> pd.DataFrame:
     log["flag_blur"] = log["lap_var"] < config.BLUR_VAR_MIN
     log["flag_upscaled"] = log["pixel_eq_frac"] > config.PIXEL_EQ_MAX
     log["flag_duplicate"] = log["dup_of"] != ""
-    log["drop"] = log["flag_low_tissue"]
-    log["drop_reason"] = np.where(log["drop"], "low_tissue", "")
+    grp = log[log["dup_group"] >= 0].groupby("dup_group")
+    conflict = (grp["label"].nunique() > 1) | (grp["hb"].agg(np.ptp) > config.DUP_HB_TOL)
+    log["dup_conflict"] = log["dup_group"].map(conflict).fillna(False).astype(bool)
+    reasons = {"low_tissue": log["flag_low_tissue"], "duplicate_conflicting_hb": log["dup_conflict"]}
+    log["drop_reason"] = [
+        ";".join(r for r, m in reasons.items() if m.iloc[i]) for i in range(len(log))
+    ]
+    log["drop"] = log["drop_reason"] != ""
     return log
