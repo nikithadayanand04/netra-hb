@@ -52,8 +52,9 @@ CANDIDATE_FEATURES = [f"{c}_med" for c in _MED] + [f"{c}_p{q}" for c in _PCT for
 REDUNDANCY_RHO = 0.95
 INTERPRETABILITY = ["lab_a", "erythema_index", "chrom_r", "lab_L", "lab_b", "a_over_L",
                     "R", "G", "B", "hsv_s", "hsv_h", "chrom_g", "chrom_b"]
+COLLINEAR_DROP = ["chrom_b_med"]   # chrom_r + chrom_g + chrom_b = 1: pairwise pruning cannot catch this
 MODEL_FEATURES = [
-    "R_med", "B_med", "chrom_r_med", "chrom_g_med", "chrom_b_med", "lab_L_med", "lab_a_med", "lab_b_med",
+    "R_med", "B_med", "chrom_r_med", "chrom_g_med", "lab_L_med", "lab_a_med", "lab_b_med",
     "hsv_h_med", "erythema_index_med", "chrom_r_p10", "lab_a_p10", "lab_a_p90", "erythema_index_p10",
     "erythema_index_p90",
 ]

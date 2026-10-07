@@ -74,6 +74,7 @@ def test_model_features_match_extracted_and_exclude_confounders():
     assert set(config.MODEL_FEATURES) <= set(config.CANDIDATE_FEATURES) <= set(feature_names())
     assert "hsv_v_med" not in config.CANDIDATE_FEATURES
     assert len(config.MODEL_FEATURES) <= 15
+    assert not {"chrom_r_med", "chrom_g_med", "chrom_b_med"} <= set(config.MODEL_FEATURES)
     assert not set(config.MODEL_FEATURES) & {"glare_frac", "tissue_px", "rg_ratio_med"}
     assert not any(f.startswith(("gw_", "flag_")) for f in config.MODEL_FEATURES)
 
@@ -93,4 +94,4 @@ def test_model_features_reproduce_pruning():
     if df is None:
         return
     keep, _ = prune_redundant(df[config.CANDIDATE_FEATURES], config.INTERPRETABILITY, config.REDUNDANCY_RHO)
-    assert keep == config.MODEL_FEATURES
+    assert [f for f in keep if f not in config.COLLINEAR_DROP] == config.MODEL_FEATURES
