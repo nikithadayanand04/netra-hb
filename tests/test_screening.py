@@ -147,3 +147,10 @@ def test_reasons_list_agreeing_directions_first() -> None:
     rows = screening.reasons(b, feats, refer=True, n=5)
     flags = [r["agrees"] for r in rows]
     assert flags == sorted(flags, reverse=True)   # every agreeing reason comes before any disagreeing one
+
+
+def test_oval_region_is_inscribed_in_the_box() -> None:
+    r = screening.oval_region((100, 200, 3), 20, 10, 180, 90)
+    box = screening.box_region((100, 200, 3), 20, 10, 180, 90)
+    assert (r <= box).all() and r[50, 100] and not r[10, 20] and not r[90, 180]   # centre in, corners out
+    assert 0.7 < r.sum() / box.sum() < 0.85                                    # an ellipse fills pi/4 of its box

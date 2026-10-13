@@ -1,0 +1,131 @@
+{
+ "blocked": [],
+ "shots": {
+  "light_en_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_2screen_start": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_3screen_sample": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_4own_tight_box": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_5own_result": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_6own_loose_box_retake": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_2screen_start": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_3screen_sample": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_2screen_start": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_3screen_sample": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_2screen_start": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_3screen_sample": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_2screen_start": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_3screen_sample": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_2screen_start": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_3screen_sample": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  }
+ }
+}

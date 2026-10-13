@@ -91,8 +91,11 @@ def overlay(rgb: np.ndarray, tissue: np.ndarray | None, point: tuple[int, int] |
         cv2.drawContours(out, cs, -1, (255, 255, 255), lw)
     if box is not None:
         lw = max(2, round(max(rgb.shape[:2]) / 300))
-        cv2.rectangle(out, box[:2], box[2:], ui_rgb(ui.INK), lw + 2)
-        cv2.rectangle(out, box[:2], box[2:], (255, 255, 255), lw)
+        cv2.rectangle(out, box[:2], box[2:], (255, 255, 255), max(1, lw - 1))
+        centre = ((box[0] + box[2]) // 2, (box[1] + box[3]) // 2)
+        axes = (max((box[2] - box[0]) // 2, 1), max((box[3] - box[1]) // 2, 1))
+        cv2.ellipse(out, centre, axes, 0, 0, 360, ui_rgb(ui.INK), lw + 2)      # the oval guide: what is measured
+        cv2.ellipse(out, centre, axes, 0, 0, 360, (255, 255, 255), lw)
     if point is not None:
         r = max(6, round(max(rgb.shape[:2]) / 60))
         cv2.circle(out, point, r + 2, ui_rgb(ui.INK), 2)

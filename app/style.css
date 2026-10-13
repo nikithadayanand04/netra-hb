@@ -124,7 +124,7 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 }
 
 /* Buttons: ink primary, outlined secondary, never red */
-.stButton > button, .stDownloadButton > button, [data-testid="stPageLink"] a {
+.stButton button, .stDownloadButton > button, [data-testid="stPageLink"] a {
   min-height: 48px;
   padding: 0.6rem 1.25rem;
   border-radius: 12px;
@@ -133,24 +133,24 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
   font-size: var(--fs-16);
   transition: background-color 120ms ease, border-color 120ms ease;
 }
-.stButton > button[kind="primary"], .stDownloadButton > button[kind="primary"] {
+.stButton button[kind="primary"], .stDownloadButton > button[kind="primary"] {
   background: var(--btn-bg);
   border: 2px solid var(--btn-bg);
   color: var(--btn-text);
 }
-.stButton > button p, .stDownloadButton > button p { font-size: 1.0625rem; font-weight: 700; }
-.stButton > button[kind="primary"] p { color: var(--btn-text); }
-.stButton > button[kind="primary"]:hover { filter: brightness(1.15); }
-.stApp .stButton > button:disabled, .stApp .stButton > button:disabled:hover {
+.stButton button p, .stDownloadButton > button p { font-size: 1.0625rem; font-weight: 700; }
+.stButton button[kind="primary"] p { color: var(--btn-text); }
+.stButton button[kind="primary"]:hover { filter: brightness(1.15); }
+.stApp .stButton button:disabled, .stApp .stButton button:disabled:hover {
   background: transparent; border: 2px dashed var(--line); color: var(--muted); filter: none; cursor: not-allowed; }
-.stApp .stButton > button:disabled p { color: var(--muted); }
-.stButton > button[kind="secondary"], .stDownloadButton > button[kind="secondary"] {
+.stApp .stButton button:disabled p { color: var(--muted); }
+.stButton button[kind="secondary"], .stDownloadButton > button[kind="secondary"] {
   background: transparent;
   border: 2px solid var(--text);
   color: var(--text);
 }
-.stButton > button[kind="secondary"]:hover { background: color-mix(in srgb, var(--text) 7%, transparent); }
-.stButton > button:focus-visible,
+.stButton button[kind="secondary"]:hover { background: color-mix(in srgb, var(--text) 7%, transparent); }
+.stButton button:focus-visible,
 .stDownloadButton > button:focus-visible,
 [data-testid="stPageLink"] a:focus-visible,
 button:focus-visible, a:focus-visible, input:focus-visible {
@@ -354,8 +354,8 @@ iframe { border: 0; color-scheme: normal; }
 .nh-photo { display: block; width: 100%; max-height: 460px; object-fit: contain; border-radius: 12px; background: var(--surface); }
 .st-key-nh_samples { align-items: flex-start; }
 .nh-sample-img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; border-radius: 12px; background: var(--surface); }
-[class*="st-key-nh_sample_"] .stButton > button { min-height: 44px; padding: 0.4rem 0.6rem; }
-[class*="st-key-nh_sample_"] .stButton > button p { font-size: var(--fs-14); }
+[class*="st-key-nh_sample_"] .stButton button { min-height: 44px; padding: 0.4rem 0.6rem; }
+[class*="st-key-nh_sample_"] .stButton button p { font-size: var(--fs-14); }
 [data-testid="stCameraInput"] video, [data-testid="stCameraInput"] img { border-radius: 12px; }
 
 /* Result: square corners, thick left rule in the state colour, the strip inside the panel */
@@ -586,3 +586,13 @@ iframe { border: 0; color-scheme: normal; }
 .stApp [data-testid="stCameraInputButton"] { background-color: var(--surface) !important; border-color: var(--line) !important; }
 .stApp [data-testid="stCameraInputButton"], .stApp [data-testid="stCameraInputButton"] * { color: var(--text) !important; }
 .stApp [data-testid="stCameraInputButton"]:disabled, .stApp [data-testid="stCameraInputButton"]:disabled * { color: var(--muted) !important; }
+
+/* ---- Cleaner Screen (P10f) */
+.nh-rank { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px;
+  background: var(--text); color: var(--on-text); font-family: var(--font-display); font-size: var(--fs-16); font-weight: 700; flex: none; }
+.nh-rec { margin-left: auto; font-family: var(--font-body); font-size: var(--fs-14); font-weight: 700; color: var(--normal);
+  border: 1.5px solid var(--normal-rule); border-radius: 999px; padding: 0.1rem 0.6rem; white-space: nowrap; }
+.nh-site-rank { margin: 0 0 0.35rem; font-weight: 700; color: var(--text); font-size: var(--fs-16); }
+.nh-result-head .nh-conf { margin-bottom: 0.5rem; }
+.stApp .st-key-nh_result_refer .nh-result-word, .stApp .st-key-nh_result_normal .nh-result-word { margin-bottom: 0; }
+.stApp [data-testid="stPageLink"] a:not(.st-key-nh_nav *) { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }

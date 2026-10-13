@@ -10,7 +10,7 @@
 Health workers already know the WHO Haemoglobin Colour Scale: a paper strip of reds, from pale blush to deep crimson, that a blood drop is matched against. Netra-Hb is built around a digital version of that strip.
 - The strip is the visual spine of the app: it sits on the home screen, it is the result display, and its reds are the only strong colour in the interface.
 - **Signature moment:** after analysis, a swatch of the patient's actual tissue colour lifts out of the photo, travels to the strip, and settles at its position, while the risk gauge fills; a thin marker drops to show the anaemia threshold.
-- **One main animation per page:** Home, the strip in the hero illustration glows once; Screen, a scan line sweeps the measured tissue once per selection, then the result moment above. Everything else is still, and `prefers-reduced-motion` shows the final state with no motion.
+- **One main animation per page:** Home, the strip in the hero illustration glows once; Screen, a scan line sweeps the measured area once per guided crop, then the result moment above. Everything else is still, and `prefers-reduced-motion` shows the final state with no motion.
 
 ## Colour tokens
 | Token | Hex | Use |
@@ -73,12 +73,14 @@ Screen: result (laptop)
 ```
 
 ## Pages and features (5, top nav in this order)
-1. **Home**: short hero with two actions ("Start a screening", "Try a sample patient"), the colour strip, a 3-step how-it-works (a genuine sequence, so numbering is fine), and a short honest results summary read from `outputs/results/final.json` and `sites.json`.
-2. **Screen**: one scrolling page in three numbered steps.
-   - *Patient and site*: age band (6–59 months / 5–11 / 12–14 / 15+ woman / 15+ man) sets the WHO cut-off; site cards for eyelid, palm, nail, each with a line illustration of how to take the photo.
-   - *Photo*: `st.camera_input`, upload, or one of 6 sample patients from `app/samples/` (2 per site, mixed results; shown with their out-of-fold score). Tissue is auto-detected from a transparent or black background, otherwise the user taps (region grow) or drags a box. A zoomed "Pixels measured" preview shows exactly which pixels count.
-   - *Photo check*: light, glare, sharpness and, for the eye, makeup or lashes (dark, low-saturation pixels removed; more than 15% removed fails). Each failure gives one plain fix; "See result" stays disabled until all pass.
-   - *Result*: the swatch-to-strip animation, the result word, probability with its uncertainty band (Wilson interval of out-of-fold children with similar scores), a severity line for the eye with its caveat, three plain-language reasons, a "Low confidence" note when the KNN unfamiliar-photo check fires or the age band is outside 6–59 months, the next step, and the Known limits box.
+1. **Home**: short hero with two actions ("Start a screening", "Try a sample patient"), the hero illustration with the colour strip, a 3-step illustrated how-it-works (a genuine sequence, so numbering is fine), and a link to the Results page. No numbers on Home.
+2. **Screen**, sample patients first:
+   - *Try a sample patient*: 6 cards (2 per site, mixed results) with thumbnail, site icon and age band; one click shows the result directly below the gallery.
+   - *Or screen with your own photo* (secondary): age band (sets the WHO cut-off), then the sites in recommended order with a rank and photo guide each: 1 eyelid (most skin-tone robust), 2 nail, 3 palm. Camera or upload.
+   - *Guided crop*: the user drags a tight box over only the pink inner eyelid, one nail bed or the palm centre; only the oval inscribed in the box is measured (an oval guide is drawn), and the crop is rescaled to the training images' scale. Photos with a clear background are found automatically.
+   - *Silent checks*: makeup filter, light, glare, sharpness and the KNN unfamiliar-photo check run without showing numbers. A failed check shows one friendly line ("Please retake: daylight, no eye makeup, show only the inner eyelid.", per site) and keeps "See result" disabled. An unfamiliar photo or an age band outside 6–59 months shows a small "Low confidence" tag only.
+   - *Result*: only the result word, the animated risk gauge, the swatch on the colour strip, 2–3 plain reasons with icons, and "Screening aid only. Confirm with a blood Hb test."
+   - No dataset sizes, model names or interval numbers on Home or Screen; they live on Results, Insights and About.
 3. **Results**: model comparison table (mean over 25 folds, 95% corrected CI) for the tuned syllabus models and the final soft vote; a model picker and threshold slider driving the 100-child icon grid ("Out of 100 children screened: 42 anaemic, 35 caught, 7 missed; 58 healthy, 24 sent for a test they didn't need"); ROC with the operating point and the confusion matrix. Saved out-of-fold predictions only (`oof_tuned.csv`, first repeat pooled).
 4. **Insights**, four tabs:
    - *Data*: class balance by severity, Hb distribution with the cut-off, feature vs Hb (feature picker), raw vs grey-world correlation with Hb.

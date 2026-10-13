@@ -35,41 +35,8 @@ steps = "".join(
 st.html(f'<ol class="nh-steps-art">{steps}</ol>')
 
 ui.spacer()
-ui.section(ui.t("brief_title"), ui.t("brief_lede"))
-
-
-def pct(v: dict) -> tuple[int, int, int]:
-    return round(v["value"] * 100), round(v["ci_low"] * 100), round(min(v["ci_high"], 1.0) * 100)
-
-
-final = ui.read_result("final.json")
-if final is None:
-    ui.missing("results/final.json", "tune_models")
-else:
-    fm = final["headline"]["fold_mean"]
-    sens, spec, auc = pct(fm["sensitivity"]), pct(fm["specificity"]), fm["roc_auc"]
-    of = html.escape(ui.t("of_100"))
-    auc_lo, auc_hi = f"{auc['ci_low']:.2f}", f"{auc['ci_high']:.2f}"
-    st.html(
-        '<div class="nh-stats">'
-        f'<div class="nh-stat nh-stat-refer"><div class="nh-stat-num">{sens[0]}<small> {of}</small></div>'
-        f'<p class="nh-stat-label">{html.escape(ui.t("stat_sens"))}</p>'
-        f'<p class="nh-stat-ci">{html.escape(ui.t("stat_ci", lo=sens[1], hi=sens[2]))}</p></div>'
-        f'<div class="nh-stat nh-stat-normal"><div class="nh-stat-num">{spec[0]}<small> {of}</small></div>'
-        f'<p class="nh-stat-label">{html.escape(ui.t("stat_spec", n=100 - spec[0]))}</p>'
-        f'<p class="nh-stat-ci">{html.escape(ui.t("stat_ci", lo=spec[1], hi=spec[2]))}</p></div>'
-        f'<div class="nh-stat"><div class="nh-stat-num">{auc["value"]:.2f}</div>'
-        f'<p class="nh-stat-label">{html.escape(ui.t("stat_auc"))}</p>'
-        f'<p class="nh-stat-ci">{html.escape(ui.t("stat_ci", lo=auc_lo, hi=auc_hi))}</p></div>'
-        '</div>')
-
-sites = ui.read_result("sites.json")
-notes = [f"<p>{ui.t('note_who')}</p>"]
-if sites is not None:
-    by_site = {row["site"]: row for row in sites["table"]}
-    palm, nail = (f'{float(by_site[k]["roc_auc"].split()[0]):.2f}' for k in ("palm", "nail"))
-    notes.append(f"<p>{ui.t('note_sites', palm=palm, nail=nail)}</p>")
-notes.append(f"<p>{ui.t('note_meaning')}</p>")
-st.html(f'<div class="nh-notes">{"".join(notes)}</div>')
+# No dataset sizes, model names or intervals here: those live on Results, Insights and About
+st.html(f'<p class="nh-section-lede">{html.escape(ui.t("home_results_lede"))}</p>')
+st.page_link("pages/2_Results.py", label=ui.t("home_results_link"))
 
 ui.footer()

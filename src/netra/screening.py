@@ -69,6 +69,17 @@ def box_region(shape: tuple[int, ...], x1: int, y1: int, x2: int, y2: int) -> np
     return region
 
 
+def oval_region(shape: tuple[int, ...], x1: int, y1: int, x2: int, y2: int) -> np.ndarray:
+    """Guided crop: the oval inscribed in a tight box, so the box corners (usually skin, lashes or background)
+    are never measured."""
+    box = box_region(shape, x1, y1, x2, y2)
+    ys, xs = np.nonzero(box)
+    cy, cx = (ys.min() + ys.max()) / 2, (xs.min() + xs.max()) / 2
+    ry, rx = max((ys.max() - ys.min()) / 2, 0.5), max((xs.max() - xs.min()) / 2, 0.5)
+    yy, xx = np.ogrid[:shape[0], :shape[1]]
+    return box & (((yy - cy) / ry) ** 2 + ((xx - cx) / rx) ** 2 <= 1.0)
+
+
 def makeup_mask(rgb: np.ndarray) -> np.ndarray:
     """Kajal, mascara and lashes: very dark and low in saturation (pink conjunctiva is neither)."""
     x = rgb.astype(float)
