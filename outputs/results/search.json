@@ -1,0 +1,510 @@
+{
+  "meta": {
+    "objective": "specificity at sensitivity >= 80% (pooled out-of-fold, logistic regression, 3-fold StratifiedGroupKFold seed 42) - 0.02 x photo cost {'eye': 3, 'palm': 1, 'nail': 1} (fusion = sum) - 0.005 x n_features",
+    "space": "site in eye/palm/nail/palm+nail, 1..3 of the site's features (23 per single site, 46 for fusion)",
+    "data": "eye = CP-AnemiC primary (Hb labels, WHO < 11); palm, nail = Ghana (folder labels); palm+nail = EXPLORATORY simulated fusion pairing palm n with nail n (child identity undocumented). Sites are different children and label sources, so site choice mixes body site with dataset.",
+    "groups": "eye: cv_group; palm/nail/fusion: palm and nail cv_groups merged through fused pairs",
+    "evaluations": "distinct states fitted (fresh cache per algorithm); requests = objective calls incl. cache hits",
+    "search_score_is_optimistic": "the threshold for the sensitivity floor is read off the same out-of-fold predictions, and the best of thousands of states is reported; see nested"
+  },
+  "table": [
+    {
+      "algorithm": "bfs",
+      "best_objective": 0.4368,
+      "gap_to_optimum": 0.0,
+      "best_state": "eye: R_med, hsv_s_med, chrom_r_p90",
+      "metric": 0.512,
+      "evaluations": 22402,
+      "requests": 22402,
+      "runtime_s": 16.2,
+      "optimum_hit_rate_10_seeds": 1.0,
+      "mean_best_10_seeds": 0.4368
+    },
+    {
+      "algorithm": "iddfs",
+      "best_objective": 0.4368,
+      "gap_to_optimum": 0.0,
+      "best_state": "eye: R_med, hsv_s_med, chrom_r_p90",
+      "metric": 0.512,
+      "evaluations": 22402,
+      "requests": 24426,
+      "runtime_s": 64.4,
+      "optimum_hit_rate_10_seeds": 1.0,
+      "mean_best_10_seeds": 0.4368
+    },
+    {
+      "algorithm": "hill_climbing",
+      "best_objective": 0.4132,
+      "gap_to_optimum": 0.0236,
+      "best_state": "eye: G_med, lab_L_med, chrom_r_p90",
+      "metric": 0.488,
+      "evaluations": 1785,
+      "requests": 2526,
+      "runtime_s": 3.2,
+      "optimum_hit_rate_10_seeds": 0.7,
+      "mean_best_10_seeds": 0.4242
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "best_objective": 0.4053,
+      "gap_to_optimum": 0.0315,
+      "best_state": "eye: chrom_r_med, lab_L_med, chrom_r_p90",
+      "metric": 0.48,
+      "evaluations": 907,
+      "requests": 3001,
+      "runtime_s": 2.7,
+      "optimum_hit_rate_10_seeds": 0.7,
+      "mean_best_10_seeds": 0.4252
+    },
+    {
+      "algorithm": "local_beam",
+      "best_objective": 0.4368,
+      "gap_to_optimum": 0.0,
+      "best_state": "eye: R_med, hsv_s_med, chrom_r_p90",
+      "metric": 0.512,
+      "evaluations": 1321,
+      "requests": 1799,
+      "runtime_s": 0.8,
+      "optimum_hit_rate_10_seeds": 0.9,
+      "mean_best_10_seeds": 0.4352
+    },
+    {
+      "algorithm": "genetic",
+      "best_objective": 0.4132,
+      "gap_to_optimum": 0.0236,
+      "best_state": "eye: G_med, lab_L_med, chrom_r_p90",
+      "metric": 0.488,
+      "evaluations": 446,
+      "requests": 1640,
+      "runtime_s": 1.0,
+      "optimum_hit_rate_10_seeds": 0.3,
+      "mean_best_10_seeds": 0.4117
+    },
+    {
+      "algorithm": "astar",
+      "best_objective": 0.4368,
+      "gap_to_optimum": 0.0,
+      "best_state": "eye: R_med, hsv_s_med, chrom_r_p90",
+      "metric": 0.512,
+      "evaluations": 22402,
+      "requests": 22402,
+      "runtime_s": 64.0,
+      "optimum_hit_rate_10_seeds": 1.0,
+      "mean_best_10_seeds": 0.4368
+    },
+    {
+      "algorithm": "astar_resub",
+      "best_objective": 0.4024,
+      "gap_to_optimum": 0.0344,
+      "best_state": "eye: R_med, chrom_r_p90",
+      "metric": 0.472,
+      "evaluations": 16321,
+      "requests": 16321,
+      "runtime_s": 45.8,
+      "optimum_hit_rate_10_seeds": 0.0,
+      "mean_best_10_seeds": 0.4024
+    }
+  ],
+  "winner": "local_beam",
+  "checks": {
+    "cost_weight_sensitivity": [
+      {
+        "photo_cost_weight": 0.0,
+        "site": "eye",
+        "features": [
+          "R_med",
+          "hsv_s_med",
+          "chrom_r_p90"
+        ],
+        "metric": 0.5118,
+        "objective": 0.4968
+      },
+      {
+        "photo_cost_weight": 0.01,
+        "site": "eye",
+        "features": [
+          "R_med",
+          "hsv_s_med",
+          "chrom_r_p90"
+        ],
+        "metric": 0.5118,
+        "objective": 0.4668
+      },
+      {
+        "photo_cost_weight": 0.02,
+        "site": "eye",
+        "features": [
+          "R_med",
+          "hsv_s_med",
+          "chrom_r_p90"
+        ],
+        "metric": 0.5118,
+        "objective": 0.4368
+      },
+      {
+        "photo_cost_weight": 0.05,
+        "site": "eye",
+        "features": [
+          "R_med",
+          "hsv_s_med",
+          "chrom_r_p90"
+        ],
+        "metric": 0.5118,
+        "objective": 0.3468
+      },
+      {
+        "photo_cost_weight": 0.1,
+        "site": "palm",
+        "features": [
+          "chrom_g_med",
+          "a_over_L_med",
+          "hsv_s_p10"
+        ],
+        "metric": 0.4072,
+        "objective": 0.2922
+      }
+    ],
+    "per_site_best": {
+      "eye": {
+        "features": [
+          "R_med",
+          "hsv_s_med",
+          "chrom_r_p90"
+        ],
+        "metric": 0.5118,
+        "objective": 0.4368
+      },
+      "nail": {
+        "features": [
+          "hsv_h_med",
+          "erythema_index_med",
+          "lab_a_p10"
+        ],
+        "metric": 0.3955,
+        "objective": 0.3605
+      },
+      "palm": {
+        "features": [
+          "chrom_g_med",
+          "a_over_L_med",
+          "hsv_s_p10"
+        ],
+        "metric": 0.4072,
+        "objective": 0.3722
+      },
+      "palm+nail": {
+        "features": [
+          "palm:chrom_g_med",
+          "nail:lab_a_med",
+          "nail:erythema_index_p90"
+        ],
+        "metric": 0.4312,
+        "objective": 0.3762
+      }
+    },
+    "astar_admissibility": {
+      "eye": {
+        "upper_bound": 0.45669291338582674,
+        "max_cv_metric": 0.5118,
+        "admissible": false
+      },
+      "nail": {
+        "upper_bound": 0.4136363636363637,
+        "max_cv_metric": 0.3955,
+        "admissible": true
+      },
+      "palm": {
+        "upper_bound": 0.3755656108597285,
+        "max_cv_metric": 0.4072,
+        "admissible": false
+      },
+      "palm+nail": {
+        "upper_bound": 0.536697247706422,
+        "max_cv_metric": 0.4312,
+        "admissible": true
+      }
+    },
+    "fusion_shift_control": {
+      "0": {
+        "n_pairs": 508,
+        "metric": 0.4311926605504587
+      },
+      "-1": {
+        "n_pairs": 504,
+        "metric": 0.3055555555555556
+      },
+      "1": {
+        "n_pairs": 506,
+        "metric": 0.4193548387096774
+      }
+    }
+  },
+  "nested": {
+    "algo": "local_beam",
+    "summary": {
+      "inner_metric": 0.49596194913609015,
+      "outer_metric": 0.3132307692307693,
+      "outer_roc_auc": 0.5972361673414305,
+      "outer_sensitivity": 0.7,
+      "outer_specificity": 0.45600000000000007,
+      "optimism": 0.18273117990532084,
+      "sites_chosen": {
+        "eye": 5
+      }
+    },
+    "folds": [
+      {
+        "fold": 0,
+        "site": "eye",
+        "features": [
+          "R_med",
+          "erythema_index_p90",
+          "hsv_s_p10"
+        ],
+        "n_test": 44,
+        "inner_metric": 0.5,
+        "inner_objective": 0.425,
+        "outer_metric": 0.28,
+        "outer_objective": 0.20500000000000002,
+        "outer_roc_auc": 0.6126315789473684,
+        "outer_sensitivity": 0.631578947368421,
+        "outer_specificity": 0.4,
+        "evaluations": 1257,
+        "runtime_s": 1.0681803749903338
+      },
+      {
+        "fold": 1,
+        "site": "eye",
+        "features": [
+          "lab_a_med",
+          "lab_b_med",
+          "hsv_s_med"
+        ],
+        "n_test": 44,
+        "inner_metric": 0.5490196078431373,
+        "inner_objective": 0.4740196078431373,
+        "outer_metric": 0.28,
+        "outer_objective": 0.20500000000000002,
+        "outer_roc_auc": 0.5389473684210526,
+        "outer_sensitivity": 0.6842105263157895,
+        "outer_specificity": 0.36,
+        "evaluations": 870,
+        "runtime_s": 0.9246656250033993
+      },
+      {
+        "fold": 2,
+        "site": "eye",
+        "features": [
+          "R_med",
+          "B_med",
+          "lab_L_med"
+        ],
+        "n_test": 44,
+        "inner_metric": 0.48514851485148514,
+        "inner_objective": 0.4101485148514851,
+        "outer_metric": 0.46153846153846156,
+        "outer_objective": 0.38653846153846155,
+        "outer_roc_auc": 0.6132478632478633,
+        "outer_sensitivity": 0.7777777777777778,
+        "outer_specificity": 0.5384615384615384,
+        "evaluations": 1201,
+        "runtime_s": 1.3515619579993654
+      },
+      {
+        "fold": 3,
+        "site": "eye",
+        "features": [
+          "G_med",
+          "chrom_r_med"
+        ],
+        "n_test": 44,
+        "inner_metric": 0.4901960784313726,
+        "inner_objective": 0.4201960784313726,
+        "outer_metric": 0.16000000000000003,
+        "outer_objective": 0.09000000000000004,
+        "outer_roc_auc": 0.6294736842105264,
+        "outer_sensitivity": 0.6842105263157895,
+        "outer_specificity": 0.52,
+        "evaluations": 1403,
+        "runtime_s": 1.4281097909988603
+      },
+      {
+        "fold": 4,
+        "site": "eye",
+        "features": [
+          "R_med",
+          "chrom_b_med",
+          "hsv_s_p90"
+        ],
+        "n_test": 44,
+        "inner_metric": 0.4554455445544554,
+        "inner_objective": 0.3804455445544554,
+        "outer_metric": 0.3846153846153846,
+        "outer_objective": 0.30961538461538457,
+        "outer_roc_auc": 0.5918803418803418,
+        "outer_sensitivity": 0.7222222222222222,
+        "outer_specificity": 0.46153846153846156,
+        "evaluations": 1189,
+        "runtime_s": 1.1145503750012722
+      }
+    ],
+    "per_site_restricted": {
+      "eye": {
+        "inner_metric": 0.49792273344981564,
+        "outer_metric": 0.28892307692307695,
+        "outer_objective": 0.21492307692307694,
+        "outer_roc_auc": 0.613136302294197,
+        "outer_sensitivity": 0.6900584795321637,
+        "outer_specificity": 0.44000000000000006,
+        "outer_metric_sd": 0.14442049060472298,
+        "features_per_fold": [
+          [
+            "B_med",
+            "lab_L_med",
+            "hsv_h_med"
+          ],
+          [
+            "R_med",
+            "B_med",
+            "lab_a_p90"
+          ],
+          [
+            "R_med",
+            "B_med",
+            "lab_L_med"
+          ],
+          [
+            "G_med",
+            "chrom_r_med"
+          ],
+          [
+            "lab_b_med",
+            "a_over_L_p90",
+            "hsv_s_p90"
+          ]
+        ]
+      },
+      "palm": {
+        "inner_metric": 0.40832691319979453,
+        "outer_metric": 0.31646464646464645,
+        "outer_objective": 0.2824646464646464,
+        "outer_roc_auc": 0.6331387055406084,
+        "outer_sensitivity": 0.7881026901439661,
+        "outer_specificity": 0.3482828282828283,
+        "outer_metric_sd": 0.09765292241295304,
+        "features_per_fold": [
+          [
+            "lab_a_med",
+            "a_over_L_med"
+          ],
+          [
+            "B_med",
+            "chrom_r_med",
+            "lab_a_med"
+          ],
+          [
+            "hsv_s_med",
+            "lab_a_p90",
+            "erythema_index_p10"
+          ],
+          [
+            "lab_a_med",
+            "chrom_r_p90",
+            "lab_a_p90"
+          ],
+          [
+            "chrom_r_med",
+            "hsv_s_med",
+            "lab_a_p90"
+          ]
+        ]
+      },
+      "nail": {
+        "inner_metric": 0.4011363636363637,
+        "outer_metric": 0.3636363636363636,
+        "outer_objective": 0.3286363636363636,
+        "outer_roc_auc": 0.5894086652145146,
+        "outer_sensitivity": 0.8285769064435462,
+        "outer_specificity": 0.33181818181818185,
+        "outer_metric_sd": 0.06224119971649613,
+        "features_per_fold": [
+          [
+            "G_med",
+            "lab_a_med",
+            "a_over_L_p90"
+          ],
+          [
+            "R_med",
+            "a_over_L_med",
+            "lab_a_p10"
+          ],
+          [
+            "lab_a_p10",
+            "a_over_L_p10",
+            "erythema_index_p90"
+          ],
+          [
+            "G_med",
+            "chrom_r_med",
+            "chrom_r_p10"
+          ],
+          [
+            "lab_a_med",
+            "a_over_L_p10",
+            "a_over_L_p90"
+          ]
+        ]
+      },
+      "palm+nail": {
+        "inner_metric": 0.45186863711001635,
+        "outer_metric": 0.28921775898520086,
+        "outer_objective": 0.23521775898520086,
+        "outer_roc_auc": 0.6108474128354893,
+        "outer_sensitivity": 0.7281920903954802,
+        "outer_specificity": 0.3943974630021142,
+        "outer_metric_sd": 0.07762307674445514,
+        "features_per_fold": [
+          [
+            "palm:R_med",
+            "palm:lab_a_med",
+            "palm:erythema_index_med"
+          ],
+          [
+            "palm:lab_a_p10",
+            "nail:hsv_h_med",
+            "nail:chrom_r_p90"
+          ],
+          [
+            "nail:lab_a_p10",
+            "nail:erythema_index_p90"
+          ],
+          [
+            "palm:lab_L_med",
+            "palm:chrom_r_p90",
+            "palm:lab_a_p90"
+          ],
+          [
+            "palm:B_med",
+            "palm:chrom_b_med",
+            "palm:lab_a_p90"
+          ]
+        ]
+      }
+    },
+    "note": "1 x 5 grouped outer CV; inside each training fold the whole search reruns (inner 3-fold CV); the chosen protocol is refit on the training fold, its threshold set on inner out-of-fold predictions for the sensitivity floor, then scored on the held-out fold. outer_metric uses the same definition as the search score."
+  },
+  "figures": {
+    "convergence": "outputs/figures/search/convergence.png",
+    "nested_optimism": "outputs/figures/search/nested_optimism.png"
+  },
+  "traces": {
+    "bfs": "outputs/results/search_trace_bfs.json",
+    "iddfs": "outputs/results/search_trace_iddfs.json",
+    "hill_climbing": "outputs/results/search_trace_hill_climbing.json",
+    "simulated_annealing": "outputs/results/search_trace_simulated_annealing.json",
+    "local_beam": "outputs/results/search_trace_local_beam.json",
+    "genetic": "outputs/results/search_trace_genetic.json",
+    "astar": "outputs/results/search_trace_astar.json",
+    "astar_resub": "outputs/results/search_trace_astar_resub.json"
+  }
+}

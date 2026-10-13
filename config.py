@@ -91,3 +91,13 @@ EQUAL_N = 220              # every site subsampled to the CP-AnemiC primary size
 N_SUBSAMPLES = 10
 LC_SIZES = (60, 100, 150, 220, 300, 400)
 FUSION_SHIFTS = (0, -1, 1)   # palm n paired with nail n + shift; non-zero shifts are the same-child control
+
+# ---- Cheapest screening protocol search (P9) ----
+# Photo cost units per site: eye needs eyelid eversion (child discomfort, hygiene); palm+nail fusion = sum.
+PHOTO_COST = {"eye": 3, "palm": 1, "nail": 1}
+PHOTO_COST_WEIGHT = 0.02    # objective units per photo-cost unit (eye 0.06, palm/nail 0.02, fusion 0.04)
+FEATURE_COST = 0.005        # objective units per feature
+SEARCH_METRIC = "spec_at_sens"   # "spec_at_sens" (specificity at sensitivity >= SENS_FLOOR) or "roc_auc"
+SEARCH_FOLDS = 3
+SEARCH_MAX_FEATURES = 3
+SEARCH_OUTER_FOLDS = 5      # honest re-evaluation: 1 x 5 grouped outer CV around the winning search algorithm

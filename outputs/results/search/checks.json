@@ -1,0 +1,133 @@
+{
+  "cost_weight_sensitivity": [
+    {
+      "photo_cost_weight": 0.0,
+      "site": "eye",
+      "features": [
+        "R_med",
+        "hsv_s_med",
+        "chrom_r_p90"
+      ],
+      "metric": 0.5118,
+      "objective": 0.4968
+    },
+    {
+      "photo_cost_weight": 0.01,
+      "site": "eye",
+      "features": [
+        "R_med",
+        "hsv_s_med",
+        "chrom_r_p90"
+      ],
+      "metric": 0.5118,
+      "objective": 0.4668
+    },
+    {
+      "photo_cost_weight": 0.02,
+      "site": "eye",
+      "features": [
+        "R_med",
+        "hsv_s_med",
+        "chrom_r_p90"
+      ],
+      "metric": 0.5118,
+      "objective": 0.4368
+    },
+    {
+      "photo_cost_weight": 0.05,
+      "site": "eye",
+      "features": [
+        "R_med",
+        "hsv_s_med",
+        "chrom_r_p90"
+      ],
+      "metric": 0.5118,
+      "objective": 0.3468
+    },
+    {
+      "photo_cost_weight": 0.1,
+      "site": "palm",
+      "features": [
+        "chrom_g_med",
+        "a_over_L_med",
+        "hsv_s_p10"
+      ],
+      "metric": 0.4072,
+      "objective": 0.2922
+    }
+  ],
+  "per_site_best": {
+    "eye": {
+      "features": [
+        "R_med",
+        "hsv_s_med",
+        "chrom_r_p90"
+      ],
+      "metric": 0.5118,
+      "objective": 0.4368
+    },
+    "nail": {
+      "features": [
+        "hsv_h_med",
+        "erythema_index_med",
+        "lab_a_p10"
+      ],
+      "metric": 0.3955,
+      "objective": 0.3605
+    },
+    "palm": {
+      "features": [
+        "chrom_g_med",
+        "a_over_L_med",
+        "hsv_s_p10"
+      ],
+      "metric": 0.4072,
+      "objective": 0.3722
+    },
+    "palm+nail": {
+      "features": [
+        "palm:chrom_g_med",
+        "nail:lab_a_med",
+        "nail:erythema_index_p90"
+      ],
+      "metric": 0.4312,
+      "objective": 0.3762
+    }
+  },
+  "astar_admissibility": {
+    "eye": {
+      "upper_bound": 0.45669291338582674,
+      "max_cv_metric": 0.5118,
+      "admissible": false
+    },
+    "nail": {
+      "upper_bound": 0.4136363636363637,
+      "max_cv_metric": 0.3955,
+      "admissible": true
+    },
+    "palm": {
+      "upper_bound": 0.3755656108597285,
+      "max_cv_metric": 0.4072,
+      "admissible": false
+    },
+    "palm+nail": {
+      "upper_bound": 0.536697247706422,
+      "max_cv_metric": 0.4312,
+      "admissible": true
+    }
+  },
+  "fusion_shift_control": {
+    "0": {
+      "n_pairs": 508,
+      "metric": 0.4311926605504587
+    },
+    "-1": {
+      "n_pairs": 504,
+      "metric": 0.3055555555555556
+    },
+    "1": {
+      "n_pairs": 506,
+      "metric": 0.4193548387096774
+    }
+  }
+}

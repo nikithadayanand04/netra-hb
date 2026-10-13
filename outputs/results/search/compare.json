@@ -1,0 +1,204 @@
+[
+  {
+    "algo": "bfs",
+    "best_objective": 0.4368110236220472,
+    "best_metric": 0.5118110236220472,
+    "best_site": "eye",
+    "best_features": [
+      "R_med",
+      "hsv_s_med",
+      "chrom_r_p90"
+    ],
+    "best_state": [
+      "eye",
+      [
+        0,
+        11,
+        14
+      ]
+    ],
+    "evaluations": 22402,
+    "requests": 22402,
+    "runtime_s": 16.219967541997903
+  },
+  {
+    "algo": "iddfs",
+    "best_objective": 0.4368110236220472,
+    "best_metric": 0.5118110236220472,
+    "best_site": "eye",
+    "best_features": [
+      "R_med",
+      "hsv_s_med",
+      "chrom_r_p90"
+    ],
+    "best_state": [
+      "eye",
+      [
+        0,
+        11,
+        14
+      ]
+    ],
+    "evaluations": 22402,
+    "requests": 24426,
+    "runtime_s": 64.37444695799786
+  },
+  {
+    "algo": "hill_climbing",
+    "best_objective": 0.41318897637795277,
+    "best_metric": 0.4881889763779528,
+    "best_site": "eye",
+    "best_features": [
+      "G_med",
+      "lab_L_med",
+      "chrom_r_p90"
+    ],
+    "best_state": [
+      "eye",
+      [
+        1,
+        6,
+        14
+      ]
+    ],
+    "evaluations": 1785,
+    "requests": 2526,
+    "runtime_s": 3.227184458010015,
+    "seeds": {
+      "n": 10,
+      "hit_rate": 0.7,
+      "mean_best": 0.42421259842519676,
+      "worst_best": 0.3816929133858267,
+      "mean_evaluations": 1776.6
+    }
+  },
+  {
+    "algo": "simulated_annealing",
+    "best_objective": 0.4053149606299213,
+    "best_metric": 0.4803149606299213,
+    "best_site": "eye",
+    "best_features": [
+      "chrom_r_med",
+      "lab_L_med",
+      "chrom_r_p90"
+    ],
+    "best_state": [
+      "eye",
+      [
+        3,
+        6,
+        14
+      ]
+    ],
+    "evaluations": 907,
+    "requests": 3001,
+    "runtime_s": 2.7487441249977564,
+    "seeds": {
+      "n": 10,
+      "hit_rate": 0.7,
+      "mean_best": 0.42523737629126634,
+      "worst_best": 0.3761926605504587,
+      "mean_evaluations": 836.5
+    }
+  },
+  {
+    "algo": "local_beam",
+    "best_objective": 0.4368110236220472,
+    "best_metric": 0.5118110236220472,
+    "best_site": "eye",
+    "best_features": [
+      "R_med",
+      "hsv_s_med",
+      "chrom_r_p90"
+    ],
+    "best_state": [
+      "eye",
+      [
+        0,
+        11,
+        14
+      ]
+    ],
+    "evaluations": 1321,
+    "requests": 1799,
+    "runtime_s": 0.8000654589995975,
+    "seeds": {
+      "n": 10,
+      "hit_rate": 0.9,
+      "mean_best": 0.4352362204724409,
+      "worst_best": 0.42106299212598425,
+      "mean_evaluations": 1271.0
+    }
+  },
+  {
+    "algo": "genetic",
+    "best_objective": 0.41318897637795277,
+    "best_metric": 0.4881889763779528,
+    "best_site": "eye",
+    "best_features": [
+      "G_med",
+      "lab_L_med",
+      "chrom_r_p90"
+    ],
+    "best_state": [
+      "eye",
+      [
+        1,
+        6,
+        14
+      ]
+    ],
+    "evaluations": 446,
+    "requests": 1640,
+    "runtime_s": 1.0393357499997364,
+    "seeds": {
+      "n": 10,
+      "hit_rate": 0.3,
+      "mean_best": 0.41167360245127727,
+      "worst_best": 0.35866515837104074,
+      "mean_evaluations": 422.0
+    }
+  },
+  {
+    "algo": "astar",
+    "best_objective": 0.4368110236220472,
+    "best_metric": 0.5118110236220472,
+    "best_site": "eye",
+    "best_features": [
+      "R_med",
+      "hsv_s_med",
+      "chrom_r_p90"
+    ],
+    "best_state": [
+      "eye",
+      [
+        0,
+        11,
+        14
+      ]
+    ],
+    "evaluations": 22402,
+    "requests": 22402,
+    "runtime_s": 63.97306550000212
+  },
+  {
+    "algo": "astar_resub",
+    "best_objective": 0.4024409448818898,
+    "best_metric": 0.4724409448818898,
+    "best_site": "eye",
+    "best_features": [
+      "R_med",
+      "chrom_r_p90"
+    ],
+    "best_state": [
+      "eye",
+      [
+        0,
+        14
+      ]
+    ],
+    "evaluations": 16321,
+    "requests": 16321,
+    "runtime_s": 45.776763042013044
+  }
+]
