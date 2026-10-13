@@ -4,12 +4,13 @@
 - **User in the story:** an ASHA worker screening a child during a home visit, often outdoors, on a phone.
 - **User at the lab evaluation:** an examiner with a few minutes. They should screen a sample patient in under 30 seconds, then check the results and the methods.
 - **Primary job:** photo in → quality check → "Refer for Hb test" or "Normal", with reasons a non-expert understands.
-- **Scope:** only what the lab evaluation needs. English only, light mode only. No language toggle, dark mode, referral slip, visit register or multi-site combined estimate (removed after P10b).
+- **Scope:** five pages for the lab evaluation, in English, ಕನ್ನಡ and हिंदी, in light (default) and dark mode. No referral slip, visit register or multi-site combined estimate (removed after P10b).
 
 ## The concept: the haemoglobin colour scale
 Health workers already know the WHO Haemoglobin Colour Scale: a paper strip of reds, from pale blush to deep crimson, that a blood drop is matched against. Netra-Hb is built around a digital version of that strip.
 - The strip is the visual spine of the app: it sits on the home screen, it is the result display, and its reds are the only strong colour in the interface.
-- **Signature moment (the one animation):** after analysis, a swatch of the patient's actual tissue colour lifts out of the photo, travels to the strip, and settles at its position. A thin marker drops to show the anaemia threshold. Everything else in the UI is calm and still.
+- **Signature moment:** after analysis, a swatch of the patient's actual tissue colour lifts out of the photo, travels to the strip, and settles at its position, while the risk gauge fills; a thin marker drops to show the anaemia threshold.
+- **One main animation per page:** Home, the strip in the hero illustration glows once; Screen, a scan line sweeps the measured tissue once per selection, then the result moment above. Everything else is still, and `prefers-reduced-motion` shows the final state with no motion.
 
 ## Colour tokens
 | Token | Hex | Use |
@@ -26,11 +27,14 @@ Hb strip gradient (low Hb → high Hb): `#F7E1E1 → #E9A3A8 → #CF5B6B → #A3
 Rules:
 - Red appears only for blood and for the refer state. No red buttons, no red decoration.
 - Charts use exactly two class colours: haem = anaemic, clear = normal. Everything else is slate.
-- All text passes WCAG AA.
+- All text passes WCAG AA in both modes.
+- Dark mode: background `#121624`, surface `#1B2133`, text `#E6E9F0`; haem and clear text are lightened (`#D17189`, `#4C958A`) because the base hues fail AA on the dark surface. Tokens live in the `.nh-dark` block of `app/style.css`; Streamlit widgets (inputs, tabs, slider, camera, uploader) are repainted from the tokens because the theme config is light.
 
 ## Type
-- **Display: Bricolage Grotesque** (Google Fonts), 600–700. Headings, the result word, big numbers.
-- **Body and UI: Atkinson Hyperlegible** (Google Fonts), 400/700. Designed for low-vision readability, which fits a field health tool.
+- **Display: Bricolage Grotesque**, 600–700. Headings, the result word, big numbers.
+- **Body and UI: Atkinson Hyperlegible**, 400/700. Designed for low-vision readability, which fits a field health tool.
+- **Regional scripts:** Noto Sans Kannada and Noto Sans Devanagari as fallbacks in every font stack.
+- All fonts are served locally from `app/static/fonts` (OFL); the app makes no network requests.
 - Scale: 14 / 16 / 20 / 28 / 40 / 64 px. Result word at 64 px. Line length ≤ 70 characters. Sentence case everywhere.
 - Avoid: all-caps labels, monospace labels, middle-dot meta strings, arrows in button text.
 
@@ -40,8 +44,8 @@ Left-aligned, generous whitespace, one column on phone, two on laptop. Shapes fo
 ```
 Home (laptop)
 +--------------------------------------------------------------+
-| Netra-Hb                                                     |
-| Home  Screen  Results  Insights  About                       |
+| Netra-Hb                          English | ಕನ್ನಡ | हिंदी  [Dark] |
+| Home  Screen  Results  Insights  About  (each with a line icon) |
 |                                                              |
 | Needle-free anaemia screening     [ Start a screening ]      |
 | from a photo of the eyelid,       [ Try a sample patient ]   |
@@ -83,10 +87,17 @@ Screen: result (laptop)
    - *Search*: algorithm comparison table, convergence chart (best score vs evaluations), honest nested re-evaluation (inner vs held-out score).
 5. **About**: problem, datasets with citations, method and syllabus mapping, honest results, known limits, disclaimer.
 
+## Visual language
+- **Original SVG artwork only**, drawn in code in `app/art.py` (no stock images, no network): the Home hero (eye, palm and fingernail line art joined by the Hb strip), the three how-it-works steps (phone camera, quality check, result), the photo guides per site (finger pulling the lower eyelid, open palm, fingernails), a header illustration per Insights tab and for About, the About pipeline nodes and the tissue swatches.
+- Illustrations are drawn per mode with the palette baked in and hold no text (an SVG image cannot use the page fonts); labels sit in the HTML around them.
+- **One icon set:** 24 × 24, 1.8 stroke, round caps, used as CSS masks so icons follow the text colour (sites, steps, checks, tips, reasons, nav).
+- A soft two-glow gradient and a faint paper grain sit behind every page, in both modes.
+
 ## Interaction and polish
 - One orchestrated animation (the swatch). Other motion only responds to the user: the threshold slider updating the grid.
 - `prefers-reduced-motion`: the swatch appears in place without travelling.
 - Touch targets ≥ 44 px. Visible keyboard focus. Every chart has a one-line plain-language takeaway above it, computed from the data it shows.
+- Every user-facing string lives in `app/strings.py` (`STRINGS`) in all three languages, with the same `{placeholders}`; a test enforces it. Home, the whole Screen flow, the nav and every page title and chart takeaway are translated; chart content, model names and the About prose stay English.
 - Empty and error states give the next action: "No photo yet. Take one, upload one or pick a sample patient."
 - Footer on every page: "Screening aid for health workers. Not a diagnosis. Confirm with a blood Hb test."
 

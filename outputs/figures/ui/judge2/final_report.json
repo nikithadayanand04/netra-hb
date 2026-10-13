@@ -1,0 +1,293 @@
+{
+ "blocked": [],
+ "shots": {
+  "light_en_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_2screen": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_3results": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_4insights_data": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_4insights_sites": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_4insights_clusters": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_4insights_search": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_en_5about": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_2screen": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_3results": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_4insights_data": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_4insights_sites": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_4insights_clusters": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_4insights_search": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_kn_5about": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_2screen": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_3results": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_4insights_data": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_4insights_sites": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_4insights_clusters": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_4insights_search": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "light_hi_5about": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_2screen": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_3results": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_4insights_data": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_4insights_sites": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_4insights_clusters": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_4insights_search": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_en_5about": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_2screen": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_3results": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_4insights_data": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_4insights_sites": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_4insights_clusters": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_4insights_search": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_kn_5about": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_1home": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_2screen": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_3results": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_4insights_data": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_4insights_sites": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_4insights_clusters": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_4insights_search": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  },
+  "dark_hi_5about": {
+   "contrast": [],
+   "overflow": [],
+   "hscroll": 0,
+   "exceptions": 0
+  }
+ }
+}

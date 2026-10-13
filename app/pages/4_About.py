@@ -2,11 +2,12 @@ import html
 
 import streamlit as st
 
+import art
 import ui
 
-ui.setup_page("About", "pages/4_About.py")
-ui.page_title("About", "Netra-Hb: needle-free anaemia screening from smartphone photos with classical machine "
-                       "learning. RVCE IS353IA (AIML) Lab Part-B.")
+ui.setup_page("nav_about", "pages/4_About.py")
+m = ui.mode()
+ui.page_title(ui.t("about_title"), ui.t("about_lede"), art.img(art.header("about", m)))
 
 
 def prose(*paras: str) -> None:
@@ -64,12 +65,22 @@ UNITS = [
      "Classifier comparison and the final soft-voting ensemble (Results); KNN unfamiliar-photo check (Screen)"),
     ("V", "K-means, cluster validity", "Pallor clusters with elbow, silhouette and purity (Insights, Clusters)"),
 ]
-rows = "".join(f'<tr><th scope="row">Unit {u}</th><td>{html.escape(t)}</td><td>{html.escape(w)}</td></tr>'
-               for u, t, w in UNITS)
-st.html(f'<div class="nh-table-wrap"><table class="nh-table nh-table-text"><thead><tr><th scope="col">IS353IA</th>'
-        f'<th scope="col">Topic</th><th scope="col">Where it is used</th></tr></thead><tbody>{rows}</tbody></table></div>'
-        '<p class="nh-note">Syllabus algorithms only, no deep learning. Logistic regression, Naive Bayes, KNN and '
-        'K-means are also written from scratch in NumPy and tested against scikit-learn.</p>')
+PIPELINE = [("photo", "Photo", "eyelid, palm or nail"), ("mask", "Mask", "tissue only; glare and makeup removed"),
+            ("features", "Colour features", "23 statistics, at most 15 kept"),
+            ("model", "Model", "soft vote of KNN, AdaBoost, random forest"),
+            ("threshold", "Threshold", "set for 80% sensitivity"), ("result", "Result", "Refer for Hb test or Normal")]
+arrow = ui.icon("arrow", "nh-pipe-arrow")
+steps = arrow.join(f'<div class="nh-pipe-step">{art.img(art.pipeline_node(k, m))}<b>{html.escape(name)}</b>'
+                   f'<span>{html.escape(sub)}</span></div>' for k, name, sub in PIPELINE)
+st.html(f'<h3 class="nh-sub">{html.escape(ui.t("pipeline_title"))}</h3>'
+        f'<p class="nh-takeaway">{html.escape(ui.t("t_pipeline"))}</p><div class="nh-pipeline" role="list">{steps}</div>')
+ui.spacer(small=True)
+units = "".join(f'<div class="nh-unit"><p class="nh-unit-n">Unit {u}</p><p class="nh-unit-topic">{html.escape(topic)}</p>'
+                f'<p class="nh-unit-where">{html.escape(where)}</p></div>' for u, topic, where in UNITS)
+st.html(f'<h3 class="nh-sub">{html.escape(ui.t("units_title"))}</h3><p class="nh-takeaway">{html.escape(ui.t("t_units"))}</p>'
+        f'<div class="nh-units">{units}</div>'
+        '<p class="nh-note">Logistic regression, Naive Bayes, KNN and K-means are also written from scratch in NumPy and '
+        'tested against scikit-learn.</p>')
 
 ui.spacer(small=True)
 ui.section("Honest results")

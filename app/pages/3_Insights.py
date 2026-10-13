@@ -8,20 +8,28 @@ import plotly.graph_objects as go
 import streamlit as st
 from scipy.stats import spearmanr
 
+import art
 import ui
 
-ui.setup_page("Insights", "pages/3_Insights.py")
-ui.page_title("Insights", "What the data looks like, how the three body sites compare, what clustering finds, and "
-                          "what the protocol search learned.")
+ui.setup_page("nav_insights", "pages/3_Insights.py")
+t = ui.t
+tk = ui.tokens()
+m = ui.mode()
+ui.page_title(t("ins_title"), t("ins_lede"))
 
-SITE_STYLE = {"eye": (ui.INK, "solid", "Eye (CP-AnemiC, Hb labels)"), "palm": (ui.SLATE, "solid", "Palm (folder labels)"),
-              "nail": ("#8C95A6", "dash", "Nail (folder labels)"),
-              "eye_extra": ("#B4BBC8", "dot", "Eye, Ghana extra (secondary)")}
-FEATURE_WORDS = {"lab_a_med": "redness (a*)", "lab_L_med": "lightness (L*)", "erythema_index_med": "erythema index",
-                 "chrom_r_med": "red share", "a_over_L_med": "redness per lightness (a*/L*)", "R_med": "red channel",
-                 "hsv_s_med": "saturation", "lab_b_med": "yellowness (b*)", "chrom_g_med": "green share",
-                 "hsv_h_med": "hue"}
-tab_data, tab_sites, tab_clusters, tab_search = st.tabs(["Data", "Eye vs palm vs nail", "Clusters", "Search"])
+SERIES = tk["series"]   # strong to faint neutral series colours for the active mode
+SITE_STYLE = {"eye": (SERIES[0], "solid", "Eye (CP-AnemiC, Hb labels)"), "palm": (SERIES[1], "solid", "Palm (folder labels)"),
+              "nail": (SERIES[2], "dash", "Nail (folder labels)"),
+              "eye_extra": (SERIES[3], "dot", "Eye, Ghana extra (secondary)")}
+FEATURES = ["lab_a_med", "lab_L_med", "erythema_index_med", "chrom_r_med", "a_over_L_med", "R_med", "hsv_s_med",
+            "lab_b_med", "chrom_g_med", "hsv_h_med"]
+CLUSTER_KEY = {"Pink": "cl_pink", "Pale": "cl_pale", "Very pale": "cl_very_pale", "Red": "cl_red",
+               "Intermediate": "cl_intermediate"}
+tab_data, tab_sites, tab_clusters, tab_search = st.tabs([t("tab_data"), t("tab_sites"), t("tab_clusters"), t("tab_search")])
+
+
+def feat(f: str) -> str:
+    return t("feat_" + f)
 
 
 def table_html(df: pd.DataFrame, num_cols: tuple[str, ...] = ()) -> str:
@@ -32,77 +40,75 @@ def table_html(df: pd.DataFrame, num_cols: tuple[str, ...] = ()) -> str:
     return f'<div class="nh-table-wrap"><table class="nh-table"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>'
 
 
+def header_art(name: str) -> str:
+    return art.img(art.header(name, m))
+
+
 # ================================================================= Data
 with tab_data:
     df = ui.read_csv("features_cp_anemic.csv")
     if df is None:
         ui.missing("features_cp_anemic.csv", "extract_features")
     else:
-        ui.section("The eye data", f"CP-AnemiC primary set: {len(df)} quality-clean conjunctiva photos of children "
-                                   "aged 6–59 months in Ghana, each with a lab Hb value.")
+        ui.section(t("data_title"), t("data_lede", n=len(df)), header_art("data"))
         left, right = st.columns(2, gap="large")
         with left:
             order = ["normal", "mild", "moderate", "severe"]
             counts = df.severity.value_counts().reindex(order, fill_value=0)
-            colours = [ui.CLEAR, ui.STRIP_STOPS[2], ui.STRIP_STOPS[3], ui.STRIP_STOPS[4]]
+            # severity reads as more intense red: darker on light, brighter on dark (the deep strip reds vanish on dark)
+            colours = ([tk["normal"], "#9E6070", "#C24161", "#EA6A88"] if ui.is_dark() else
+                       [tk["normal"], ui.STRIP_STOPS[2], ui.STRIP_STOPS[3], ui.STRIP_STOPS[4]])
             fig = go.Figure(go.Bar(x=[o.capitalize() for o in order], y=counts.values, marker_color=colours,
-                                   text=counts.values, textposition="outside", cliponaxis=False))
+                                   text=counts.values, textposition="outside", cliponaxis=False,
+                                   textfont=dict(color=tk["text"])))
             fig.update_layout(yaxis_title="Children", showlegend=False)
             n_an = int((df.label == 1).sum())
-            ui.chart(fig, f"{n_an} of {len(df)} children ({n_an / len(df):.0%}) are anaemic (Hb below 11 g/dL), so the "
-                          "classes are fairly balanced; most anaemia is mild or moderate.", height=360, key="eda_balance")
+            ui.chart(fig, t("t_balance", n_an=n_an, n=len(df), pct=f"{n_an / len(df):.0%}"), height=360, key="eda_balance")
         with right:
             fig = go.Figure()
             for lab, name in ((0, "Not anaemic"), (1, "Anaemic")):
                 fig.add_histogram(x=df.hb[df.label == lab], name=name, marker_color=ui.class_color(bool(lab)),
                                   xbins=dict(start=4, end=15.5, size=0.5), opacity=0.9)
-            fig.add_vline(x=11, line=dict(color=ui.INK, width=2), annotation_text="WHO cut-off 11 g/dL",
+            fig.add_vline(x=11, line=dict(color=tk["text"], width=2), annotation_text="WHO cut-off 11 g/dL",
                           annotation_position="top")
             fig.update_layout(barmode="stack", xaxis_title="Lab Hb, g/dL", yaxis_title="Children")
-            ui.chart(fig, f"Hb runs from {df.hb.min():.1f} to {df.hb.max():.1f} g/dL; many children sit close to the "
-                          "cut-off, which is where colour screening is hardest.", height=360, key="eda_hb")
+            ui.chart(fig, t("t_hb", lo=f"{df.hb.min():.1f}", hi=f"{df.hb.max():.1f}"), height=360, key="eda_hb")
 
         ui.spacer(small=True)
-        feats = [f for f in FEATURE_WORDS if f in df.columns]
+        feats = [f for f in FEATURES if f in df.columns]
         rho = {f: spearmanr(df[f], df.hb)[0] for f in feats}
         best = max(rho, key=lambda f: abs(rho[f]))
         left, right = st.columns([1, 1], gap="large")
         with left:
-            feat = st.selectbox("Feature", feats, index=feats.index(best), format_func=FEATURE_WORDS.get,
-                                key="eda_feat")
-            r = rho[feat]
+            f_sel = st.selectbox("Feature", feats, index=feats.index(best), format_func=feat, key="eda_feat")
+            r = rho[f_sel]
             fig = go.Figure()
             for lab, name in ((0, "Not anaemic"), (1, "Anaemic")):
                 s = df[df.label == lab]
-                fig.add_scatter(x=s[feat], y=s.hb, mode="markers", name=name,
-                                marker=dict(color=ui.class_color(bool(lab)), size=8, opacity=0.75,
-                                            line=dict(color="white", width=0.5)))
-            fig.add_hline(y=11, line=dict(color=ui.INK, width=1, dash="dot"))
-            fig.update_layout(xaxis_title=FEATURE_WORDS[feat].capitalize(), yaxis_title="Lab Hb, g/dL")
+                fig.add_scatter(x=s[f_sel], y=s.hb, mode="markers", name=name,
+                                marker=dict(color=ui.class_color(bool(lab)), size=8, opacity=0.8,
+                                            line=dict(color=tk["surface"], width=0.5)))
+            fig.add_hline(y=11, line=dict(color=tk["text"], width=1, dash="dot"))
+            fig.update_layout(xaxis_title=feat(f_sel).capitalize(), yaxis_title="Lab Hb, g/dL")
             strength = "weak" if abs(r) < 0.3 else "moderate" if abs(r) < 0.5 else "strong"
-            ui.chart(fig, f"{FEATURE_WORDS[feat].capitalize()} has a {strength} link with Hb (Spearman ρ = {r:+.2f}): "
-                          "the classes overlap a lot, so no single colour number separates them.", height=400,
-                     key="eda_scatter")
+            ui.chart(fig, t("t_scatter", feat=feat(f_sel).capitalize(), strength=t("strength_" + strength), r=f"{r:+.2f}"),
+                     height=400, key="eda_scatter")
         with right:
             pairs = [(f, f"gw_{f}") for f in feats if f"gw_{f}" in df.columns]
             raw = [abs(spearmanr(df[a], df.hb)[0]) for a, _ in pairs]
             gw = [abs(spearmanr(df[b], df.hb)[0]) for _, b in pairs]
-            names = [FEATURE_WORDS[a] for a, _ in pairs]
+            names = [feat(a) for a, _ in pairs]
             o = np.argsort(raw)
             fig = go.Figure()
             fig.add_bar(y=[names[i] for i in o], x=[raw[i] for i in o], orientation="h", name="Raw colour",
-                        marker_color=ui.INK)
+                        marker_color=SERIES[0])
             fig.add_bar(y=[names[i] for i in o], x=[gw[i] for i in o], orientation="h",
-                        name="Grey-world corrected", marker_color="#B4BBC8")
-            fig.update_layout(barmode="group", xaxis_title="Strength of link with Hb, |Spearman ρ|",
-                              margin=dict(l=190))
+                        name="Grey-world corrected", marker_color=SERIES[3])
+            fig.update_layout(barmode="group", xaxis_title="Strength of link with Hb, |Spearman ρ|", margin=dict(l=200))
             weaker = sum(g < r_ for g, r_ in zip(gw, raw))
             drops = sorted(range(len(pairs)), key=lambda i: gw[i] - raw[i])[:2]
-            named = " and ".join(f"{names[i]} ({raw[i]:.2f} to {gw[i]:.2f})" for i in drops)
-            ui.chart(fig, f"Grey-world lighting correction weakens the link with Hb for {weaker} of {len(pairs)} "
-                          f"features, most for {named}: it removes redness along with the light cast, so the model "
-                          "keeps raw colour.",
-                     height=400, key="eda_gw")
+            named = t("and").join(f"{names[i]} ({raw[i]:.2f} → {gw[i]:.2f})" for i in drops)
+            ui.chart(fig, t("t_gw", weaker=weaker, n=len(pairs), named=named), height=400, key="eda_gw")
 
 
 # ================================================================= Sites
@@ -112,53 +118,49 @@ with tab_sites:
     if sites is None or curves is None:
         ui.missing("results/sites.json", "compare_sites")
     else:
-        ui.section("Eye vs palm vs nail", "Each site has its own children and labels: eye uses lab Hb, palm and nail "
-                                          "use folder labels from file names (about 3% label noise). Not a fair "
-                                          "head-to-head.")
-        t = pd.DataFrame(sites["table"])
-        t["site"] = t.site.map(lambda s: SITE_STYLE[s][2])
-        show = t[["site", "n_images", "pct_anaemic", "roc_auc", "sensitivity", "specificity"]].rename(columns={
+        ui.section(t("sites_title"), t("sites_lede"), header_art("sites"))
+        tab = pd.DataFrame(sites["table"])
+        tab["site"] = tab.site.map(lambda s: SITE_STYLE[s][2])
+        show = tab[["site", "n_images", "pct_anaemic", "roc_auc", "sensitivity", "specificity"]].rename(columns={
             "site": "Site", "n_images": "Images", "pct_anaemic": "Anaemic", "roc_auc": "ROC-AUC [95% CI]",
             "sensitivity": "Sensitivity", "specificity": "Specificity"})
         auc = {r["site"]: float(r["roc_auc"].split()[0]) for r in sites["table"]}
-        st.html(f'<p class="nh-takeaway">With all their data, palm ({auc["palm"]:.2f}) edges the eye ({auc["eye"]:.2f}) '
-                f'and nail is weakest ({auc["nail"]:.2f}), but palm and nail have more than twice as many photos.</p>'
+        ranked = sorted(("eye", "palm", "nail"), key=lambda s: -auc[s])
+        names = {s: t("site_" + s).lower() for s in ranked}
+        st.html(f'<p class="nh-takeaway">{html.escape(t("t_sites_table", first=names[ranked[0]], first_auc=f"{auc[ranked[0]]:.2f}", second=names[ranked[1]], second_auc=f"{auc[ranked[1]]:.2f}", third=names[ranked[2]], third_auc=f"{auc[ranked[2]]:.2f}"))}</p>'
                 + table_html(show, ("Images",)))
         ui.spacer(small=True)
         left, right = st.columns(2, gap="large")
         eq = curves[curves.n_target == 220].groupby("site").roc_auc
         with left:
-            m, lo, hi = eq.mean(), eq.quantile(0.025), eq.quantile(0.975)
-            order = [s for s in ("eye", "palm", "nail", "eye_extra") if s in m.index]
+            mean, lo, hi = eq.mean(), eq.quantile(0.025), eq.quantile(0.975)
+            order = [s for s in ("eye", "palm", "nail", "eye_extra") if s in mean.index]
             fig = go.Figure(go.Bar(
-                x=[f"{SITE_STYLE[s][2].split(' (')[0]}<br><b>{m[s]:.2f}</b>" for s in order], y=[m[s] for s in order],
+                x=[f"{SITE_STYLE[s][2].split(' (')[0]}<br><b>{mean[s]:.2f}</b>" for s in order], y=[mean[s] for s in order],
                 marker_color=[SITE_STYLE[s][0] for s in order],
-                error_y=dict(type="data", symmetric=False, array=[hi[s] - m[s] for s in order],
-                             arrayminus=[m[s] - lo[s] for s in order], color=ui.SLATE)))
-            fig.add_hline(y=0.5, line=dict(color=ui.LIGHT["line"], dash="dot"))
+                error_y=dict(type="data", symmetric=False, array=[hi[s] - mean[s] for s in order],
+                             arrayminus=[mean[s] - lo[s] for s in order], color=tk["muted"])))
+            fig.add_hline(y=0.5, line=dict(color=tk["muted"], dash="dot"))
             fig.update_layout(yaxis_title="ROC-AUC", yaxis_range=[0.4, 1], showlegend=False)
-            extra = (f" The secondary Ghana eye set scores {m['eye_extra']:.2f}, but with folder labels and 66% "
-                     "anaemic it is not comparable." if "eye_extra" in m.index else "")
-            ui.chart(fig, f"At the same 220 photos each, the CP-AnemiC eye ({m['eye']:.2f}) beats palm ({m['palm']:.2f}) "
-                          f"and nail ({m['nail']:.2f}): palm's lead above comes from having more data.{extra}", height=380,
-                     key="site_equal")
+            extra = t("t_equal_extra", v=f"{mean['eye_extra']:.2f}") if "eye_extra" in mean.index else ""
+            ui.chart(fig, t("t_equal", eye=f"{mean['eye']:.2f}", palm=f"{mean['palm']:.2f}", nail=f"{mean['nail']:.2f}") + extra,
+                     height=380, key="site_equal")
         with right:
             g = curves.groupby(["site", "n_target"]).roc_auc
             mean, q_lo, q_hi = g.mean(), g.quantile(0.1), g.quantile(0.9)
             fig = go.Figure()
+            band = "rgba(154,163,181,0.14)" if ui.is_dark() else "rgba(91,100,117,0.10)"
             for s in ("eye", "palm", "nail", "eye_extra"):
                 if s not in mean.index.get_level_values(0):
                     continue
                 colour, dash, name = SITE_STYLE[s]
                 x = mean[s].index.to_numpy()
-                fig.add_scatter(x=np.r_[x, x[::-1]], y=np.r_[q_hi[s].values, q_lo[s].values[::-1]], fill="toself", mode="lines",
-                                fillcolor="rgba(91,100,117,0.10)", line=dict(width=0), hoverinfo="skip",
-                                showlegend=False)
+                fig.add_scatter(x=np.r_[x, x[::-1]], y=np.r_[q_hi[s].values, q_lo[s].values[::-1]], fill="toself",
+                                mode="lines", fillcolor=band, line=dict(width=0), hoverinfo="skip", showlegend=False)
                 fig.add_scatter(x=x, y=mean[s].values, mode="lines+markers", name=name.split(" (")[0],
-                                line=dict(color=colour, dash=dash, width=2.5), marker=dict(size=7))
+                                line=dict(color=colour, dash=dash, width=2.5), marker=dict(size=7, color=colour))
             fig.update_layout(xaxis_title="Training photos (subsampled by child)", yaxis_title="ROC-AUC")
-            ui.chart(fig, "Every site is still improving at its largest size, so more photos would help all three.",
-                     height=380, key="site_curves")
+            ui.chart(fig, t("t_curves"), height=380, key="site_curves")
         ui.note("Equal-size and learning-curve numbers use one fixed, untuned random forest per site so only the data "
                 "changes. Bands: 10th to 90th percentile over 10 subsamples.")
 
@@ -176,26 +178,22 @@ with tab_clusters:
         ui.missing("results/clustering.json", "the clustering notebook (notebooks/02_clustering.ipynb)")
     else:
         eye = cl["eye"]
-        ui.section("K-means pallor groups", f"K-means on {len(cl['features'])} scaled colour features of the "
-                                            f"{eye['n']} eye photos, without labels. Then we check whether the "
-                                            "groups line up with anaemia.")
+        ui.section(t("clusters_title"), t("clusters_lede", k=len(cl["features"]), n=eye["n"]), header_art("clusters"))
         scan = pd.DataFrame(eye["scan"])
         scan = scan[scan.kind == "sklearn"]
         left, right = st.columns(2, gap="large")
         with left:
-            fig = go.Figure(go.Scatter(x=scan.k, y=scan.sse, mode="lines+markers", line=dict(color=ui.INK, width=2.5),
-                                       marker=dict(size=8)))
-            fig.add_vline(x=eye["k_elbow"], line=dict(color=ui.SLATE, dash="dot"),
+            fig = go.Figure(go.Scatter(x=scan.k, y=scan.sse, mode="lines+markers",
+                                       line=dict(color=SERIES[0], width=2.5), marker=dict(size=8, color=SERIES[0])))
+            fig.add_vline(x=eye["k_elbow"], line=dict(color=tk["muted"], dash="dot"),
                           annotation_text=f"elbow, k = {eye['k_elbow']}")
             fig.update_layout(xaxis_title="Number of clusters k", yaxis_title="Within-cluster error (SSE)")
-            ui.chart(fig, f"The error curve bends at k = {eye['k_elbow']}, so we keep {eye['k_chosen']} groups.",
-                     height=340, key="cl_elbow")
+            ui.chart(fig, t("t_elbow", k=eye["k_elbow"]), height=340, key="cl_elbow")
         with right:
             fig = go.Figure(go.Scatter(x=scan.k, y=scan.silhouette, mode="lines+markers",
-                                       line=dict(color=ui.SLATE, width=2.5), marker=dict(size=8)))
+                                       line=dict(color=SERIES[1], width=2.5), marker=dict(size=8, color=SERIES[1])))
             fig.update_layout(xaxis_title="Number of clusters k", yaxis_title="Silhouette")
-            ui.chart(fig, f"Silhouette peaks at k = {eye['k_silhouette']} and stays low: the colours form a "
-                          "continuum, not clean islands.", height=340, key="cl_sil")
+            ui.chart(fig, t("t_sil", k=eye["k_silhouette"]), height=340, key="cl_sil")
 
         ui.spacer(small=True)
         groups = sorted(eye["clusters"][str(eye["k_chosen"])], key=lambda c: c["mean_hb"])
@@ -208,13 +206,12 @@ with tab_clusters:
         hi_g, lo_g = max(groups, key=lambda c: c["pct_anaemic"]), min(groups, key=lambda c: c["pct_anaemic"])
         p_hb = sup["kruskal_hb_p"]
         p_txt = "p < 0.001" if p_hb < 0.001 else f"p = {p_hb:.3f}"
-        differ = (f"Mean Hb does differ between the groups ({p_txt}): {hi_g['pct_anaemic']:.0%} anaemic in the "
-                  f"{hi_g['name'].lower()} group vs {lo_g['pct_anaemic']:.0%} in the {lo_g['name'].lower()} group."
-                  if p_hb < 0.05 else f"Mean Hb does not differ clearly between the groups ({p_txt}).")
-        purity = (f" But no group is clean: severity purity {sup['purity']:.2f} equals the majority baseline "
-                  f"{sup['majority_baseline']:.2f}, so clusters alone cannot screen."
-                  if sup["purity"] <= sup["majority_baseline"] + 0.01 else
-                  f" Severity purity {sup['purity']:.2f} vs majority baseline {sup['majority_baseline']:.2f}.")
+        differ = (t("t_cl_differ", p=p_txt, hi_pct=f"{hi_g['pct_anaemic']:.0%}", hi_name=t(CLUSTER_KEY[hi_g["name"]]),
+                    lo_pct=f"{lo_g['pct_anaemic']:.0%}", lo_name=t(CLUSTER_KEY[lo_g["name"]]))
+                  if p_hb < 0.05 else t("t_cl_nodiffer", p=p_txt))
+        same = sup["purity"] <= sup["majority_baseline"] + 0.01
+        purity = t("t_cl_purity_same" if same else "t_cl_purity", pur=f"{sup['purity']:.2f}",
+                   base=f"{sup['majority_baseline']:.2f}")
         st.html(f'<p class="nh-takeaway">{html.escape(differ + purity)}</p><div class="nh-centroids">{tiles}</div>')
         ui.note("Swatches are the cluster centres (median tissue colour), ordered by mean Hb.")
         ui.spacer(small=True)
@@ -224,12 +221,12 @@ with tab_clusters:
             rows.append({"Site": site.capitalize(), "Photos": cl[site]["n"], "Purity": f"{float(b['purity']):.2f}",
                          "Majority baseline": f"{float(b['majority_baseline']):.2f}",
                          "p (vs shuffled labels)": f"{float(b['purity_p_value']):.3f}"})
-        beat = [r["Site"].lower() for r in rows if float(r["p (vs shuffled labels)"]) < 0.05]
-        miss = [r["Site"].lower() for r in rows if r["Site"].lower() not in beat]
-        txt = ("With folder labels, the same 5-group K-means beats the majority baseline on "
-               + (" and ".join(beat) if beat else "neither site")
-               + (f" but not on {' or '.join(miss)}" if beat and miss else "") + ", and only by a few points.")
-        st.html(f'<p class="nh-takeaway">{html.escape(txt)}</p>' + table_html(pd.DataFrame(rows), ("Photos",)))
+        beat = [t("site_" + r["Site"].lower()).lower() for r in rows if float(r["p (vs shuffled labels)"]) < 0.05]
+        miss = [t("site_" + r["Site"].lower()).lower() for r in rows if float(r["p (vs shuffled labels)"]) >= 0.05]
+        where = (t("t_cl_sites_but", beat=t("and").join(beat), miss=t("and").join(miss)) if beat and miss
+                 else t("and").join(beat) if beat else t("t_cl_sites_none"))
+        st.html(f'<p class="nh-takeaway">{html.escape(t("t_cl_sites", beat=where))}</p>'
+                + table_html(pd.DataFrame(rows), ("Photos",)))
 
 
 # ================================================================= Search
@@ -252,26 +249,25 @@ with tab_search:
     if se is None:
         ui.missing("results/search.json", "run_search")
     else:
-        ui.section("Cheapest screening protocol", "Search over site plus up to 3 colour features. Score = specificity "
-                                                  "at 80% sensitivity, minus a cost per photo and per feature.")
-        t = pd.DataFrame(se["table"])
-        opt = t.best_objective.max()
+        ui.section(t("search_title"), t("search_lede"), header_art("search"))
+        st_ = pd.DataFrame(se["table"])
+        opt = st_.best_objective.max()
         show = pd.DataFrame({
-            "Algorithm": t.algorithm.map(ALGO), "Best score": t.best_objective.map("{:.3f}".format),
-            "Gap to optimum": t.gap_to_optimum.map("{:.3f}".format), "Best protocol": t.best_state,
-            "Evaluations": t.evaluations.map("{:,}".format), "Runtime (s)": t.runtime_s.map("{:.1f}".format),
-            "Found optimum (10 seeds)": t.optimum_hit_rate_10_seeds.map(lambda v: "" if pd.isna(v) else f"{v:.0%}")})
-        fast = t[t.gap_to_optimum == 0].sort_values("evaluations").iloc[0]
-        st.html(f'<p class="nh-takeaway">Exhaustive BFS checks {int(t.loc[t.algorithm == "bfs", "evaluations"].iloc[0]):,} '
-                f'protocols to find the best ({opt:.3f}); {ALGO[fast.algorithm]} finds the same protocol in a run of '
-                f'{int(fast.evaluations):,} evaluations.</p>' + table_html(show, ("Evaluations", "Runtime (s)")))
+            "Algorithm": st_.algorithm.map(ALGO), "Best score": st_.best_objective.map("{:.3f}".format),
+            "Gap to optimum": st_.gap_to_optimum.map("{:.3f}".format), "Best protocol": st_.best_state,
+            "Evaluations": st_.evaluations.map("{:,}".format), "Runtime (s)": st_.runtime_s.map("{:.1f}".format),
+            "Found optimum (10 seeds)": st_.optimum_hit_rate_10_seeds.map(lambda v: "" if pd.isna(v) else f"{v:.0%}")})
+        fast = st_[st_.gap_to_optimum == 0].sort_values("evaluations").iloc[0]
+        n_bfs = int(st_.loc[st_.algorithm == "bfs", "evaluations"].iloc[0])
+        st.html(f'<p class="nh-takeaway">{html.escape(t("t_search_table", n=f"{n_bfs:,}", opt=f"{opt:.3f}", algo=ALGO[fast.algorithm], evals=f"{int(fast.evaluations):,}"))}</p>'
+                + table_html(show, ("Evaluations", "Runtime (s)")))
 
         ui.spacer(small=True)
         left, right = st.columns([1.3, 1], gap="large")
         with left:
             fig = go.Figure()
-            shades = {"hill_climbing": ui.SLATE, "simulated_annealing": "#8C95A6", "local_beam": ui.INK,
-                      "genetic": "#B4BBC8", "astar": ui.INK}
+            shades = {"hill_climbing": SERIES[1], "simulated_annealing": SERIES[2], "local_beam": SERIES[0],
+                      "genetic": SERIES[3], "astar": SERIES[0]}
             dashes = {"astar": "dot", "genetic": "dash"}
             for algo in shades:
                 ev = convergence(algo)
@@ -279,28 +275,26 @@ with tab_search:
                     continue
                 fig.add_scatter(x=ev["eval"] + 1, y=ev.best_objective, mode="lines", line_shape="hv",
                                 name=ALGO[algo], line=dict(color=shades[algo], width=2.5, dash=dashes.get(algo)))
-            fig.add_hline(y=opt, line=dict(color=ui.HAEM, width=1.5, dash="dot"), annotation_text="optimum (BFS)",
+            fig.add_hline(y=opt, line=dict(color=tk["muted"], width=1.5, dash="dot"), annotation_text="optimum (BFS)",
                           annotation_position="bottom right")
-            fig.update_layout(xaxis_type="log", xaxis_title="Protocols evaluated (log scale)",
-                              yaxis_title="Best score so far")
-            n_bfs = int(t.loc[t.algorithm == "bfs", "evaluations"].iloc[0])
+            fig.update_layout(xaxis_type="log", xaxis_title="Protocols evaluated (log scale)", yaxis_title="Best score so far")
             hit = convergence("local_beam")
             hit = hit[hit.best_objective >= opt - 1e-9]
-            msg = (f"Local beam reaches the exhaustive optimum after {int(hit['eval'].iloc[0]) + 1:,} evaluations, "
-                   f"{(int(hit['eval'].iloc[0]) + 1) / n_bfs:.0%} of BFS's {n_bfs:,}" if len(hit) else
-                   "Local beam does not reach the exhaustive optimum on this seed")
-            ui.chart(fig, msg + "; hill climbing, annealing and the genetic algorithm stop slightly below it.",
-                     height=400, key="search_conv")
+            if len(hit):
+                n_hit = int(hit["eval"].iloc[0]) + 1
+                msg = t("t_conv", n=f"{n_hit:,}", pct=f"{n_hit / n_bfs:.0%}", bfs=f"{n_bfs:,}")
+            else:
+                msg = t("t_conv_none")
+            ui.chart(fig, msg, height=400, key="search_conv")
         with right:
             n = se["nested"]["summary"]
             fig = go.Figure(go.Bar(x=["Search score<br>(inner folds)", "Honest score<br>(held-out folds)"],
-                                   y=[n["inner_metric"], n["outer_metric"]], marker_color=[ui.SLATE, ui.INK],
+                                   y=[n["inner_metric"], n["outer_metric"]], marker_color=[SERIES[2], SERIES[0]],
                                    text=[f"{n['inner_metric']:.2f}", f"{n['outer_metric']:.2f}"],
-                                   textposition="outside", cliponaxis=False, width=0.5))
+                                   textposition="outside", cliponaxis=False, width=0.5, textfont=dict(color=tk["text"])))
             fig.update_layout(yaxis_title="Specificity at 80% sensitivity", yaxis_range=[0, 0.65], showlegend=False)
-            ui.chart(fig, f"Rerun inside each training fold and scored on held-out children, the winning protocol "
-                          f"drops from {n['inner_metric']:.2f} to {n['outer_metric']:.2f}: picking the best of "
-                          "thousands flatters the score.", height=400, key="search_nested")
+            ui.chart(fig, t("t_nested", inner=f"{n['inner_metric']:.2f}", outer=f"{n['outer_metric']:.2f}"), height=400,
+                     key="search_nested")
         ui.note(f"Honest re-evaluation: 5 grouped outer folds; the full {ALGO[se['nested']['algo']]} search reruns "
                 f"inside each. Held-out ROC-AUC {n['outer_roc_auc']:.2f}, sensitivity {n['outer_sensitivity']:.0%}, "
                 f"specificity {n['outer_specificity']:.0%}. Sites chosen per fold: "

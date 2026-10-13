@@ -46,3 +46,10 @@ def test_results_threshold_slider_runs() -> None:
     at.selectbox(key="res_model").set_value("knn").run()
     at.slider(key="res_thr_knn").set_value(0.9).run()
     assert not at.exception, at.exception
+
+
+@pytest.mark.parametrize("path", sorted(str(p.relative_to(APP)) for p in APP.rglob("*.py")))
+def test_app_file_compiles(path: str) -> None:
+    """AppTest does not surface a page's syntax error as an exception, so compile every file explicitly."""
+    import py_compile
+    py_compile.compile(str(APP / path), doraise=True)
