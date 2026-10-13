@@ -1,0 +1,926 @@
+{
+  "features": [
+    "R_med",
+    "B_med",
+    "chrom_r_med",
+    "chrom_g_med",
+    "lab_L_med",
+    "lab_a_med",
+    "lab_b_med",
+    "hsv_h_med",
+    "erythema_index_med",
+    "chrom_r_p10",
+    "lab_a_p10",
+    "lab_a_p90",
+    "erythema_index_p10",
+    "erythema_index_p90"
+  ],
+  "seed": 42,
+  "eye": {
+    "data": "CP-AnemiC primary (conjunctiva), Hb labels",
+    "n": 220,
+    "k_elbow": 5,
+    "k_silhouette": 2,
+    "k_chosen": 5,
+    "k_rule": "kneedle elbow saved for the app; silhouette peaks at k=2 then is flat for k>=3",
+    "scan": [
+      {
+        "k": 2,
+        "kind": "sklearn",
+        "sse": 1855.8324470479427,
+        "silhouette": 0.40541169493040674
+      },
+      {
+        "k": 2,
+        "kind": "scratch",
+        "sse": 1855.8324470479424,
+        "silhouette": 0.40541169493040674
+      },
+      {
+        "k": 2,
+        "kind": "bisecting",
+        "sse": 1855.8324470479427,
+        "silhouette": 0.40541169493040674
+      },
+      {
+        "k": 3,
+        "kind": "sklearn",
+        "sse": 1469.6692793344694,
+        "silhouette": 0.27223366643088404
+      },
+      {
+        "k": 3,
+        "kind": "scratch",
+        "sse": 1469.3854231667726,
+        "silhouette": 0.2670854529865152
+      },
+      {
+        "k": 3,
+        "kind": "bisecting",
+        "sse": 1532.2791742951913,
+        "silhouette": 0.21115063745318566
+      },
+      {
+        "k": 4,
+        "kind": "sklearn",
+        "sse": 1286.5184579777047,
+        "silhouette": 0.23961752869581818
+      },
+      {
+        "k": 4,
+        "kind": "scratch",
+        "sse": 1286.5184579777049,
+        "silhouette": 0.23961752869581818
+      },
+      {
+        "k": 4,
+        "kind": "bisecting",
+        "sse": 1314.8400833346795,
+        "silhouette": 0.21693448400779686
+      },
+      {
+        "k": 5,
+        "kind": "sklearn",
+        "sse": 1115.7354811783362,
+        "silhouette": 0.23441242847612778
+      },
+      {
+        "k": 5,
+        "kind": "scratch",
+        "sse": 1118.8914383741526,
+        "silhouette": 0.241177729205235
+      },
+      {
+        "k": 5,
+        "kind": "bisecting",
+        "sse": 1167.6854518620319,
+        "silhouette": 0.20580445799635808
+      },
+      {
+        "k": 6,
+        "kind": "sklearn",
+        "sse": 983.6868224690684,
+        "silhouette": 0.24246649565129288
+      },
+      {
+        "k": 6,
+        "kind": "scratch",
+        "sse": 980.7566959713174,
+        "silhouette": 0.2463580937951612
+      },
+      {
+        "k": 6,
+        "kind": "bisecting",
+        "sse": 1053.0308647906825,
+        "silhouette": 0.1905351027359457
+      },
+      {
+        "k": 7,
+        "kind": "sklearn",
+        "sse": 891.5818171808265,
+        "silhouette": 0.2525231200071779
+      },
+      {
+        "k": 7,
+        "kind": "scratch",
+        "sse": 896.8322460671754,
+        "silhouette": 0.24948032447995286
+      },
+      {
+        "k": 7,
+        "kind": "bisecting",
+        "sse": 965.2131715956765,
+        "silhouette": 0.1976013041847096
+      },
+      {
+        "k": 8,
+        "kind": "sklearn",
+        "sse": 803.3179968450379,
+        "silhouette": 0.25452650178392716
+      },
+      {
+        "k": 8,
+        "kind": "scratch",
+        "sse": 802.8636937293636,
+        "silhouette": 0.24988255692911235
+      },
+      {
+        "k": 8,
+        "kind": "bisecting",
+        "sse": 911.0369954773369,
+        "silhouette": 0.1806333174092222
+      },
+      {
+        "k": 9,
+        "kind": "sklearn",
+        "sse": 737.3951685255196,
+        "silhouette": 0.26115895104130976
+      },
+      {
+        "k": 9,
+        "kind": "scratch",
+        "sse": 748.3267835545349,
+        "silhouette": 0.24954142364389392
+      },
+      {
+        "k": 9,
+        "kind": "bisecting",
+        "sse": 842.2026290987689,
+        "silhouette": 0.1865493879105333
+      },
+      {
+        "k": 10,
+        "kind": "sklearn",
+        "sse": 695.74134971782,
+        "silhouette": 0.25781716887133266
+      },
+      {
+        "k": 10,
+        "kind": "scratch",
+        "sse": 703.737942348665,
+        "silhouette": 0.2528498831756867
+      },
+      {
+        "k": 10,
+        "kind": "bisecting",
+        "sse": 772.8127991419725,
+        "silhouette": 0.18485527351549058
+      }
+    ],
+    "scratch_check": [
+      {
+        "k": 2,
+        "SSE sklearn": 1855.832,
+        "SSE scratch": 1855.832,
+        "ARI sklearn vs scratch": 1.0,
+        "scratch iters": 5
+      },
+      {
+        "k": 3,
+        "SSE sklearn": 1469.669,
+        "SSE scratch": 1469.385,
+        "ARI sklearn vs scratch": 0.894,
+        "scratch iters": 12
+      },
+      {
+        "k": 4,
+        "SSE sklearn": 1286.518,
+        "SSE scratch": 1286.518,
+        "ARI sklearn vs scratch": 1.0,
+        "scratch iters": 8
+      },
+      {
+        "k": 5,
+        "SSE sklearn": 1115.735,
+        "SSE scratch": 1118.891,
+        "ARI sklearn vs scratch": 0.68,
+        "scratch iters": 7
+      }
+    ],
+    "supervised": [
+      {
+        "k": 2,
+        "purity": 0.5772727272727273,
+        "majority_baseline": 0.5772727272727273,
+        "purity_p": 1.0,
+        "entropy_bits": 1.5416511581527832,
+        "entropy_null_mean": 1.5343065833490293,
+        "entropy_p": 0.8515742128935532,
+        "ARI_severity": 0.014975123161165437,
+        "purity_binary": 0.5772727272727273,
+        "kruskal_hb_p": 0.2647453152192159
+      },
+      {
+        "k": 3,
+        "purity": 0.5772727272727273,
+        "majority_baseline": 0.5772727272727273,
+        "purity_p": 1.0,
+        "entropy_bits": 1.5184971535275553,
+        "entropy_null_mean": 1.5236090210430762,
+        "entropy_p": 0.2723638180909545,
+        "ARI_severity": -0.016723210668164058,
+        "purity_binary": 0.5772727272727273,
+        "kruskal_hb_p": 0.2980046699166513
+      },
+      {
+        "k": 4,
+        "purity": 0.5772727272727273,
+        "majority_baseline": 0.5772727272727273,
+        "purity_p": 1.0,
+        "entropy_bits": 1.4931569951037564,
+        "entropy_null_mean": 1.512722206221276,
+        "entropy_p": 0.09895052473763119,
+        "ARI_severity": -0.0224768070435869,
+        "purity_binary": 0.5772727272727273,
+        "kruskal_hb_p": 0.28053595698199146
+      },
+      {
+        "k": 5,
+        "purity": 0.5772727272727273,
+        "majority_baseline": 0.5772727272727273,
+        "purity_p": 1.0,
+        "entropy_bits": 1.42423113726847,
+        "entropy_null_mean": 1.5021603887477786,
+        "entropy_p": 0.0004997501249375312,
+        "ARI_severity": 0.03597587388648933,
+        "purity_binary": 0.6590909090909091,
+        "kruskal_hb_p": 0.0007417719505725622
+      },
+      {
+        "k": 6,
+        "purity": 0.5772727272727273,
+        "majority_baseline": 0.5772727272727273,
+        "purity_p": 1.0,
+        "entropy_bits": 1.3998710587244598,
+        "entropy_null_mean": 1.4911155249314303,
+        "entropy_p": 0.0014992503748125937,
+        "ARI_severity": 0.032938836873926285,
+        "purity_binary": 0.6590909090909091,
+        "kruskal_hb_p": 0.0009918369656625348
+      }
+    ],
+    "class_entropy_bits": 1.544769364616613,
+    "majority_baseline": 0.5772727272727273,
+    "clusters": {
+      "2": [
+        {
+          "cluster": 0,
+          "name": "Pale",
+          "n": 166,
+          "mean_hb": 11.135361445783131,
+          "pct_anaemic": 0.40963855421686746,
+          "severity_counts": {
+            "normal": 98,
+            "mild": 28,
+            "moderate": 35,
+            "severe": 5
+          },
+          "centroid": {
+            "R_med": 209.8102,
+            "B_med": 129.4548,
+            "chrom_r_med": 0.4353,
+            "chrom_g_med": 0.2972,
+            "lab_L_med": 65.9079,
+            "lab_a_med": 23.1478,
+            "lab_b_med": 17.6387,
+            "hsv_h_med": 9.2813,
+            "erythema_index_med": 0.1644,
+            "chrom_r_p10": 0.407,
+            "lab_a_p10": 16.6974,
+            "lab_a_p90": 29.6069,
+            "erythema_index_p10": 0.1177,
+            "erythema_index_p90": 0.2276
+          }
+        },
+        {
+          "cluster": 1,
+          "name": "Red",
+          "n": 54,
+          "mean_hb": 10.716111111111113,
+          "pct_anaemic": 0.46296296296296297,
+          "severity_counts": {
+            "normal": 29,
+            "mild": 10,
+            "moderate": 12,
+            "severe": 3
+          },
+          "centroid": {
+            "R_med": 172.0,
+            "B_med": 79.7037,
+            "chrom_r_med": 0.5143,
+            "chrom_g_med": 0.2536,
+            "lab_L_med": 47.1095,
+            "lab_a_med": 33.9349,
+            "lab_b_med": 20.0092,
+            "hsv_h_med": 2.9578,
+            "erythema_index_med": 0.304,
+            "chrom_r_p10": 0.4689,
+            "lab_a_p10": 26.8858,
+            "lab_a_p90": 38.4226,
+            "erythema_index_p10": 0.2277,
+            "erythema_index_p90": 0.3968
+          }
+        }
+      ],
+      "5": [
+        {
+          "cluster": 1,
+          "name": "Very pale",
+          "n": 48,
+          "mean_hb": 10.960833333333333,
+          "pct_anaemic": 0.375,
+          "severity_counts": {
+            "normal": 30,
+            "mild": 4,
+            "moderate": 12,
+            "severe": 2
+          },
+          "centroid": {
+            "R_med": 206.3646,
+            "B_med": 149.6979,
+            "chrom_r_med": 0.4072,
+            "chrom_g_med": 0.2985,
+            "lab_L_med": 67.8354,
+            "lab_a_med": 20.0103,
+            "lab_b_med": 9.2185,
+            "hsv_h_med": 1.514,
+            "erythema_index_med": 0.1341,
+            "chrom_r_p10": 0.3824,
+            "lab_a_p10": 14.0979,
+            "lab_a_p90": 27.0226,
+            "erythema_index_p10": 0.0909,
+            "erythema_index_p90": 0.199
+          }
+        },
+        {
+          "cluster": 3,
+          "name": "Pale",
+          "n": 58,
+          "mean_hb": 10.670344827586208,
+          "pct_anaemic": 0.5689655172413793,
+          "severity_counts": {
+            "normal": 25,
+            "mild": 15,
+            "moderate": 16,
+            "severe": 2
+          },
+          "centroid": {
+            "R_med": 210.5,
+            "B_med": 125.0172,
+            "chrom_r_med": 0.4335,
+            "chrom_g_med": 0.3077,
+            "lab_L_med": 67.1398,
+            "lab_a_med": 19.7678,
+            "lab_b_med": 21.6313,
+            "hsv_h_med": 16.4158,
+            "erythema_index_med": 0.148,
+            "chrom_r_p10": 0.412,
+            "lab_a_p10": 15.0465,
+            "lab_a_p90": 24.8001,
+            "erythema_index_p10": 0.1147,
+            "erythema_index_p90": 0.1931
+          }
+        },
+        {
+          "cluster": 4,
+          "name": "Intermediate",
+          "n": 57,
+          "mean_hb": 11.974912280701755,
+          "pct_anaemic": 0.21052631578947367,
+          "severity_counts": {
+            "normal": 45,
+            "mild": 6,
+            "moderate": 6,
+            "severe": 0
+          },
+          "centroid": {
+            "R_med": 221.3684,
+            "B_med": 120.9825,
+            "chrom_r_med": 0.4626,
+            "chrom_g_med": 0.2855,
+            "lab_L_med": 65.5655,
+            "lab_a_med": 30.4987,
+            "lab_b_med": 21.8098,
+            "hsv_h_med": 8.7581,
+            "erythema_index_med": 0.2084,
+            "chrom_r_p10": 0.426,
+            "lab_a_p10": 21.8273,
+            "lab_a_p90": 37.9786,
+            "erythema_index_p10": 0.1478,
+            "erythema_index_p90": 0.2911
+          }
+        },
+        {
+          "cluster": 0,
+          "name": "Pink",
+          "n": 38,
+          "mean_hb": 10.20184210526316,
+          "pct_anaemic": 0.631578947368421,
+          "severity_counts": {
+            "normal": 14,
+            "mild": 12,
+            "moderate": 8,
+            "severe": 4
+          },
+          "centroid": {
+            "R_med": 166.6316,
+            "B_med": 90.0789,
+            "chrom_r_med": 0.4778,
+            "chrom_g_med": 0.2649,
+            "lab_L_med": 47.7707,
+            "lab_a_med": 29.7843,
+            "lab_b_med": 14.7315,
+            "hsv_h_med": 1.4811,
+            "erythema_index_med": 0.2541,
+            "chrom_r_p10": 0.4381,
+            "lab_a_p10": 22.5111,
+            "lab_a_p90": 34.6766,
+            "erythema_index_p10": 0.185,
+            "erythema_index_p90": 0.3375
+          }
+        },
+        {
+          "cluster": 2,
+          "name": "Red",
+          "n": 19,
+          "mean_hb": 11.152631578947368,
+          "pct_anaemic": 0.3157894736842105,
+          "severity_counts": {
+            "normal": 13,
+            "mild": 1,
+            "moderate": 5,
+            "severe": 0
+          },
+          "centroid": {
+            "R_med": 160.6316,
+            "B_med": 54.6316,
+            "chrom_r_med": 0.5697,
+            "chrom_g_med": 0.238,
+            "lab_L_med": 41.1524,
+            "lab_a_med": 36.7244,
+            "lab_b_med": 26.7608,
+            "hsv_h_med": 6.323,
+            "erythema_index_med": 0.3765,
+            "chrom_r_p10": 0.5106,
+            "lab_a_p10": 30.244,
+            "lab_a_p90": 40.6099,
+            "erythema_index_p10": 0.2827,
+            "erythema_index_p90": 0.476
+          }
+        }
+      ]
+    },
+    "init_stability": {
+      "k=2": {
+        "sse_min": 1855.8324470479427,
+        "sse_max": 1857.3522624651996,
+        "sse_rel_spread": 0.0008189399962666393,
+        "ari_mean": 0.9507637636157441,
+        "ari_min": 0.8875616525836832
+      },
+      "k=3": {
+        "sse_min": 1469.3854231667729,
+        "sse_max": 1550.842227262167,
+        "sse_rel_spread": 0.05543596854244067,
+        "ari_mean": 0.7177902783301545,
+        "ari_min": 0.26101358643582795
+      },
+      "k=4": {
+        "sse_min": 1289.1134445055488,
+        "sse_max": 1354.7750400020911,
+        "sse_rel_spread": 0.05093546714325627,
+        "ari_mean": 0.45952539570685175,
+        "ari_min": 0.20343030431731468
+      },
+      "k=5": {
+        "sse_min": 1112.9775759886911,
+        "sse_max": 1223.7783454739442,
+        "sse_rel_spread": 0.09955346080250134,
+        "ari_mean": 0.4766310358136763,
+        "ari_min": 0.1500118452954015
+      }
+    },
+    "scaling_ari_unscaled_vs_scaled": 0.24669330689946747,
+    "k5_robustness": [
+      {
+        "kind": "scratch",
+        "runs": 10,
+        "kw_p_median": 0.0003018690770258229,
+        "kw_p_max": 0.0018161858222068613,
+        "purity_binary_min": 0.6363636363636364,
+        "purity_binary_max": 0.6727272727272727,
+        "ARI_vs_saved_min": 0.6458277579977609
+      },
+      {
+        "kind": "sklearn",
+        "runs": 20,
+        "kw_p_median": 0.000355321101559088,
+        "kw_p_max": 0.0025143515108395674,
+        "purity_binary_min": 0.6272727272727273,
+        "purity_binary_max": 0.6681818181818182,
+        "ARI_vs_saved_min": 0.6139201784540005
+      }
+    ]
+  },
+  "palm": {
+    "labels": "folder (file name)",
+    "n": 501,
+    "anaemic_share": 0.5748502994011976,
+    "k_elbow": 5,
+    "k_silhouette": 2,
+    "scan": [
+      {
+        "k": 2,
+        "kind": "sklearn",
+        "sse": 3992.687410083066,
+        "silhouette": 0.3634048267536054
+      },
+      {
+        "k": 2,
+        "kind": "scratch",
+        "sse": 3992.6874100830655,
+        "silhouette": 0.3634048267536054
+      },
+      {
+        "k": 3,
+        "kind": "sklearn",
+        "sse": 3202.3835707996004,
+        "silhouette": 0.27024629737322947
+      },
+      {
+        "k": 3,
+        "kind": "scratch",
+        "sse": 3202.3835707996004,
+        "silhouette": 0.27024629737322947
+      },
+      {
+        "k": 4,
+        "kind": "sklearn",
+        "sse": 2724.344245381748,
+        "silhouette": 0.2857270769283394
+      },
+      {
+        "k": 4,
+        "kind": "scratch",
+        "sse": 2723.6533462002203,
+        "silhouette": 0.28359216857119396
+      },
+      {
+        "k": 5,
+        "kind": "sklearn",
+        "sse": 2295.5961005475247,
+        "silhouette": 0.26674787111808357
+      },
+      {
+        "k": 5,
+        "kind": "scratch",
+        "sse": 2295.5961005475247,
+        "silhouette": 0.26674787111808357
+      },
+      {
+        "k": 6,
+        "kind": "sklearn",
+        "sse": 2007.9613132927725,
+        "silhouette": 0.27256305387169993
+      },
+      {
+        "k": 6,
+        "kind": "scratch",
+        "sse": 2008.6578243249292,
+        "silhouette": 0.2679173556793444
+      },
+      {
+        "k": 7,
+        "kind": "sklearn",
+        "sse": 1797.2350964005745,
+        "silhouette": 0.27425750164616675
+      },
+      {
+        "k": 7,
+        "kind": "scratch",
+        "sse": 1792.500793546262,
+        "silhouette": 0.28014306043718157
+      },
+      {
+        "k": 8,
+        "kind": "sklearn",
+        "sse": 1632.9732148357382,
+        "silhouette": 0.2783333945107267
+      },
+      {
+        "k": 8,
+        "kind": "scratch",
+        "sse": 1634.7886523848965,
+        "silhouette": 0.2675123439118219
+      },
+      {
+        "k": 9,
+        "kind": "sklearn",
+        "sse": 1493.373785889604,
+        "silhouette": 0.2727148978501212
+      },
+      {
+        "k": 9,
+        "kind": "scratch",
+        "sse": 1485.8609913928092,
+        "silhouette": 0.26579941634932075
+      },
+      {
+        "k": 10,
+        "kind": "sklearn",
+        "sse": 1390.521523305011,
+        "silhouette": 0.26658456918960033
+      },
+      {
+        "k": 10,
+        "kind": "scratch",
+        "sse": 1391.5155241938962,
+        "silhouette": 0.27241043030485296
+      }
+    ],
+    "by_k": {
+      "2": {
+        "purity": 0.5748502994011976,
+        "majority_baseline": 0.5748502994011976,
+        "entropy_bits": 0.9763594211749036,
+        "class_entropy_bits": 0.9837734807730737,
+        "silhouette": 0.3634048267536054,
+        "ARI": 0.009224899381694568,
+        "purity_null_mean": 0.5748512974051894,
+        "purity_null_p95": 0.5748502994011976,
+        "purity_p_value": 1.0,
+        "entropy_null_mean": 0.9822481061175502,
+        "entropy_null_p05": 0.9775718869626664,
+        "entropy_p_value": 0.031984007996002,
+        "clusters": [
+          {
+            "name": "Pale",
+            "n": 260,
+            "pct_anaemic": 0.6230769230769231
+          },
+          {
+            "name": "Red",
+            "n": 241,
+            "pct_anaemic": 0.5228215767634855
+          }
+        ]
+      },
+      "5": {
+        "purity": 0.6107784431137725,
+        "majority_baseline": 0.5748502994011976,
+        "entropy_bits": 0.9230414645486302,
+        "class_entropy_bits": 0.9837734807730737,
+        "silhouette": 0.26674787111808357,
+        "ARI": 0.027995092748359433,
+        "purity_null_mean": 0.5769890219560877,
+        "purity_null_p95": 0.5848303393213573,
+        "purity_p_value": 0.0014992503748125937,
+        "entropy_null_mean": 0.9777896678982254,
+        "entropy_null_p05": 0.9698131426184684,
+        "entropy_p_value": 0.0004997501249375312,
+        "clusters": [
+          {
+            "name": "Very pale",
+            "n": 10,
+            "pct_anaemic": 0.9
+          },
+          {
+            "name": "Pale",
+            "n": 119,
+            "pct_anaemic": 0.7899159663865546
+          },
+          {
+            "name": "Intermediate",
+            "n": 140,
+            "pct_anaemic": 0.4357142857142857
+          },
+          {
+            "name": "Pink",
+            "n": 137,
+            "pct_anaemic": 0.5401459854014599
+          },
+          {
+            "name": "Red",
+            "n": 95,
+            "pct_anaemic": 0.5263157894736842
+          }
+        ]
+      }
+    }
+  },
+  "nail": {
+    "labels": "folder (file name)",
+    "n": 514,
+    "anaemic_share": 0.5817120622568094,
+    "k_elbow": 5,
+    "k_silhouette": 2,
+    "scan": [
+      {
+        "k": 2,
+        "kind": "sklearn",
+        "sse": 4231.035664794562,
+        "silhouette": 0.34965615610437345
+      },
+      {
+        "k": 2,
+        "kind": "scratch",
+        "sse": 4231.035664794562,
+        "silhouette": 0.34965615610437345
+      },
+      {
+        "k": 3,
+        "kind": "sklearn",
+        "sse": 3404.1667255271877,
+        "silhouette": 0.25697712156765196
+      },
+      {
+        "k": 3,
+        "kind": "scratch",
+        "sse": 3404.1667255271877,
+        "silhouette": 0.25697712156765196
+      },
+      {
+        "k": 4,
+        "kind": "sklearn",
+        "sse": 2901.192543143088,
+        "silhouette": 0.2516357538383241
+      },
+      {
+        "k": 4,
+        "kind": "scratch",
+        "sse": 2900.6802508704623,
+        "silhouette": 0.25047854283478377
+      },
+      {
+        "k": 5,
+        "kind": "sklearn",
+        "sse": 2484.922492280626,
+        "silhouette": 0.26216200431163444
+      },
+      {
+        "k": 5,
+        "kind": "scratch",
+        "sse": 2484.932921513391,
+        "silhouette": 0.26223493340364673
+      },
+      {
+        "k": 6,
+        "kind": "sklearn",
+        "sse": 2253.5335631696107,
+        "silhouette": 0.2342156615723239
+      },
+      {
+        "k": 6,
+        "kind": "scratch",
+        "sse": 2241.9127626715167,
+        "silhouette": 0.2374797271257149
+      },
+      {
+        "k": 7,
+        "kind": "sklearn",
+        "sse": 2051.4199656491724,
+        "silhouette": 0.24335849360342518
+      },
+      {
+        "k": 7,
+        "kind": "scratch",
+        "sse": 2060.501462190024,
+        "silhouette": 0.23042454064271717
+      },
+      {
+        "k": 8,
+        "kind": "sklearn",
+        "sse": 1888.7719418880479,
+        "silhouette": 0.23378916476676717
+      },
+      {
+        "k": 8,
+        "kind": "scratch",
+        "sse": 1905.0735356404107,
+        "silhouette": 0.23146254149657333
+      },
+      {
+        "k": 9,
+        "kind": "sklearn",
+        "sse": 1766.006954675043,
+        "silhouette": 0.22627299746636692
+      },
+      {
+        "k": 9,
+        "kind": "scratch",
+        "sse": 1766.5971860337434,
+        "silhouette": 0.22686923935986797
+      },
+      {
+        "k": 10,
+        "kind": "sklearn",
+        "sse": 1659.7532667608225,
+        "silhouette": 0.2321131426367486
+      },
+      {
+        "k": 10,
+        "kind": "scratch",
+        "sse": 1672.2470114921384,
+        "silhouette": 0.22059611009552324
+      }
+    ],
+    "by_k": {
+      "2": {
+        "purity": 0.5817120622568094,
+        "majority_baseline": 0.5817120622568094,
+        "entropy_bits": 0.9806463643047845,
+        "class_entropy_bits": 0.9806479670013345,
+        "silhouette": 0.34965615610437345,
+        "ARI": -0.0019283046436268305,
+        "purity_null_mean": 0.5817140077821011,
+        "purity_null_p95": 0.5817120622568094,
+        "purity_p_value": 1.0,
+        "entropy_null_mean": 0.9792682916973393,
+        "entropy_null_p05": 0.9752838629430975,
+        "entropy_p_value": 1.0,
+        "clusters": [
+          {
+            "name": "Pale",
+            "n": 296,
+            "pct_anaemic": 0.581081081081081
+          },
+          {
+            "name": "Red",
+            "n": 218,
+            "pct_anaemic": 0.5825688073394495
+          }
+        ]
+      },
+      "5": {
+        "purity": 0.5817120622568094,
+        "majority_baseline": 0.5817120622568094,
+        "entropy_bits": 0.9721697725170819,
+        "class_entropy_bits": 0.9806479670013345,
+        "silhouette": 0.26216200431163444,
+        "ARI": -0.001512559778693265,
+        "purity_null_mean": 0.5830817120622568,
+        "purity_null_p95": 0.5894941634241245,
+        "purity_p_value": 1.0,
+        "entropy_null_mean": 0.9749914026944712,
+        "entropy_null_p05": 0.9671582045388122,
+        "entropy_p_value": 0.20689655172413793,
+        "clusters": [
+          {
+            "name": "Very pale",
+            "n": 56,
+            "pct_anaemic": 0.6607142857142857
+          },
+          {
+            "name": "Pale",
+            "n": 170,
+            "pct_anaemic": 0.5764705882352941
+          },
+          {
+            "name": "Intermediate",
+            "n": 106,
+            "pct_anaemic": 0.5188679245283019
+          },
+          {
+            "name": "Pink",
+            "n": 104,
+            "pct_anaemic": 0.5480769230769231
+          },
+          {
+            "name": "Red",
+            "n": 78,
+            "pct_anaemic": 0.6666666666666666
+          }
+        ]
+      }
+    }
+  },
+  "model_path": "outputs/models/clusters_eye.joblib",
+  "figures": [
+    "outputs/figures/clustering/01_eye_k_selection.png",
+    "outputs/figures/clustering/02_eye_centroids.png",
+    "outputs/figures/clustering/03_eye_proximity_matrix.png",
+    "outputs/figures/clustering/04_eye_purity_severity.png",
+    "outputs/figures/clustering/05_eye_pca_clusters.png",
+    "outputs/figures/clustering/06_palm_nail.png"
+  ]
+}
