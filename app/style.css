@@ -369,6 +369,18 @@ iframe { border: 0; color-scheme: normal; }
   .st-key-nh_result_refer, .st-key-nh_result_normal { padding: 1rem; border-left-width: 6px; }
 }
 
+/* Safeguards */
+.nh-limits { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 1rem 1.25rem; max-width: 70ch; }
+.nh-limits h4 { font-family: var(--font-display); font-weight: 650; font-size: var(--fs-20); margin: 0 0 0.4rem; color: var(--text); }
+.nh-limits ul { margin: 0; padding-left: 1.2rem; }
+.nh-limits li { margin: 0.3rem 0; line-height: 1.5; color: var(--text); font-size: var(--fs-16); }
+.nh-conf { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 36px; padding: 0.3rem 0.8rem; border-radius: 999px;
+  background: var(--text); color: var(--bg); font-weight: 700; font-size: var(--fs-14); margin: 0 0 0.5rem; }
+.nh-conf-why { margin: 0.25rem 0 0.75rem; padding-left: 1.2rem; }
+.nh-conf-why li { color: var(--text); margin: 0.2rem 0; line-height: 1.5; max-width: 60ch; }
+.nh-preview { display: block; max-width: 100%; max-height: 260px; border-radius: 12px; border: 1px solid var(--line);
+  image-rendering: pixelated; background: var(--surface); }
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

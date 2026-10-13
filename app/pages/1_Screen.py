@@ -39,6 +39,11 @@ def cutoff() -> float:
     return ui.AGE_BANDS[ss.scr_age]
 
 
+def low_confidence(res: dict) -> list[str]:
+    why = ["unfamiliar"] if res.get("familiarity", {}).get("unfamiliar") else []
+    return why + (["age_outside"] if ss.scr_age != "age_6_59m" else [])
+
+
 def go(step: str) -> None:
     ss.scr_step = step
 
@@ -94,6 +99,7 @@ def log_visit() -> None:
     ss.scr_register[ss.scr_visit] = {
         "time": datetime.now(), "name": ss.scr_name.strip(), "age_key": ss.scr_age,
         "sites": [r["site"] for r in ss.scr_results], "refer": bool(worst["position"] < c),
+        "low_conf": any(low_confidence(r) for r in ss.scr_results),
         "p": worst["p"], "combined": len(ss.scr_results) > 1}
 
 
@@ -227,6 +233,25 @@ def step_photo() -> None:
     sample_tiles()
 
 
+def select_tissue(img: dict, click: dict) -> None:
+    """A tap grows a region of similar colour; a drag of more than a few pixels selects that box."""
+    h, w = img["rgb"].shape[:2]
+    sx, sy = w / click["width"], h / click["height"]
+    if "x1" in click:
+        x1, y1, x2, y2 = (int(click[k] * (sx if k[0] == "x" else sy)) for k in ("x1", "y1", "x2", "y2"))
+    else:
+        x1 = x2 = int(click["x"] * sx)
+        y1 = y2 = int(click["y"] * sy)
+    if abs(x2 - x1) > 6 and abs(y2 - y1) > 6:
+        region = screening.box_region(img["rgb"].shape, x1, y1, x2, y2)
+        img["box"], img["point"] = (min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)), None
+    else:
+        x, y = int(np.clip(x1, 0, w - 1)), int(np.clip(y1, 0, h - 1))
+        region = screening.grow_region(img["rgb"], x, y)
+        img["point"], img["box"] = (x, y), None
+    img["tissue"] = region if region.sum() >= 200 else None
+
+
 def photo_panel(img: dict, noun: str) -> None:
     rgb = core.on_black(img["rgb"], img["alpha"])
     if img["how"] in ("auto", "whole"):
@@ -235,23 +260,19 @@ def photo_panel(img: dict, noun: str) -> None:
         st.html(f'<img class="nh-photo" alt="" src="{core.png_url(shown)}">')
         st.html(f'<p class="nh-note">{html.escape(ui.t("tissue_" + img["how"]))}</p>')
     else:
-        shown = core.overlay(rgb, img["tissue"], img["point"])
+        shown = core.overlay(rgb, img["tissue"], img["point"], box=img.get("box"))
         click = streamlit_image_coordinates(shown, key=f"scr_click_{img['sig']}", width="stretch",
-                                            cursor="crosshair", image_format="JPEG", jpeg_quality=88)
+                                            cursor="crosshair", image_format="JPEG", jpeg_quality=88,
+                                            click_and_drag=True)
         if click and click.get("unix_time") != img["last_click"]:   # a resize re-sends the old click
             img["last_click"] = click.get("unix_time")
-            h, w = img["rgb"].shape[:2]
-            x = int(np.clip(click["x"] * w / click["width"], 0, w - 1))
-            y = int(np.clip(click["y"] * h / click["height"], 0, h - 1))
-            region = screening.grow_region(img["rgb"], x, y)
-            img["point"] = (x, y)
-            img["tissue"] = region if region.sum() >= 200 else None
+            select_tissue(img, click)
             st.rerun()
-        if img["tissue"] is None and img["point"] is not None:
+        if img["tissue"] is None and (img["point"] is not None or img.get("box")):
             st.html(f'<p class="nh-note nh-note-warn">{html.escape(ui.t("tissue_small", site=noun))}</p>')
         else:
-            key = "tissue_selected" if img["tissue"] is not None else "tissue_click"
-            st.html(f'<p class="nh-note">{html.escape(ui.t(key, site=noun))}</p>')
+            msg = ui.t("tissue_selected") if img["tissue"] is not None else ui.t("tissue_drag", site=noun)
+            st.html(f'<p class="nh-note">{html.escape(msg)}</p>')
 
     st.html(f'<h3 class="nh-sub">{html.escape(ui.t("quality_title"))}</h3>')
     photo = screening.analyse_photo(img["rgb"], img["tissue"], ss.scr_site) if img["tissue"] is not None else None
@@ -261,6 +282,10 @@ def photo_panel(img: dict, noun: str) -> None:
     ok = ui.quality_chips({k: v["ok"] for k, v in photo.checks.items()})
     if ok:
         st.html(f'<p class="nh-note">{html.escape(ui.t("quality_pass"))}</p>')
+    removed = 1 - photo.mask.sum() / max(photo.tissue.sum(), 1)
+    st.html(f'<h3 class="nh-sub">{html.escape(ui.t("preview_title"))}</h3>'
+            f'<img class="nh-preview" alt="" src="{core.measured_preview(photo)}">'
+            f'<p class="nh-note">{html.escape(ui.t("preview_text", pct=round(removed * 100)))}</p>')
     if st.button(ui.t("analyse"), type="primary", disabled=not ok, key="scr_analyse"):
         run_analysis()
         st.rerun()
@@ -291,6 +316,7 @@ def step_result() -> None:
     res = ss.scr_results[-1]
     c = cutoff()
     refer = res["position"] < c
+    why_low = low_confidence(res)
     state = "refer" if refer else "normal"
     left, right = st.columns([1, 1.45], gap="large")
     with left:
@@ -309,6 +335,9 @@ def step_result() -> None:
                 f'<p class="nh-result-prob">{html.escape(ui.t("prob_line", word=word, p=round(res["p"] * 100)))}</p>'
                 f'<p class="nh-result-band">{html.escape(ui.t("band_explain", lo=round(lo * 100), hi=round(hi * 100)))}'
                 f'</p></div>')
+        if why_low:
+            items = "".join(f"<li>{html.escape(ui.t(k))}</li>" for k in why_low)
+            st.html(f'<p class="nh-conf" role="status">{html.escape(ui.t("low_conf"))}</p><ul class="nh-conf-why">{items}</ul>')
         animate = res["id"] not in ss.scr_animated
         ss.scr_animated.add(res["id"])
         ui.hb_strip(hb=float(np.clip(res["position"], ui.HB_MIN, ui.HB_MAX)), swatch_rgb=res["swatch"], threshold=c,
@@ -330,7 +359,7 @@ def step_result() -> None:
         if final_refer:
             visit = {"name": ss.scr_name.strip(), "age_key": ss.scr_age, "cutoff": c, "time": datetime.now(),
                      "results": [{**r, "refer": r["position"] < c} for r in ss.scr_results],
-                     "refer": final_refer,
+                     "refer": final_refer, "low_conf": [k for r in ss.scr_results for k in low_confidence(r)],
                      "combined": None if combined is None else {**combined, "refer": combined["position"] < c}}
             st.download_button(ui.t("slip_button"), data=slip.referral_slip(visit), mime="application/pdf",
                                file_name=f"netra-hb-referral-{datetime.now():%Y%m%d-%H%M}.pdf", type="primary",
@@ -345,6 +374,8 @@ def step_result() -> None:
         st.button(ui.t("new_patient"), key="scr_new", on_click=next_patient)
     if not final_refer:
         st.html(f'<p class="nh-note">{html.escape(ui.t("no_referral"))}</p>')
+    ui.spacer(small=True)
+    ui.known_limits()
 
     if combined:
         ui.spacer()
@@ -377,6 +408,7 @@ def register() -> None:
                            + (f' ({ui.t("combined_short")})' if r["combined"] else "") for r in rows],
         ui.t("col_result"): [ui.t("refer" if r["refer"] else "normal") for r in rows],
         ui.t("col_chance"): [f"{round(r['p'] * 100)}%" for r in rows],
+        ui.t("col_conf"): [ui.t("low_conf" if r.get("low_conf") else "conf_ok") for r in rows],
     })
     if not any(r["name"] for r in rows):
         df = df.drop(columns=ui.t("col_name"))

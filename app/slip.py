@@ -103,6 +103,8 @@ def referral_slip(visit: dict) -> bytes:
     if visit["combined"]:
         lines.append(f"{ui.t('combined')}: {round(visit['combined']['p'] * 100)}%")
     _row(pdf, "", "\n".join(lines))
+    if visit.get("low_conf"):
+        _row(pdf, ui.t("slip_conf"), ui.t("low_conf") + ": " + " ".join(ui.t(k) for k in dict.fromkeys(visit["low_conf"])))
 
     y = pdf.get_y() + 12
     _strip(pdf, 16, y, 116, 6, final["position"], visit["cutoff"], final["swatch"])

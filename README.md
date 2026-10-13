@@ -85,7 +85,7 @@ Run the scripts from the repository root, in this order. Each step writes CSVs, 
 | 5 | `python -m scripts.extract_ghana` | Unpacks the Ghana sets, keeps originals, groups duplicates, extracts features |
 | 6 | `python -m scripts.compare_sites` | Eye vs palm vs nail, equal-n learning curves, palm+nail fusion with the shift control -> `outputs/results/sites.json` |
 | 7 | `python -m scripts.run_search` | Cheapest-protocol search: 8 search algorithms compared, plus a nested honest re-evaluation -> `outputs/results/search.json`, `search_trace_<algo>.json.gz` (~5 min) |
-| 8 | `python -m scripts.build_screen_models` | Screen-page bundles per site (eye = P6 model; palm, nail = same procedure on folder labels) with out-of-fold scores for the uncertainty band -> `outputs/models/screen_<site>.joblib` (~4 min) |
+| 8 | `python -m scripts.build_screen_models` | Screen-page bundles per site (eye = P6 model; palm, nail = same procedure on folder labels) with out-of-fold scores for the uncertainty band and the KNN unfamiliar-photo reference -> `outputs/models/screen_<site>.joblib` (~4 min; `--reference-only` refreshes just the references) |
 | 9 | `python -m scripts.make_samples` | The 6 demo patients in `app/samples/` (one refer and one normal per site, each correct out-of-fold) |
 
 `compare_sites` and `run_search` accept stage names to run part of the pipeline, for example `python -m scripts.run_search report`. Optional extras: `scripts.inspect_images` (sample image grid) and `scripts.plot_scratch_logreg` (from-scratch loss curve). The notebooks `notebooks/01_eda.ipynb` (EDA) and `notebooks/02_clustering.ipynb` (K-means, Unit V) import from `src/netra`.

@@ -13,7 +13,8 @@
       "label_source": "Hb, WHO < 11 g/dL",
       "trained_on": "cp_anemic primary, n=220",
       "hb_mae": 1.5004277278452065,
-      "oof_roc_auc": null
+      "oof_roc_auc": null,
+      "unfamiliar_threshold": 3.093736786334906
     },
     "palm": {
       "n": 522,
@@ -27,7 +28,8 @@
       "label_source": "folder labels (file names), no Hb",
       "trained_on": "Ghana palm originals, n=522",
       "hb_mae": null,
-      "oof_roc_auc": 0.7924193851079097
+      "oof_roc_auc": 0.7924193851079097,
+      "unfamiliar_threshold": 2.124897143658296
     },
     "nail": {
       "n": 530,
@@ -41,7 +43,8 @@
       "label_source": "folder labels (file names), no Hb",
       "trained_on": "Ghana nail originals, n=530",
       "hb_mae": null,
-      "oof_roc_auc": 0.7060117302052786
+      "oof_roc_auc": 0.7060117302052786,
+      "unfamiliar_threshold": 2.2820028408503323
     }
   }
 }

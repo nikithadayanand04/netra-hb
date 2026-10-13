@@ -26,8 +26,10 @@ SEVERITY = {11.0: (10.0, 7.0), 11.5: (11.0, 8.0), 12.0: (11.0, 8.0), 13.0: (11.0
 class Photo:
     rgb: np.ndarray        # tissue crop, downscaled to SCREEN_LONG_SIDE
     tissue: np.ndarray
-    mask: np.ndarray       # tissue minus glare
+    mask: np.ndarray       # tissue minus glare minus makeup/lashes: the pixels that are measured
     glare_frac: float
+    makeup: np.ndarray     # removed as makeup or lashes
+    makeup_frac: float
     checks: dict
     swatch: tuple[int, int, int]
 
@@ -58,6 +60,23 @@ def grow_region(rgb: np.ndarray, x: int, y: int) -> np.ndarray:
     return lbl == lbl[int(y), int(x)] if n > 1 and lbl[int(y), int(x)] > 0 else region > 0
 
 
+def box_region(shape: tuple[int, ...], x1: int, y1: int, x2: int, y2: int) -> np.ndarray:
+    h, w = shape[:2]
+    xa, xb = sorted((int(np.clip(x1, 0, w - 1)), int(np.clip(x2, 0, w - 1))))
+    ya, yb = sorted((int(np.clip(y1, 0, h - 1)), int(np.clip(y2, 0, h - 1))))
+    region = np.zeros((h, w), bool)
+    region[ya:yb + 1, xa:xb + 1] = True
+    return region
+
+
+def makeup_mask(rgb: np.ndarray) -> np.ndarray:
+    """Kajal, mascara and lashes: very dark and low in saturation (pink conjunctiva is neither)."""
+    x = rgb.astype(float)
+    mx, mn = x.max(axis=2), x.min(axis=2)
+    s = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-9), 0.0)
+    return (mx / 255.0 < config.MAKEUP_V_MAX) & (s < config.MAKEUP_S_MAX)
+
+
 def crop_to_tissue(rgb: np.ndarray, tissue: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     ys, xs = np.nonzero(tissue)
     sl = (slice(ys.min(), ys.max() + 1), slice(xs.min(), xs.max() + 1))
@@ -75,12 +94,18 @@ def analyse_photo(rgb: np.ndarray, tissue: np.ndarray, site: str = "eye") -> Pho
         return None
     rgb, tissue = crop_to_tissue(rgb, tissue)
     glare = glare_mask(rgb) & tissue
+    makeup = makeup_mask(rgb) & tissue & ~glare
     n = int(tissue.sum())
     glare_frac = float(glare.sum() / n) if n else 0.0
-    mask = tissue & ~glare
-    sw = np.median(rgb[mask if mask.any() else tissue], axis=0)
-    return Photo(rgb, tissue, mask, glare_frac, photo_checks(rgb, tissue, glare_frac, config.BLUR_VAR_MIN_SITE[site]),
-                 tuple(int(c) for c in sw))
+    makeup_frac = float(makeup.sum() / n) if n else 0.0
+    mask = tissue & ~glare & ~makeup
+    checks = photo_checks(rgb, tissue & ~makeup, glare_frac, config.BLUR_VAR_MIN_SITE[site])
+    if site == "eye":
+        checks["makeup"] = {"value": makeup_frac, "ok": bool(makeup_frac <= config.MAKEUP_WARN_FRAC)}
+    if mask.sum() < 50:
+        return None
+    sw = np.median(rgb[mask], axis=0)
+    return Photo(rgb, tissue, mask, glare_frac, makeup, makeup_frac, checks, tuple(int(c) for c in sw))
 
 
 def features(photo: Photo) -> dict[str, float]:
@@ -90,6 +115,15 @@ def features(photo: Photo) -> dict[str, float]:
 def probability(bundle: dict, feats: dict[str, float]) -> float:
     x = np.array([[feats[c] for c in bundle["input_columns"]]], float)
     return float(bundle["model"].predict_proba(x)[0, 1])
+
+
+def familiarity(bundle: dict, feats: dict[str, float]) -> dict:
+    """KNN check: mean distance from this photo to its NN_K nearest training photos (scaled features) against the
+    NN_PCT percentile of the same distance among the training photos themselves."""
+    ref = bundle["nn"]
+    x = (np.array([feats[c] for c in bundle["input_columns"]], float) - ref["mean"]) / ref["scale"]
+    d = np.sort(np.sqrt(((ref["X"] - x) ** 2).sum(axis=1)))[:config.NN_K].mean()
+    return {"distance": float(d), "threshold": float(ref["threshold"]), "unfamiliar": bool(d > ref["threshold"])}
 
 
 def uncertainty_band(bundle: dict, p: float) -> tuple[float, float]:

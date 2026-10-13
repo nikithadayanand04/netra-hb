@@ -216,15 +216,16 @@ STRINGS: dict[str, dict[str, str]] = {
                      "kn": "ಈ ಫೋಟೋವನ್ನು ಈಗಾಗಲೇ ಅಂಗಾಂಶಕ್ಕೆ ಕತ್ತರಿಸಲಾಗಿದೆ.", "hi": "यह फ़ोटो पहले से ऊतक तक कटी हुई है।"},
     "tissue_click": {"en": "Tap the {site} on the photo to select it.",
                      "kn": "ಆಯ್ಕೆ ಮಾಡಲು ಫೋಟೋದಲ್ಲಿ {site} ಮೇಲೆ ತಟ್ಟಿ.", "hi": "चुनने के लिए फ़ोटो पर {site} को टैप करें।"},
-    "tissue_selected": {"en": "Selected. Tap again to change.", "kn": "ಆಯ್ಕೆಯಾಗಿದೆ. ಬದಲಿಸಲು ಮತ್ತೆ ತಟ್ಟಿ.",
-                        "hi": "चुना गया। बदलने के लिए फिर से टैप करें।"},
+    "tissue_selected": {"en": "Selected. Tap or drag again to change.",
+                        "kn": "ಆಯ್ಕೆಯಾಗಿದೆ. ಬದಲಿಸಲು ಮತ್ತೆ ತಟ್ಟಿ ಅಥವಾ ಎಳೆಯಿರಿ.",
+                        "hi": "चुना गया। बदलने के लिए फिर से टैप करें या खींचें।"},
     "tissue_small": {"en": "That area is too small. Tap the middle of the {site}.",
                      "kn": "ಆ ಭಾಗ ತುಂಬಾ ಚಿಕ್ಕದು. {site} ಮಧ್ಯದಲ್ಲಿ ತಟ್ಟಿ.", "hi": "वह हिस्सा बहुत छोटा है। {site} के बीच में टैप करें।"},
     "quality_title": {"en": "Photo check", "kn": "ಫೋಟೋ ಪರಿಶೀಲನೆ", "hi": "फ़ोटो जाँच"},
     "quality_wait": {"en": "Select the tissue to run the light, glare and sharpness checks.",
                      "kn": "ಬೆಳಕು, ಹೊಳಪು ಮತ್ತು ಸ್ಪಷ್ಟತೆ ಪರಿಶೀಲನೆಗೆ ಅಂಗಾಂಶವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
                      "hi": "रोशनी, चमक और साफ़पन की जाँच के लिए ऊतक चुनें।"},
-    "quality_pass": {"en": "All three checks passed.", "kn": "ಮೂರೂ ಪರಿಶೀಲನೆಗಳು ಸರಿ.", "hi": "तीनों जाँच ठीक हैं।"},
+    "quality_pass": {"en": "All checks passed.", "kn": "ಎಲ್ಲಾ ಪರಿಶೀಲನೆಗಳು ಸರಿ.", "hi": "सभी जाँच ठीक हैं।"},
     "analyse": {"en": "See result", "kn": "ಫಲಿತಾಂಶ ನೋಡಿ", "hi": "नतीजा देखें"},
     "retake": {"en": "Retake photo", "kn": "ಮತ್ತೆ ಫೋಟೋ ತೆಗೆಯಿರಿ", "hi": "फ़ोटो दोबारा लें"},
     "bad_image": {"en": "This file could not be read as a photo. Try a JPG or PNG.",
@@ -333,6 +334,56 @@ STRINGS: dict[str, dict[str, str]] = {
     "slip_phc": {"en": "For the PHC: Hb result (g/dL) ____________   Checked by ____________",
                  "kn": "PHCಗಾಗಿ: Hb ಫಲಿತಾಂಶ (g/dL) ____________   ಪರಿಶೀಲಿಸಿದವರು ____________",
                  "hi": "PHC के लिए: Hb नतीजा (g/dL) ____________   जाँचकर्ता ____________"},
+    # ---- Screen safeguards ----
+    "q_makeup": {"en": "Makeup or lashes", "kn": "ಮೇಕಪ್ ಅಥವಾ ರೆಪ್ಪೆಗೂದಲು", "hi": "मेकअप या पलकें"},
+    "fix_makeup": {
+        "en": "Makeup or lashes in the photo. Select only the pink inner eyelid, or remove eye makeup and retake.",
+        "kn": "ಫೋಟೋದಲ್ಲಿ ಮೇಕಪ್ ಅಥವಾ ರೆಪ್ಪೆಗೂದಲು ಇದೆ. ಗುಲಾಬಿ ಒಳರೆಪ್ಪೆಯನ್ನು ಮಾತ್ರ ಆಯ್ಕೆಮಾಡಿ, ಅಥವಾ ಕಣ್ಣಿನ ಮೇಕಪ್ ತೆಗೆದು ಮತ್ತೆ ತೆಗೆಯಿರಿ.",
+        "hi": "फ़ोटो में मेकअप या पलकें हैं। केवल गुलाबी भीतरी पलक चुनें, या आँखों का मेकअप हटाकर दोबारा लें।",
+    },
+    "tissue_drag": {"en": "Tap the {site}, or drag a box over it. For the eye, box only the pink inner eyelid.",
+                    "kn": "{site} ಮೇಲೆ ತಟ್ಟಿ, ಅಥವಾ ಅದರ ಮೇಲೆ ಚೌಕ ಎಳೆಯಿರಿ. ಕಣ್ಣಿಗೆ, ಗುಲಾಬಿ ಒಳರೆಪ್ಪೆಯನ್ನು ಮಾತ್ರ ಚೌಕದಲ್ಲಿ ಸೇರಿಸಿ.",
+                    "hi": "{site} पर टैप करें, या उस पर एक बॉक्स खींचें। आँख के लिए केवल गुलाबी भीतरी पलक पर बॉक्स बनाएँ।"},
+    "preview_title": {"en": "Pixels measured", "kn": "ಅಳೆದ ಪಿಕ್ಸೆಲ್‌ಗಳು", "hi": "मापे गए पिक्सेल"},
+    "preview_text": {
+        "en": "Only the coloured pixels are measured. Grey: removed as makeup, lashes or glare ({pct}% of the selection).",
+        "kn": "ಬಣ್ಣದ ಪಿಕ್ಸೆಲ್‌ಗಳನ್ನು ಮಾತ್ರ ಅಳೆಯಲಾಗುತ್ತದೆ. ಬೂದು: ಮೇಕಪ್, ರೆಪ್ಪೆಗೂದಲು ಅಥವಾ ಹೊಳಪು ಎಂದು ತೆಗೆದದ್ದು (ಆಯ್ಕೆಯ {pct}%).",
+        "hi": "केवल रंगीन पिक्सेल मापे जाते हैं। धूसर: मेकअप, पलकें या चमक मानकर हटाए गए (चयन का {pct}%)।",
+    },
+    "low_conf": {"en": "Low confidence", "kn": "ಕಡಿಮೆ ವಿಶ್ವಾಸ", "hi": "कम भरोसा"},
+    "conf_ok": {"en": "Usual", "kn": "ಸಾಮಾನ್ಯ", "hi": "सामान्य"},
+    "col_conf": {"en": "Confidence", "kn": "ವಿಶ್ವಾಸ", "hi": "भरोसा"},
+    "unfamiliar": {"en": "This photo looks unlike the training photos, so the result is less reliable.",
+                   "kn": "ಈ ಫೋಟೋ ತರಬೇತಿ ಫೋಟೋಗಳಂತೆ ಕಾಣುವುದಿಲ್ಲ, ಆದ್ದರಿಂದ ಫಲಿತಾಂಶ ಕಡಿಮೆ ವಿಶ್ವಾಸಾರ್ಹ.",
+                   "hi": "यह फ़ोटो ट्रेनिंग फ़ोटो जैसी नहीं दिखती, इसलिए नतीजा कम भरोसेमंद है।"},
+    "age_outside": {
+        "en": "The models were trained on young children (eye 6–59 months, palm and nail under 5 years), "
+              "so this result is less reliable for this age band.",
+        "kn": "ಮಾದರಿಗಳು ಚಿಕ್ಕ ಮಕ್ಕಳಿಂದ ಕಲಿತಿವೆ (ಕಣ್ಣು 6–59 ತಿಂಗಳು, ಅಂಗೈ ಮತ್ತು ಉಗುರು 5 ವರ್ಷದೊಳಗೆ), "
+              "ಆದ್ದರಿಂದ ಈ ವಯಸ್ಸಿನ ಗುಂಪಿಗೆ ಫಲಿತಾಂಶ ಕಡಿಮೆ ವಿಶ್ವಾಸಾರ್ಹ.",
+        "hi": "मॉडल छोटे बच्चों से सीखे हैं (आँख 6–59 महीने, हथेली और नाखून 5 साल से कम), "
+              "इसलिए इस आयु वर्ग के लिए नतीजा कम भरोसेमंद है।",
+    },
+    "limits_title": {"en": "Known limits", "kn": "ತಿಳಿದಿರುವ ಮಿತಿಗಳು", "hi": "ज्ञात सीमाएँ"},
+    "limit_makeup": {"en": "Makeup: kajal, mascara and lashes darken the eyelid. Dark pixels are removed, but "
+                           "smudged makeup can still change the colour.",
+                     "kn": "ಮೇಕಪ್: ಕಾಜಲ್, ಮಸ್ಕರಾ ಮತ್ತು ರೆಪ್ಪೆಗೂದಲು ರೆಪ್ಪೆಯನ್ನು ಗಾಢಗೊಳಿಸುತ್ತವೆ. ಗಾಢ ಪಿಕ್ಸೆಲ್‌ಗಳನ್ನು "
+                           "ತೆಗೆಯಲಾಗುತ್ತದೆ, ಆದರೆ ಹರಡಿದ ಮೇಕಪ್ ಬಣ್ಣವನ್ನು ಬದಲಿಸಬಹುದು.",
+                     "hi": "मेकअप: काजल, मस्कारा और पलकें पलक को गहरा करते हैं। गहरे पिक्सेल हटाए जाते हैं, पर "
+                           "फैला हुआ मेकअप रंग बदल सकता है।"},
+    "limit_adult": {"en": "Adult eyes: no adult photos were in the training data.",
+                    "kn": "ವಯಸ್ಕರ ಕಣ್ಣುಗಳು: ತರಬೇತಿ ದತ್ತಾಂಶದಲ್ಲಿ ವಯಸ್ಕರ ಫೋಟೋಗಳಿರಲಿಲ್ಲ.",
+                    "hi": "वयस्क आँखें: ट्रेनिंग डेटा में वयस्कों की कोई फ़ोटो नहीं थी।"},
+    "limit_light": {"en": "Webcam and indoor light: the training photos were taken on phones, mostly in daylight. "
+                          "Laptop webcams and warm room lights shift the colour.",
+                    "kn": "ವೆಬ್‌ಕ್ಯಾಮ್ ಮತ್ತು ಒಳಾಂಗಣ ಬೆಳಕು: ತರಬೇತಿ ಫೋಟೋಗಳನ್ನು ಫೋನ್‌ಗಳಲ್ಲಿ, ಹೆಚ್ಚಾಗಿ ಹಗಲು ಬೆಳಕಿನಲ್ಲಿ "
+                          "ತೆಗೆಯಲಾಗಿದೆ. ಲ್ಯಾಪ್‌ಟಾಪ್ ವೆಬ್‌ಕ್ಯಾಮ್ ಮತ್ತು ಕೋಣೆಯ ಬೆಚ್ಚನೆಯ ಬೆಳಕು ಬಣ್ಣವನ್ನು ಬದಲಿಸುತ್ತವೆ.",
+                    "hi": "वेबकैम और घर के अंदर की रोशनी: ट्रेनिंग फ़ोटो फ़ोन से, ज़्यादातर दिन की रोशनी में ली गईं। "
+                          "लैपटॉप वेबकैम और कमरे की पीली रोशनी रंग बदल देती है।"},
+    "limit_children": {"en": "Child-only training data: every training photo is of a child under 5 in Ghana.",
+                       "kn": "ಮಕ್ಕಳ ದತ್ತಾಂಶ ಮಾತ್ರ: ಎಲ್ಲಾ ತರಬೇತಿ ಫೋಟೋಗಳು ಘಾನಾದ 5 ವರ್ಷದೊಳಗಿನ ಮಕ್ಕಳದ್ದು.",
+                       "hi": "केवल बच्चों का डेटा: हर ट्रेनिंग फ़ोटो घाना के 5 साल से कम उम्र के बच्चे की है।"},
+    "slip_conf": {"en": "Confidence", "kn": "ವಿಶ್ವಾಸ", "hi": "भरोसा"},
     "footer": {
         "en": "Screening aid for health workers. Not a diagnosis. Confirm with a blood Hb test.",
         "kn": "ಆರೋಗ್ಯ ಕಾರ್ಯಕರ್ತರಿಗೆ ತಪಾಸಣಾ ಸಹಾಯಕ. ಇದು ರೋಗನಿರ್ಣಯವಲ್ಲ. ರಕ್ತದ Hb ಪರೀಕ್ಷೆಯಿಂದ ಖಚಿತಪಡಿಸಿ.",
@@ -583,6 +634,11 @@ def quality_chips(checks: dict[str, bool]) -> bool:
 
 def toast(key: str, icon: str = ":material/check_circle:") -> None:
     st.toast(t(key), icon=icon)
+
+
+def known_limits() -> None:
+    items = "".join(f"<li>{html.escape(t(k))}</li>" for k in ("limit_makeup", "limit_adult", "limit_light", "limit_children"))
+    st.html(f'<aside class="nh-limits"><h4>{html.escape(t("limits_title"))}</h4><ul>{items}</ul></aside>')
 
 
 def empty_state(key: str = "no_photo") -> None:

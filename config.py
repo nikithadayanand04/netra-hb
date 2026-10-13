@@ -53,6 +53,16 @@ LIGHT_V_MIN = 0.35      # live photo check: median tissue brightness (max channe
 SCREEN_LONG_SIDE = 240  # tissue crop is downscaled to this long side before checks/features (training images are ~100-350 px)
 REGION_TOL = 22         # click-to-select: flood-fill tolerance per Lab channel (0-255 scale) around the clicked colour
 REGION_RADIUS = 0.30    # ... limited to a disc of this fraction of the shorter image side
+# Makeup / lash filter: very dark, low-saturation pixels (kajal, mascara, lashes) leave the tissue mask before features.
+# On the 220 CP-AnemiC eyelids it wrongly removes 0.06% of pixels (max 1.9% in one image). A skin-tone rule was tried
+# and rejected: the best Lab rule (a* < 15) wrongly removed 9.0% of real eyelid pixels.
+MAKEUP_V_MAX = 0.30
+MAKEUP_S_MAX = 0.40
+MAKEUP_WARN_FRAC = 0.15   # eye photos with more of the selection removed than this fail the photo check
+# Unfamiliar-photo check (KNN, Unit IV): mean distance to the NN_K nearest training photos in scaled feature space,
+# flagged above the NN_PCT percentile of the same distance for each training photo (itself left out)
+NN_K = 5
+NN_PCT = 95
 BAND_NEIGHBOURS = 40    # uncertainty band: out-of-fold patients with the nearest scores
 
 # ---- Model inputs ----

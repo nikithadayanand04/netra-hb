@@ -82,3 +82,63 @@ def test_samples_cover_every_site_with_both_results() -> None:
     assert sorted((x["site"], x["label"]) for x in s) == sorted((site, y) for site in ("eye", "palm", "nail")
                                                                for y in (0, 1))
     assert all((config.ROOT / "app" / "samples" / x["file"]).exists() for x in s)
+
+
+def test_makeup_filter_removes_kajal_and_flags_the_eye_photo() -> None:
+    rng = np.random.default_rng(0)
+    rgb = np.stack([rng.integers(170, 230, (60, 60)), rng.integers(80, 120, (60, 60)),
+                    rng.integers(90, 130, (60, 60))], axis=2).astype(np.uint8)       # pink, textured
+    rgb[45:, :] = (25, 22, 24)                                                       # kajal band: 25% of rows
+    tissue = np.ones((60, 60), bool)
+    photo = screening.analyse_photo(rgb, tissue, "eye")
+    assert photo.makeup_frac == pytest.approx(0.25, abs=0.02)
+    assert not photo.mask[50, 10] and photo.mask[10, 10]          # kajal is not measured, pink is
+    assert not photo.checks["makeup"]["ok"]
+    assert "makeup" not in screening.analyse_photo(rgb, tissue, "nail").checks   # warning is eye-only
+
+
+def test_makeup_filter_keeps_pink_conjunctiva() -> None:
+    pink = np.full((20, 20, 3), (200, 110, 120), np.uint8)
+    dark_red = np.full((20, 20, 3), (90, 30, 40), np.uint8)       # dark but saturated: still tissue
+    assert not screening.makeup_mask(pink).any() and not screening.makeup_mask(dark_red).any()
+
+
+def test_box_region_is_order_free_and_clipped() -> None:
+    r = screening.box_region((50, 80, 3), 70, 40, 10, 5)
+    assert r.sum() == 61 * 36 and r[5, 10] and r[40, 70]
+    assert screening.box_region((50, 80, 3), -5, -5, 200, 200).all()
+
+
+def _nn_bundle(X: np.ndarray) -> dict:
+    from sklearn.neighbors import NearestNeighbors
+    mean, scale = X.mean(0), X.std(0)
+    Z = (X - mean) / scale
+    d, _ = NearestNeighbors(n_neighbors=config.NN_K + 1).fit(Z).kneighbors(Z)
+    cols = [f"f{i}" for i in range(X.shape[1])]
+    return {"input_columns": cols, "nn": {"mean": mean, "scale": scale, "X": Z,
+                                          "threshold": float(np.percentile(d[:, 1:].mean(1), config.NN_PCT))}}
+
+
+def test_familiarity_flags_far_photos_only() -> None:
+    X = np.random.default_rng(0).normal(size=(300, 4))
+    b = _nn_bundle(X)
+    near = screening.familiarity(b, {c: 0.1 for c in b["input_columns"]})
+    far = screening.familiarity(b, {c: 6.0 for c in b["input_columns"]})
+    assert not near["unfamiliar"] and far["unfamiliar"] and far["distance"] > far["threshold"] > near["distance"]
+
+
+def test_saved_eye_bundle_flags_a_cool_webcam_tint() -> None:
+    """Measured behaviour (not a promise): a strong blue webcam cast is flagged, the sample itself is not.
+    Warm indoor light, washed-out photos and palm or nail photos offered as an eye are NOT flagged."""
+    import joblib
+    from netra.masks import load_image
+    path = config.OUT_DIR / "models" / "screen_eye.joblib"
+    if not path.exists():
+        pytest.skip("run python -m scripts.build_screen_models")
+    eye = joblib.load(path)
+    rgb, alpha = load_image(config.ROOT / "app" / "samples" / "eye_refer.png")
+    own = screening.analyse_photo(rgb, alpha > 0, "eye")
+    cool = np.clip(rgb.astype(float) * [0.8, 1.0, 1.25], 0, 255).astype(np.uint8)
+    tinted = screening.analyse_photo(cool, alpha > 0, "eye")
+    assert not screening.familiarity(eye, screening.features(own))["unfamiliar"]
+    assert screening.familiarity(eye, screening.features(tinted))["unfamiliar"]

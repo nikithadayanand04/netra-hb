@@ -75,7 +75,7 @@ def png_url(rgb: np.ndarray, alpha: np.ndarray | None = None) -> str:
 
 
 def overlay(rgb: np.ndarray, tissue: np.ndarray | None, point: tuple[int, int] | None = None,
-            dim: bool = True) -> np.ndarray:
+            dim: bool = True, box: tuple[int, int, int, int] | None = None) -> np.ndarray:
     """Photo with the selected tissue outlined (white over ink, readable on any skin or background).
     dim=False for photos whose background is already cleared (transparent or black)."""
     out = rgb.copy()
@@ -88,6 +88,10 @@ def overlay(rgb: np.ndarray, tissue: np.ndarray | None, point: tuple[int, int] |
         lw = max(2, round(max(rgb.shape[:2]) / 250))
         cv2.drawContours(out, cs, -1, ui_rgb(ui.INK), lw + 2)
         cv2.drawContours(out, cs, -1, (255, 255, 255), lw)
+    if box is not None:
+        lw = max(2, round(max(rgb.shape[:2]) / 300))
+        cv2.rectangle(out, box[:2], box[2:], ui_rgb(ui.INK), lw + 2)
+        cv2.rectangle(out, box[:2], box[2:], (255, 255, 255), lw)
     if point is not None:
         r = max(6, round(max(rgb.shape[:2]) / 60))
         cv2.circle(out, point, r + 2, ui_rgb(ui.INK), 2)
@@ -117,6 +121,18 @@ def on_black(rgb: np.ndarray, alpha: np.ndarray | None) -> np.ndarray:
     bg = np.array(ui_rgb(ui.tokens()["surface"]), float)
     a = (alpha.astype(float) / 255)[..., None]
     return (rgb * a + bg * (1 - a)).astype(np.uint8)
+
+
+def measured_preview(photo: screening.Photo, long_side: int = 420) -> str:
+    """Zoomed view of exactly the measured pixels: colour = measured, slate = removed (makeup, lashes, glare),
+    surface = not selected. Nearest-neighbour enlargement so every pixel stays a pixel."""
+    bg, grey = ui_rgb(ui.tokens()["surface"]), ui_rgb(ui.SLATE)
+    out = np.empty_like(photo.rgb)
+    out[:] = bg
+    out[photo.tissue & ~photo.mask] = grey
+    out[photo.mask] = photo.rgb[photo.mask]
+    scale = max(1, long_side // max(out.shape[:2]))
+    return png_url(cv2.resize(out, None, fx=scale, fy=scale, interpolation=cv2.INTER_NEAREST))
 
 
 def swatch_point(photo: screening.Photo) -> tuple[float, float]:
@@ -149,7 +165,8 @@ def analyse(site: str, photo: screening.Photo, p_override: float | None = None) 
     lo, hi = screening.uncertainty_band(b[site], p)
     point = swatch_point(photo)
     thumb, thumb_pt = square_thumb(photo, point)
-    return {"site": site, "p": p, "band": (lo, hi), "position": pos,
+    return {"site": site, "p": p, "band": (lo, hi), "position": pos, "makeup_frac": photo.makeup_frac,
+            "familiarity": screening.familiarity(b[site], feats),
             "hb_mae": b["eye"]["hb_mae"], "feats_key": tuple(sorted(feats.items())), "swatch": photo.swatch,
             "thumb": thumb, "thumb_point": thumb_pt, "checks": photo.checks}
 

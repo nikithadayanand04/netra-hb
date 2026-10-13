@@ -5,12 +5,15 @@ palm, nail: the same P6 procedure (TunedScreen, soft vote of top 3) fit on all r
 grouped out-of-fold probabilities from cross_validate for the uncertainty band.
 Each bundle adds a healthy-class reference (per-feature quantiles) for the plain-language reasons and, for the eye,
 a probability-to-Hb map from the outer out-of-fold probabilities (CP-AnemiC is the only set with Hb)."""
+import argparse
 import json
 
 import joblib
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import StratifiedGroupKFold
+from sklearn.neighbors import NearestNeighbors
+from sklearn.preprocessing import StandardScaler
 
 import config
 from netra.evaluate import cross_validate
@@ -27,6 +30,17 @@ def healthy_reference(df: pd.DataFrame) -> dict:
     h, a = df[df.label == 0], df[df.label == 1]
     return {"quantiles": {c: np.percentile(h[c], np.arange(101)).tolist() for c in COLS},
             "healthy_median": h[COLS].median().to_dict(), "anaemic_median": a[COLS].median().to_dict()}
+
+
+def nn_reference(df: pd.DataFrame) -> dict:
+    """Unfamiliar-photo reference (KNN, Unit IV): scaled training features and the NN_PCT percentile of each
+    training photo's mean distance to its NN_K nearest other training photos. Uses no labels."""
+    sc = StandardScaler().fit(df[COLS])
+    X = sc.transform(df[COLS])
+    d, _ = NearestNeighbors(n_neighbors=config.NN_K + 1).fit(X).kneighbors(X)
+    own = d[:, 1:].mean(axis=1)                    # column 0 is the photo itself
+    return {"mean": sc.mean_, "scale": sc.scale_, "X": X, "threshold": float(np.percentile(own, config.NN_PCT)),
+            "train_distances": own}
 
 
 def hb_map(p: np.ndarray, hb: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
@@ -77,19 +91,32 @@ def ghana_bundle(site: str, df: pd.DataFrame) -> dict:
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--reference-only", action="store_true",
+                    help="keep the saved models, recompute only the healthy and unfamiliar-photo references")
+    args = ap.parse_args()
     assert not NON_FEATURES & set(COLS)
-    summary = {"meta": __doc__, "sites": {}}
+    path = config.OUT_DIR / "results" / "screen_models.json"
+    summary = json.loads(path.read_text()) if args.reference_only and path.exists() else {"meta": __doc__, "sites": {}}
     for site, csv in CSV.items():
         df = pd.read_csv(csv).reset_index(drop=True)
-        b = eye_bundle(df) if site == "eye" else ghana_bundle(site, df)
+        if args.reference_only:
+            b = joblib.load(MODELS / f"screen_{site}.joblib")
+        else:
+            b = eye_bundle(df) if site == "eye" else ghana_bundle(site, df)
         b |= {"site": site, "input_columns": COLS, "n": len(df), "n_anaemic": int(df.label.sum()),
-              **healthy_reference(df)}
+              **healthy_reference(df), "nn": nn_reference(df)}
         joblib.dump(b, MODELS / f"screen_{site}.joblib")
         summary["sites"][site] = {k: b[k] for k in ("n", "n_anaemic", "threshold", "members", "label_source",
                                                      "trained_on", "hb_mae")} | {"oof_roc_auc": b.get("oof_roc_auc")}
+        summary["sites"][site]["unfamiliar_threshold"] = b["nn"]["threshold"]
+        print(f"  {site}: unfamiliar-photo threshold {b['nn']['threshold']:.2f} (k={config.NN_K}, "
+              f"{config.NN_PCT}th percentile of training distances)", flush=True)
+        if args.reference_only:
+            continue
         print(f"  {site}: saved, threshold {b['threshold']:.3f}, members {b['members']}"
               + (f", Hb map MAE {b['hb_mae']:.2f} g/dL" if b["hb_mae"] else ""), flush=True)
-    (config.OUT_DIR / "results" / "screen_models.json").write_text(json.dumps(summary, indent=2))
+    path.write_text(json.dumps(summary, indent=2))
 
 
 if __name__ == "__main__":
