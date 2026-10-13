@@ -8,8 +8,8 @@
         "hsv_s_med",
         "chrom_r_p90"
       ],
-      "metric": 0.5118,
-      "objective": 0.4968
+      "metric": 0.5118110236220472,
+      "objective": 0.4968110236220472
     },
     {
       "photo_cost_weight": 0.01,
@@ -19,8 +19,8 @@
         "hsv_s_med",
         "chrom_r_p90"
       ],
-      "metric": 0.5118,
-      "objective": 0.4668
+      "metric": 0.5118110236220472,
+      "objective": 0.4668110236220472
     },
     {
       "photo_cost_weight": 0.02,
@@ -30,8 +30,8 @@
         "hsv_s_med",
         "chrom_r_p90"
       ],
-      "metric": 0.5118,
-      "objective": 0.4368
+      "metric": 0.5118110236220472,
+      "objective": 0.4368110236220472
     },
     {
       "photo_cost_weight": 0.05,
@@ -41,8 +41,8 @@
         "hsv_s_med",
         "chrom_r_p90"
       ],
-      "metric": 0.5118,
-      "objective": 0.3468
+      "metric": 0.5118110236220472,
+      "objective": 0.3468110236220472
     },
     {
       "photo_cost_weight": 0.1,
@@ -52,8 +52,8 @@
         "a_over_L_med",
         "hsv_s_p10"
       ],
-      "metric": 0.4072,
-      "objective": 0.2922
+      "metric": 0.4072398190045249,
+      "objective": 0.2922398190045249
     }
   ],
   "per_site_best": {
@@ -63,8 +63,8 @@
         "hsv_s_med",
         "chrom_r_p90"
       ],
-      "metric": 0.5118,
-      "objective": 0.4368
+      "metric": 0.5118110236220472,
+      "objective": 0.4368110236220472
     },
     "nail": {
       "features": [
@@ -72,8 +72,8 @@
         "erythema_index_med",
         "lab_a_p10"
       ],
-      "metric": 0.3955,
-      "objective": 0.3605
+      "metric": 0.3954545454545455,
+      "objective": 0.36045454545454547
     },
     "palm": {
       "features": [
@@ -81,8 +81,8 @@
         "a_over_L_med",
         "hsv_s_p10"
       ],
-      "metric": 0.4072,
-      "objective": 0.3722
+      "metric": 0.4072398190045249,
+      "objective": 0.37223981900452485
     },
     "palm+nail": {
       "features": [
@@ -90,29 +90,29 @@
         "nail:lab_a_med",
         "nail:erythema_index_p90"
       ],
-      "metric": 0.4312,
-      "objective": 0.3762
+      "metric": 0.4311926605504587,
+      "objective": 0.3761926605504587
     }
   },
   "astar_admissibility": {
     "eye": {
       "upper_bound": 0.45669291338582674,
-      "max_cv_metric": 0.5118,
+      "max_cv_metric": 0.5118110236220472,
       "admissible": false
     },
     "nail": {
       "upper_bound": 0.4136363636363637,
-      "max_cv_metric": 0.3955,
+      "max_cv_metric": 0.3954545454545455,
       "admissible": true
     },
     "palm": {
       "upper_bound": 0.3755656108597285,
-      "max_cv_metric": 0.4072,
+      "max_cv_metric": 0.4072398190045249,
       "admissible": false
     },
     "palm+nail": {
       "upper_bound": 0.536697247706422,
-      "max_cv_metric": 0.4312,
+      "max_cv_metric": 0.4311926605504587,
       "admissible": true
     }
   },

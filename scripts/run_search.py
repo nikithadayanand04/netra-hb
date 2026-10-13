@@ -13,7 +13,8 @@ from scipy.sparse.csgraph import connected_components
 from sklearn.model_selection import StratifiedGroupKFold
 
 import config
-from netra.search import ALGORITHMS, FUSION, STOCHASTIC, Evaluator, SiteData, nested_search, photo_cost, resub_upper, run_search
+from netra.search import (ALGORITHMS, FUSION, STOCHASTIC, THIN_IMPROVEMENTS_ONLY, Evaluator, SiteData, load_trace,
+                          nested_search, photo_cost, resub_upper, run_search, save_trace)
 from scripts.compare_sites import COLS, SITES, pair_frame
 
 RESULTS = config.OUT_DIR / "results"
@@ -81,7 +82,8 @@ def run_compare() -> None:
     rows = []
     for algo in ALGORITHMS:
         res, ev = run_search(algo, sites)
-        (RESULTS / f"search_trace_{algo}.json").write_text(json.dumps({"meta": res, **ev.trace()}))
+        save_trace(RESULTS / f"search_trace_{algo}.json.gz", res,
+                   ev.trace(None if algo in THIN_IMPROVEMENTS_ONLY else 20))
         rows.append(res)
         print(f"  {algo:<20} best {res['best_objective']:.4f} ({res['best_site']}: {', '.join(res['best_features'])})"
               f"  metric {res['best_metric']:.3f}  evals {res['evaluations']}  requests {res['requests']}  "
@@ -105,9 +107,9 @@ def winner(rows: list[dict]) -> dict:
 
 # ---------- 2. checks on the exhaustive table: weight sensitivity, A* admissibility, fusion shift control ----------
 def run_checks() -> None:
-    bfs = json.loads((RESULTS / "search_trace_bfs.json").read_text())
-    tab = pd.DataFrame(bfs["evaluations"], columns=bfs["columns"])
-    tab["features"] = [[bfs["feature_names"][s][i] for i in f] for s, f in zip(tab["site"], tab["features"])]
+    sites, _ = load_sites()
+    _, ev = run_search("bfs", sites)        # the full exhaustive table (traces on disk are thinned)
+    tab = pd.DataFrame([{"site": s[0], "features": ev.label(s), "metric": m, "objective": o} for s, m, o, *_ in ev.evals])
     tab["n_feat"] = tab["features"].str.len()
     out = {"cost_weight_sensitivity": [], "per_site_best": {}, "astar_admissibility": {}, "fusion_shift_control": {}}
     for w in WEIGHTS:
@@ -115,7 +117,6 @@ def run_checks() -> None:
         b = tab.loc[obj.idxmax()]
         out["cost_weight_sensitivity"].append({"photo_cost_weight": w, "site": b["site"], "features": b["features"],
                                                "metric": b["metric"], "objective": float(obj.max())})
-    sites, _ = load_sites()
     for s, d in tab.groupby("site"):
         b = d.loc[d["objective"].idxmax()]
         ub = resub_upper(sites[s], config.SEARCH_METRIC)
@@ -172,7 +173,7 @@ def _style(ax) -> None:
 
 
 def _best_curve(algo: str) -> np.ndarray:
-    tr = json.loads((RESULTS / f"search_trace_{algo}.json").read_text())
+    tr = load_trace(algo)
     return np.array([[r[0] + 1, r[5]] for r in tr["evaluations"]])
 
 
@@ -282,7 +283,10 @@ def run_report() -> None:
                            "threshold set on inner out-of-fold predictions for the sensitivity floor, then scored on "
                            "the held-out fold. outer_metric uses the same definition as the search score."},
         "figures": {k: str((FIG_DIR / f"{k}.png").relative_to(config.ROOT)) for k in ("convergence", "nested_optimism")},
-        "traces": {a: f"outputs/results/search_trace_{a}.json" for a in ALGORITHMS}}
+        "traces": {a: f"outputs/results/search_trace_{a}.json.gz" for a in ALGORITHMS},
+        "trace_format": "gzipped JSON, load with netra.search.load_trace(algo). Stochastic algorithms keep every "
+                        "best-objective improvement + every 20th other evaluation/step; bfs, iddfs and A* keep "
+                        "improvements only plus a summary. 'eval' is the original evaluation index."}
     (RESULTS / "search.json").write_text(json.dumps(out, indent=2, default=str))
     print(tab.to_string(index=False))
     print(f"\nnested ({nested['algo']}): inner {summary['inner_metric']:.3f} -> outer {summary['outer_metric']:.3f} "

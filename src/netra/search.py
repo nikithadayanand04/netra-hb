@@ -1,6 +1,8 @@
 """Cheapest screening protocol search. A state is (site, sorted feature indices); every site has its own dataset.
 objective(state) = metric(3-fold grouped CV logistic regression) - photo cost - feature cost."""
+import gzip
 import heapq
+import json
 import math
 import time
 from dataclasses import dataclass, field
@@ -182,18 +184,57 @@ class Evaluator:
     def label(self, state: State) -> list[str]:
         return [self.sites[state[0]].names[i] for i in state[1]]
 
-    def trace(self) -> dict:
-        return {"feature_names": {s: d.names for s, d in self.sites.items()},
+    def trace(self, every: int | None = 20) -> dict:
+        """Every improvement of the best objective, the first and last rows, and every `every`-th other row
+        (`every=None`: improvements only). Rows keep their original eval index so the x-axis stays true."""
+        best = [b for *_, b, _ in self.evals]
+        new_best = [i == 0 or best[i] > best[i - 1] for i in range(len(best))]
+
+        def keep(i: int, n: int, improved: bool) -> bool:
+            return improved or i in (0, n - 1) or (every is not None and i % every == 0)
+
+        rows = [[i, s[0], list(s[1]), round(m, 4), round(o, 4), round(b, 4), round(t, 2)]
+                for i, (s, m, o, b, t) in enumerate(self.evals) if keep(i, len(self.evals), new_best[i])]
+        at = [best[st["eval"] - 1] if st["eval"] else float("-inf") for st in self.steps]
+        steps = [{k: (self._state_json(v) if k in ("state", "states") else _round(v)) for k, v in st.items()}
+                 for j, st in enumerate(self.steps) if keep(j, len(self.steps), j == 0 or at[j] > at[j - 1])]
+        per_site = {}
+        for st, m, o, *_ in self.evals:
+            if st[0] not in per_site or o > per_site[st[0]]["objective"]:
+                per_site[st[0]] = {"features": self.label(st), "metric": round(m, 4), "objective": round(o, 4)}
+        return {"summary": {"n_evaluations": len(self.evals), "n_steps": len(self.steps), "kept_evaluations": len(rows),
+                            "kept_steps": len(steps), "thinning": f"improvements + every {every}th" if every else
+                            "improvements only", "per_site_best": per_site},
+                "feature_names": {s: d.names for s, d in self.sites.items()},
                 "columns": ["eval", "site", "features", "metric", "objective", "best_objective", "seconds"],
-                "evaluations": [[i, s[0], list(s[1]), round(m, 4), round(o, 4), round(b, 4), round(t, 2)]
-                                for i, (s, m, o, b, t) in enumerate(self.evals)],
-                "steps": [{k: (self._state_json(v) if k in ("state", "states") else v) for k, v in st.items()}
-                          for st in self.steps]}
+                "evaluations": rows, "steps": steps}
 
     def _state_json(self, v):
         if isinstance(v, list):
             return [self._state_json(s) for s in v]
         return {"site": v[0], "features": self.label(v)}
+
+
+def _round(v):
+    if isinstance(v, float):
+        return round(v, 4)
+    if isinstance(v, (list, tuple)):
+        return [_round(x) for x in v]
+    if isinstance(v, dict):
+        return {k: _round(x) for k, x in v.items()}
+    return v
+
+
+def save_trace(path, meta: dict, trace: dict) -> None:
+    with gzip.open(path, "wt", encoding="utf-8") as f:
+        json.dump({"meta": _round(meta), **trace}, f, separators=(",", ":"))
+
+
+def load_trace(algo: str, folder=config.OUT_DIR / "results") -> dict:
+    """{"meta", "summary", "feature_names", "columns", "evaluations", "steps"}; evaluations as rows of `columns`,
+    features as indices into feature_names[site]."""
+    with gzip.open(folder / f"search_trace_{algo}.json.gz", "rt", encoding="utf-8") as f:
+        return json.load(f)
 
 
 # ---------- algorithms (each maximises ev.objective over space) ----------
@@ -326,6 +367,7 @@ def astar_resub(space: Space, ev: Evaluator, rng=None) -> None:
 ALGORITHMS = {"bfs": bfs, "iddfs": iddfs, "hill_climbing": hill_climbing,
               "simulated_annealing": simulated_annealing, "local_beam": local_beam, "genetic": genetic,
               "astar": astar, "astar_resub": astar_resub}
+THIN_IMPROVEMENTS_ONLY = ("bfs", "iddfs", "astar", "astar_resub")
 STOCHASTIC = ("hill_climbing", "simulated_annealing", "local_beam", "genetic")
 
 

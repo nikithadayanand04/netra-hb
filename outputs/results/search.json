@@ -16,7 +16,7 @@
       "metric": 0.512,
       "evaluations": 22402,
       "requests": 22402,
-      "runtime_s": 16.2,
+      "runtime_s": 15.8,
       "optimum_hit_rate_10_seeds": 1.0,
       "mean_best_10_seeds": 0.4368
     },
@@ -28,7 +28,7 @@
       "metric": 0.512,
       "evaluations": 22402,
       "requests": 24426,
-      "runtime_s": 64.4,
+      "runtime_s": 64.1,
       "optimum_hit_rate_10_seeds": 1.0,
       "mean_best_10_seeds": 0.4368
     },
@@ -40,7 +40,7 @@
       "metric": 0.488,
       "evaluations": 1785,
       "requests": 2526,
-      "runtime_s": 3.2,
+      "runtime_s": 3.1,
       "optimum_hit_rate_10_seeds": 0.7,
       "mean_best_10_seeds": 0.4242
     },
@@ -52,7 +52,7 @@
       "metric": 0.48,
       "evaluations": 907,
       "requests": 3001,
-      "runtime_s": 2.7,
+      "runtime_s": 2.8,
       "optimum_hit_rate_10_seeds": 0.7,
       "mean_best_10_seeds": 0.4252
     },
@@ -88,7 +88,7 @@
       "metric": 0.512,
       "evaluations": 22402,
       "requests": 22402,
-      "runtime_s": 64.0,
+      "runtime_s": 65.1,
       "optimum_hit_rate_10_seeds": 1.0,
       "mean_best_10_seeds": 0.4368
     },
@@ -100,7 +100,7 @@
       "metric": 0.472,
       "evaluations": 16321,
       "requests": 16321,
-      "runtime_s": 45.8,
+      "runtime_s": 49.3,
       "optimum_hit_rate_10_seeds": 0.0,
       "mean_best_10_seeds": 0.4024
     }
@@ -116,8 +116,8 @@
           "hsv_s_med",
           "chrom_r_p90"
         ],
-        "metric": 0.5118,
-        "objective": 0.4968
+        "metric": 0.5118110236220472,
+        "objective": 0.4968110236220472
       },
       {
         "photo_cost_weight": 0.01,
@@ -127,8 +127,8 @@
           "hsv_s_med",
           "chrom_r_p90"
         ],
-        "metric": 0.5118,
-        "objective": 0.4668
+        "metric": 0.5118110236220472,
+        "objective": 0.4668110236220472
       },
       {
         "photo_cost_weight": 0.02,
@@ -138,8 +138,8 @@
           "hsv_s_med",
           "chrom_r_p90"
         ],
-        "metric": 0.5118,
-        "objective": 0.4368
+        "metric": 0.5118110236220472,
+        "objective": 0.4368110236220472
       },
       {
         "photo_cost_weight": 0.05,
@@ -149,8 +149,8 @@
           "hsv_s_med",
           "chrom_r_p90"
         ],
-        "metric": 0.5118,
-        "objective": 0.3468
+        "metric": 0.5118110236220472,
+        "objective": 0.3468110236220472
       },
       {
         "photo_cost_weight": 0.1,
@@ -160,8 +160,8 @@
           "a_over_L_med",
           "hsv_s_p10"
         ],
-        "metric": 0.4072,
-        "objective": 0.2922
+        "metric": 0.4072398190045249,
+        "objective": 0.2922398190045249
       }
     ],
     "per_site_best": {
@@ -171,8 +171,8 @@
           "hsv_s_med",
           "chrom_r_p90"
         ],
-        "metric": 0.5118,
-        "objective": 0.4368
+        "metric": 0.5118110236220472,
+        "objective": 0.4368110236220472
       },
       "nail": {
         "features": [
@@ -180,8 +180,8 @@
           "erythema_index_med",
           "lab_a_p10"
         ],
-        "metric": 0.3955,
-        "objective": 0.3605
+        "metric": 0.3954545454545455,
+        "objective": 0.36045454545454547
       },
       "palm": {
         "features": [
@@ -189,8 +189,8 @@
           "a_over_L_med",
           "hsv_s_p10"
         ],
-        "metric": 0.4072,
-        "objective": 0.3722
+        "metric": 0.4072398190045249,
+        "objective": 0.37223981900452485
       },
       "palm+nail": {
         "features": [
@@ -198,29 +198,29 @@
           "nail:lab_a_med",
           "nail:erythema_index_p90"
         ],
-        "metric": 0.4312,
-        "objective": 0.3762
+        "metric": 0.4311926605504587,
+        "objective": 0.3761926605504587
       }
     },
     "astar_admissibility": {
       "eye": {
         "upper_bound": 0.45669291338582674,
-        "max_cv_metric": 0.5118,
+        "max_cv_metric": 0.5118110236220472,
         "admissible": false
       },
       "nail": {
         "upper_bound": 0.4136363636363637,
-        "max_cv_metric": 0.3955,
+        "max_cv_metric": 0.3954545454545455,
         "admissible": true
       },
       "palm": {
         "upper_bound": 0.3755656108597285,
-        "max_cv_metric": 0.4072,
+        "max_cv_metric": 0.4072398190045249,
         "admissible": false
       },
       "palm+nail": {
         "upper_bound": 0.536697247706422,
-        "max_cv_metric": 0.4312,
+        "max_cv_metric": 0.4311926605504587,
         "admissible": true
       }
     },
@@ -270,7 +270,7 @@
         "outer_sensitivity": 0.631578947368421,
         "outer_specificity": 0.4,
         "evaluations": 1257,
-        "runtime_s": 1.0681803749903338
+        "runtime_s": 1.073867416009307
       },
       {
         "fold": 1,
@@ -289,7 +289,7 @@
         "outer_sensitivity": 0.6842105263157895,
         "outer_specificity": 0.36,
         "evaluations": 870,
-        "runtime_s": 0.9246656250033993
+        "runtime_s": 0.854601166996872
       },
       {
         "fold": 2,
@@ -308,7 +308,7 @@
         "outer_sensitivity": 0.7777777777777778,
         "outer_specificity": 0.5384615384615384,
         "evaluations": 1201,
-        "runtime_s": 1.3515619579993654
+        "runtime_s": 1.2734847079991596
       },
       {
         "fold": 3,
@@ -326,7 +326,7 @@
         "outer_sensitivity": 0.6842105263157895,
         "outer_specificity": 0.52,
         "evaluations": 1403,
-        "runtime_s": 1.4281097909988603
+        "runtime_s": 1.4400606660055928
       },
       {
         "fold": 4,
@@ -345,7 +345,7 @@
         "outer_sensitivity": 0.7222222222222222,
         "outer_specificity": 0.46153846153846156,
         "evaluations": 1189,
-        "runtime_s": 1.1145503750012722
+        "runtime_s": 1.1472319169988623
       }
     ],
     "per_site_restricted": {
@@ -498,13 +498,14 @@
     "nested_optimism": "outputs/figures/search/nested_optimism.png"
   },
   "traces": {
-    "bfs": "outputs/results/search_trace_bfs.json",
-    "iddfs": "outputs/results/search_trace_iddfs.json",
-    "hill_climbing": "outputs/results/search_trace_hill_climbing.json",
-    "simulated_annealing": "outputs/results/search_trace_simulated_annealing.json",
-    "local_beam": "outputs/results/search_trace_local_beam.json",
-    "genetic": "outputs/results/search_trace_genetic.json",
-    "astar": "outputs/results/search_trace_astar.json",
-    "astar_resub": "outputs/results/search_trace_astar_resub.json"
-  }
+    "bfs": "outputs/results/search_trace_bfs.json.gz",
+    "iddfs": "outputs/results/search_trace_iddfs.json.gz",
+    "hill_climbing": "outputs/results/search_trace_hill_climbing.json.gz",
+    "simulated_annealing": "outputs/results/search_trace_simulated_annealing.json.gz",
+    "local_beam": "outputs/results/search_trace_local_beam.json.gz",
+    "genetic": "outputs/results/search_trace_genetic.json.gz",
+    "astar": "outputs/results/search_trace_astar.json.gz",
+    "astar_resub": "outputs/results/search_trace_astar_resub.json.gz"
+  },
+  "trace_format": "gzipped JSON, load with netra.search.load_trace(algo). Stochastic algorithms keep every best-objective improvement + every 20th other evaluation/step; bfs, iddfs and A* keep improvements only plus a summary. 'eval' is the original evaluation index."
 }

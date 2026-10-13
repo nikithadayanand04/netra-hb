@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 
-from netra.search import (ALGORITHMS, FUSION, Evaluator, SiteData, Space, nested_search, run_search,
-                          spec_at_sens)
+from netra.search import (ALGORITHMS, FUSION, Evaluator, SiteData, Space, load_trace, nested_search, run_search,
+                          save_trace, spec_at_sens)
 
 
 def _sites(n: int = 90, d: int = 5) -> dict[str, SiteData]:
@@ -69,3 +69,17 @@ def test_nested_search_keeps_test_rows_out():
     assert len(folds) == 3
     for f in folds:
         assert f["n_test"] == 30 and 0 <= f["outer_metric"] <= 1
+
+
+def test_trace_thinning_round_trip(tmp_path):
+    res, ev = run_search("simulated_annealing", _sites(), n_jobs=1, n_steps=300)
+    full = [b for *_, b, _ in ev.evals]
+    n_improve = sum(i == 0 or full[i] > full[i - 1] for i in range(len(full)))
+    only = ev.trace(None)
+    assert len(only["evaluations"]) <= n_improve + 1
+    assert only["evaluations"][-1][5] == round(res["best_objective"], 4)
+    save_trace(tmp_path / "search_trace_sa.json.gz", res, ev.trace(20))
+    tr = load_trace("sa", tmp_path)
+    assert n_improve <= len(tr["evaluations"]) < len(ev.evals)
+    assert tr["summary"]["n_evaluations"] == len(ev.evals) and tr["meta"]["algo"] == "simulated_annealing"
+    assert len(tr["steps"]) < 300 / 20 + n_improve + 3
