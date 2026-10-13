@@ -304,11 +304,13 @@ STAGES = {"main": run_main, "curves": run_curves, "fusion": run_fusion, "checks"
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("stages", nargs="*", default=list(STAGES), choices=list(STAGES))
+    ap.add_argument("stages", nargs="*", help=f"any of {list(STAGES)}; default all")
     args = ap.parse_args()
+    if bad := set(args.stages) - set(STAGES):
+        ap.error(f"unknown stages {bad}")
     RESULTS.mkdir(parents=True, exist_ok=True)
     FIG_DIR.mkdir(parents=True, exist_ok=True)
-    for st in args.stages:
+    for st in args.stages or list(STAGES):
         print(f"[{st}]", flush=True)
         STAGES[st]()
 
