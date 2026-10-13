@@ -147,6 +147,11 @@ if res is not None:
         ui.hb_strip(hb=float(np.clip(res["position"], ui.HB_MIN, ui.HB_MAX)), swatch_rgb=res["swatch"], threshold=c,
                     photo_url=res["thumb"], photo_point=res["thumb_point"], animate=animate, photo_width=88,
                     bar_height=26)
+        swatches = [("this", res["swatch"], "swatch_this"), ("", res["typical"]["healthy"], "swatch_healthy"),
+                    ("", res["typical"]["anaemic"], "swatch_anaemic")]
+        chips = "".join(f'<div class="nh-swatch {cls}">{art.img(art.swatch_chip(rgb, m))}<span>{html.escape(t(k))}</span></div>'
+                        for cls, rgb, k in swatches)
+        st.html(f'<div class="nh-swatch-row"><h4>{html.escape(t("swatch_title"))}</h4><div class="nh-swatches">{chips}</div></div>')
         items = "".join(f'<li>{ui.icon(i)}<span>{html.escape(text)}</span></li>' for i, text in plain_reasons(res, refer))
         st.html(f'<div class="nh-result-body"><h4>{html.escape(t("why"))}</h4><ul class="nh-reasons">{items}</ul>'
                 f'<p class="nh-result-caveat">{html.escape(t("result_footer"))}</p></div>')

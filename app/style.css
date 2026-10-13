@@ -596,3 +596,21 @@ iframe { border: 0; color-scheme: normal; }
 .nh-result-head .nh-conf { margin-bottom: 0.5rem; }
 .stApp .st-key-nh_result_refer .nh-result-word, .stApp .st-key-nh_result_normal .nh-result-word { margin-bottom: 0; }
 .stApp [data-testid="stPageLink"] a:not(.st-key-nh_nav *) { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- Story (P10g): why points, findings, swatch row */
+.nh-why, .nh-find { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+.nh-why { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.nh-find { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.nh-why-card, .nh-find-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 1rem 1.1rem 1.2rem; box-shadow: var(--card-shadow); }
+.nh-why-card img, .nh-find-card img { width: 100%; height: auto; display: block; border-radius: 12px; margin-bottom: 0.75rem; }
+.nh-why-card h3, .nh-find-card h3 { font-family: var(--font-display); font-weight: 650; font-size: var(--fs-20); color: var(--text);
+  margin: 0 0 0.35rem; line-height: 1.25; }
+.nh-why-card p, .nh-find-card p { margin: 0; color: var(--muted); line-height: 1.5; font-size: var(--fs-16); }
+.nh-found { margin: 0.25rem 0 0.5rem; }
+@media (max-width: 1000px) { .nh-why { grid-template-columns: 1fr; } .nh-find { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.nh-swatch-row { margin: 0.5rem 0 0.25rem; }
+.nh-swatch-row h4 { font-family: var(--font-display); font-weight: 650; font-size: var(--fs-20); margin: 0 0 0.4rem; color: var(--text); }
+
+.stApp ul.nh-why, .stApp ul.nh-find, .stApp ol.nh-steps-art { padding-left: 0 !important; margin-left: 0 !important; }
+.stApp ul.nh-why > li, .stApp ul.nh-find > li, .stApp ol.nh-steps-art > li { margin: 0 !important; }

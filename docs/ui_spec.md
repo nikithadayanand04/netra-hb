@@ -73,21 +73,21 @@ Screen: result (laptop)
 ```
 
 ## Pages and features (5, top nav in this order)
-1. **Home**: short hero with two actions ("Start a screening", "Try a sample patient"), the hero illustration with the colour strip, a 3-step illustrated how-it-works (a genuine sequence, so numbering is fine), and a link to the Results page. No numbers on Home.
+1. **Home**: short hero with two actions ("Start a screening", "Try a sample patient"), the hero illustration with the colour strip, a "Why Netra-Hb" section with 3 illustrated points (health workers, not doctors, screen in villages; a visual pallor check varies between examiners while this gives the same answer every time; it decides who gets a finger-prick test when strips are short), a 3-step illustrated how-it-works (a genuine sequence, so numbering is fine), and a link to the Results page. No numbers on Home.
 2. **Screen**, sample patients first:
    - *Try a sample patient*: 6 cards (2 per site, mixed results) with thumbnail, site icon and age band; one click shows the result directly below the gallery.
    - *Or screen with your own photo* (secondary): age band (sets the WHO cut-off), then the sites in recommended order with a rank and photo guide each: 1 eyelid (most skin-tone robust), 2 nail, 3 palm. Camera or upload.
    - *Guided crop*: the user drags a tight box over only the pink inner eyelid, one nail bed or the palm centre; only the oval inscribed in the box is measured (an oval guide is drawn), and the crop is rescaled to the training images' scale. Photos with a clear background are found automatically.
    - *Silent checks*: makeup filter, light, glare, sharpness and the KNN unfamiliar-photo check run without showing numbers. A failed check shows one friendly line ("Please retake: daylight, no eye makeup, show only the inner eyelid.", per site) and keeps "See result" disabled. An unfamiliar photo or an age band outside 6–59 months shows a small "Low confidence" tag only.
-   - *Result*: only the result word, the animated risk gauge, the swatch on the colour strip, 2–3 plain reasons with icons, and "Screening aid only. Confirm with a blood Hb test."
+   - *Result*: the result word, the animated risk gauge, the swatch on the colour strip, the child's tissue swatch beside typical healthy and typical anaemic swatches, 2–3 plain reasons with icons, and "Screening aid only. Confirm with a blood Hb test."
    - No dataset sizes, model names or interval numbers on Home or Screen; they live on Results, Insights and About.
 3. **Results**: model comparison table (mean over 25 folds, 95% corrected CI) for the tuned syllabus models and the final soft vote; a model picker and threshold slider driving the 100-child icon grid ("Out of 100 children screened: 42 anaemic, 35 caught, 7 missed; 58 healthy, 24 sent for a test they didn't need"); ROC with the operating point and the confusion matrix. Saved out-of-fold predictions only (`oof_tuned.csv`, first repeat pooled).
-4. **Insights**, four tabs:
+4. **Insights**: a "What we found" panel with 4 illustrated findings (sites at equal size; honest evaluation lowers scores; makeup and webcam safeguards; the search algorithms), every number read from `outputs/results`, then four tabs:
    - *Data*: class balance by severity, Hb distribution with the cut-off, feature vs Hb (feature picker), raw vs grey-world correlation with Hb.
    - *Eye vs palm vs nail*: site table, equal-size (n = 220) comparison, learning curves, with the different-children / folder-label caveat.
    - *Clusters*: K-means elbow and silhouette, centroid swatches with mean Hb and % anaemic, purity against the majority baseline, palm and nail purity.
    - *Search*: algorithm comparison table, convergence chart (best score vs evaluations), honest nested re-evaluation (inner vs held-out score).
-5. **About**: problem, datasets with citations, method and syllabus mapping, honest results, known limits, disclaimer.
+5. **About**: problem, datasets with citations, method, the pipeline diagram (photo → crop/mask → colour features → model → threshold → result), the syllabus Units I–V grid, honest results, known limits (first: not yet validated across skin tones; the eyelid is the most skin-tone-robust site), future work (sclera-referenced normalisation, Indian data), disclaimer.
 
 ## Visual language
 - **Original SVG artwork only**, drawn in code in `app/art.py` (no stock images, no network): the Home hero (eye, palm and fingernail line art joined by the Hb strip), the three how-it-works steps (phone camera, quality check, result), the photo guides per site (finger pulling the lower eyelid, open palm, fingernails), a header illustration per Insights tab and for About, the About pipeline nodes and the tissue swatches.

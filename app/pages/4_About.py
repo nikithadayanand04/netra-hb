@@ -65,7 +65,7 @@ UNITS = [
      "Classifier comparison and the final soft-voting ensemble (Results); KNN unfamiliar-photo check (Screen)"),
     ("V", "K-means, cluster validity", "Pallor clusters with elbow, silhouette and purity (Insights, Clusters)"),
 ]
-PIPELINE = [("photo", "Photo", "eyelid, palm or nail"), ("mask", "Mask", "tissue only; glare and makeup removed"),
+PIPELINE = [("photo", "Photo", "eyelid, palm or nail"), ("mask", "Crop / mask", "tight oval crop; glare and makeup removed"),
             ("features", "Colour features", "23 statistics, at most 15 kept"),
             ("model", "Model", "soft vote of KNN, AdaBoost, random forest"),
             ("threshold", "Threshold", "set for 80% sensitivity"), ("result", "Result", "Refer for Hb test or Normal")]
@@ -104,6 +104,13 @@ else:
 
 ui.spacer(small=True)
 ui.known_limits()
+ui.spacer(small=True)
+ui.section(ui.t("future_title"))
+prose("<strong>Sclera-referenced colour normalisation.</strong> The white of the eye is a natural colour reference in "
+      "the same photo; correcting the light cast with it, instead of grey-world, should keep the redness signal. None of "
+      "the photos available to us show the sclera, so this needs new data.",
+      "<strong>Indian data.</strong> Testing on Indian children and adults (the IEEE DataPort multi-site set, access "
+      "pending), across skin tones, phones and lighting, and an external test on Eyes-defy-anemia.")
 ui.spacer(small=True)
 st.html('<aside class="nh-disclaimer"><h4>Not a diagnosis</h4><p>Netra-Hb is a student research prototype and a '
         'screening aid for health workers. It does not diagnose anaemia or measure haemoglobin. Every "Refer" and '

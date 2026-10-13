@@ -705,4 +705,66 @@ STRINGS: dict[str, dict[str, str]] = {
     "screen_lede_samples": {"en": "Start with a sample patient, or screen a child with your own photo.",
                             "kn": "ಮಾದರಿ ರೋಗಿಯಿಂದ ಆರಂಭಿಸಿ, ಅಥವಾ ನಿಮ್ಮ ಸ್ವಂತ ಫೋಟೋದೊಂದಿಗೆ ಮಗುವಿನ ತಪಾಸಣೆ ಮಾಡಿ.",
                             "hi": "नमूना मरीज़ से शुरू करें, या अपनी फ़ोटो से बच्चे की जाँच करें।"},
+
+    # ---------------------------------------------------------------- story (P10g)
+    "why_title": {"en": "Why Netra-Hb", "kn": "ಏಕೆ Netra-Hb", "hi": "Netra-Hb क्यों"},
+    "why1_title": {"en": "Health workers screen, not doctors", "kn": "ತಪಾಸಣೆ ಮಾಡುವವರು ಆರೋಗ್ಯ ಕಾರ್ಯಕರ್ತರು, ವೈದ್ಯರಲ್ಲ",
+                   "hi": "जाँच स्वास्थ्य कार्यकर्ता करते हैं, डॉक्टर नहीं"},
+    "why1_text": {"en": "In villages, most screening is done by community health workers on home visits, often far from a "
+                        "doctor or a lab.",
+                  "kn": "ಹಳ್ಳಿಗಳಲ್ಲಿ ಹೆಚ್ಚಿನ ತಪಾಸಣೆಯನ್ನು ಮನೆ ಭೇಟಿಗಳಲ್ಲಿ ಸಮುದಾಯ ಆರೋಗ್ಯ ಕಾರ್ಯಕರ್ತರು ಮಾಡುತ್ತಾರೆ, ಹೆಚ್ಚಾಗಿ ವೈದ್ಯರು "
+                        "ಅಥವಾ ಪ್ರಯೋಗಾಲಯದಿಂದ ದೂರ.",
+                  "hi": "गाँवों में ज़्यादातर जाँच समुदाय स्वास्थ्य कार्यकर्ता घर-घर जाकर करते हैं, अक्सर डॉक्टर या लैब से दूर।"},
+    "why2_title": {"en": "The same answer every time", "kn": "ಪ್ರತಿ ಬಾರಿಯೂ ಒಂದೇ ಉತ್ತರ", "hi": "हर बार एक ही जवाब"},
+    "why2_text": {"en": "A visual pallor check is subjective and varies between examiners. Netra-Hb measures colour, so the "
+                        "same photo always gives the same result.",
+                  "kn": "ಕಣ್ಣಿನಿಂದ ಬಿಳಿಚುವಿಕೆ ನೋಡುವುದು ವ್ಯಕ್ತಿನಿಷ್ಠ ಮತ್ತು ಪರೀಕ್ಷಕರ ನಡುವೆ ಬದಲಾಗುತ್ತದೆ. Netra-Hb ಬಣ್ಣವನ್ನು ಅಳೆಯುತ್ತದೆ, "
+                        "ಆದ್ದರಿಂದ ಅದೇ ಫೋಟೋ ಯಾವಾಗಲೂ ಅದೇ ಫಲಿತಾಂಶ ನೀಡುತ್ತದೆ.",
+                  "hi": "आँख से पीलापन देखना व्यक्तिपरक है और जाँचने वालों में बदलता है। Netra-Hb रंग मापता है, इसलिए वही फ़ोटो "
+                        "हमेशा वही नतीजा देती है।"},
+    "why3_title": {"en": "Spend scarce test strips well", "kn": "ಕಡಿಮೆ ಪರೀಕ್ಷಾ ಪಟ್ಟಿಗಳನ್ನು ಸರಿಯಾಗಿ ಬಳಸಿ",
+                   "hi": "कम टेस्ट स्ट्रिप का सही इस्तेमाल"},
+    "why3_text": {"en": "When finger-prick strips run short, it helps decide which children should get a blood test first.",
+                  "kn": "ಬೆರಳು ಚುಚ್ಚುವ ಪಟ್ಟಿಗಳು ಕಡಿಮೆಯಾದಾಗ, ಯಾವ ಮಕ್ಕಳಿಗೆ ಮೊದಲು ರಕ್ತ ಪರೀಕ್ಷೆ ಬೇಕು ಎಂದು ನಿರ್ಧರಿಸಲು ಇದು "
+                        "ಸಹಾಯ ಮಾಡುತ್ತದೆ.",
+                  "hi": "जब उँगली की जाँच वाली स्ट्रिप कम हों, तो यह तय करने में मदद करता है कि किन बच्चों की खून की जाँच पहले "
+                        "हो।"},
+    "found_title": {"en": "What we found", "kn": "ನಾವು ಕಂಡುಕೊಂಡದ್ದು", "hi": "हमने क्या पाया"},
+    "f_sites_title": {"en": "Eye, palm or nail?", "kn": "ಕಣ್ಣು, ಅಂಗೈ ಅಥವಾ ಉಗುರು?", "hi": "आँख, हथेली या नाखून?"},
+    "f_sites": {"en": "At the same 220 photos each, the eye scores {eye}, palm {palm} and nail {nail} (ROC-AUC). With more "
+                      "data, palm and nail improve.",
+                "kn": "ಪ್ರತಿಯೊಂದಕ್ಕೂ ಅದೇ 220 ಫೋಟೋಗಳಲ್ಲಿ ಕಣ್ಣು {eye}, ಅಂಗೈ {palm}, ಉಗುರು {nail} (ROC-AUC). ಹೆಚ್ಚು ದತ್ತಾಂಶದೊಂದಿಗೆ "
+                      "ಅಂಗೈ ಮತ್ತು ಉಗುರು ಸುಧಾರಿಸುತ್ತವೆ.",
+                "hi": "हर एक की उन्हीं 220 फ़ोटो पर आँख {eye}, हथेली {palm} और नाखून {nail} (ROC-AUC)। ज़्यादा डेटा से हथेली "
+                      "और नाखून सुधरते हैं।"},
+    "f_honest_title": {"en": "Honest evaluation lowers scores", "kn": "ಪ್ರಾಮಾಣಿಕ ಮೌಲ್ಯಮಾಪನ ಅಂಕಗಳನ್ನು ಇಳಿಸುತ್ತದೆ",
+                       "hi": "ईमानदार जाँच स्कोर घटाती है"},
+    "f_honest": {"en": "Dropping blurred, upscaled and glare-heavy photos takes the best eye score from {q_before} to "
+                       "{q_after}; the protocol search falls from {s_before} to {s_after} on held-out children.",
+                 "kn": "ಮಸುಕಾದ, ದೊಡ್ಡದಾಗಿಸಿದ ಮತ್ತು ಹೆಚ್ಚು ಹೊಳಪಿನ ಫೋಟೋಗಳನ್ನು ತೆಗೆದಾಗ ಅತ್ಯುತ್ತಮ ಕಣ್ಣಿನ ಅಂಕ {q_before} ರಿಂದ "
+                       "{q_after} ಗೆ ಇಳಿಯುತ್ತದೆ; ಶೋಧನೆ ಪ್ರತ್ಯೇಕ ಮಕ್ಕಳ ಮೇಲೆ {s_before} ರಿಂದ {s_after} ಗೆ ಇಳಿಯುತ್ತದೆ.",
+                 "hi": "धुंधली, बड़ी की गई और ज़्यादा चमक वाली फ़ोटो हटाने पर सबसे अच्छा आँख स्कोर {q_before} से {q_after} पर "
+                       "आता है; खोज अलग रखे बच्चों पर {s_before} से {s_after} पर आती है।"},
+    "f_safe_title": {"en": "Makeup and webcams fool colour models", "kn": "ಮೇಕಪ್ ಮತ್ತು ವೆಬ್‌ಕ್ಯಾಮ್ ಬಣ್ಣದ ಮಾದರಿಗಳನ್ನು ತಪ್ಪಿಸುತ್ತವೆ",
+                     "hi": "मेकअप और वेबकैम रंग मॉडल को भटकाते हैं"},
+    "f_safe": {"en": "So we added safeguards: dark makeup and lash pixels are removed (only {fp} of real eyelid pixels are "
+                     "lost), and photos unlike the training set are marked low confidence.",
+               "kn": "ಆದ್ದರಿಂದ ಸುರಕ್ಷತೆಗಳನ್ನು ಸೇರಿಸಿದೆವು: ಗಾಢ ಮೇಕಪ್ ಮತ್ತು ರೆಪ್ಪೆಗೂದಲಿನ ಪಿಕ್ಸೆಲ್‌ಗಳನ್ನು ತೆಗೆಯಲಾಗುತ್ತದೆ (ನಿಜವಾದ "
+                     "ರೆಪ್ಪೆಯ {fp} ಪಿಕ್ಸೆಲ್‌ಗಳು ಮಾತ್ರ ಕಳೆದುಹೋಗುತ್ತವೆ), ಮತ್ತು ತರಬೇತಿ ಸೆಟ್‌ನಂತೆ ಇಲ್ಲದ ಫೋಟೋಗಳನ್ನು ಕಡಿಮೆ ವಿಶ್ವಾಸ "
+                     "ಎಂದು ಗುರುತಿಸಲಾಗುತ್ತದೆ.",
+               "hi": "इसलिए हमने सुरक्षा जोड़ी: गहरे मेकअप और पलकों के पिक्सेल हटाए जाते हैं (असली पलक के केवल {fp} पिक्सेल "
+                     "खोते हैं), और ट्रेनिंग सेट से अलग दिखने वाली फ़ोटो को कम भरोसा चिह्नित किया जाता है।"},
+    "f_search_title": {"en": "Cheapest screening protocol", "kn": "ಅತ್ಯಂತ ಕಡಿಮೆ ವೆಚ್ಚದ ತಪಾಸಣಾ ವಿಧಾನ",
+                       "hi": "सबसे सस्ता जाँच तरीका"},
+    "f_search": {"en": "BFS, IDDFS, hill climbing, simulated annealing, local beam, a genetic algorithm and A* searched site "
+                       "and feature choices; local beam found the exhaustive optimum after {beam} of {bfs} evaluations.",
+                 "kn": "BFS, IDDFS, ಹಿಲ್ ಕ್ಲೈಂಬಿಂಗ್, ಸಿಮ್ಯುಲೇಟೆಡ್ ಅನೀಲಿಂಗ್, ಲೋಕಲ್ ಬೀಮ್, ಜೆನೆಟಿಕ್ ಅಲ್ಗಾರಿದಮ್ ಮತ್ತು A* ಭಾಗ ಮತ್ತು "
+                       "ಲಕ್ಷಣಗಳ ಆಯ್ಕೆಯನ್ನು ಶೋಧಿಸಿದವು; ಲೋಕಲ್ ಬೀಮ್ {bfs} ರಲ್ಲಿ {beam} ಮೌಲ್ಯಮಾಪನಗಳ ನಂತರ ಸಂಪೂರ್ಣ ಅತ್ಯುತ್ತಮವನ್ನು "
+                       "ಕಂಡುಹಿಡಿಯಿತು.",
+                 "hi": "BFS, IDDFS, हिल क्लाइंबिंग, सिम्युलेटेड एनीलिंग, लोकल बीम, जेनेटिक एल्गोरिदम और A* ने अंग और विशेषताओं "
+                       "के विकल्प खोजे; लोकल बीम ने {bfs} में से {beam} मूल्यांकनों के बाद पूरी खोज का सबसे अच्छा पाया।"},
+    "limit_skin": {"en": "Not yet validated across skin tones; the eyelid is the most skin-tone-robust site.",
+                   "kn": "ಎಲ್ಲಾ ಚರ್ಮದ ಬಣ್ಣಗಳ ಮೇಲೆ ಇನ್ನೂ ಪರಿಶೀಲಿಸಲಾಗಿಲ್ಲ; ಕಣ್ಣಿನ ರೆಪ್ಪೆ ಚರ್ಮದ ಬಣ್ಣಕ್ಕೆ ಅತ್ಯಂತ ಸ್ಥಿರವಾದ ಭಾಗ.",
+                   "hi": "अभी हर त्वचा के रंग पर नहीं जाँचा गया; पलक त्वचा के रंग से सबसे कम प्रभावित होने वाला अंग है।"},
+    "future_title": {"en": "Future work", "kn": "ಮುಂದಿನ ಕೆಲಸ", "hi": "आगे का काम"},
 }

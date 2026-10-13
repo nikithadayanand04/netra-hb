@@ -288,3 +288,78 @@ def swatch_chip(rgb: tuple[int, int, int], mode: str) -> str:
     return _svg("0 0 80 80", f'<rect x="3" y="3" width="74" height="74" rx="18" fill="rgb({r},{g},{b})" '
                              f'stroke="{p["line"]}" stroke-opacity=".25" stroke-width="2"/>'
                              f'<path d="M14 18 Q22 10 34 12" stroke="#fff" stroke-opacity=".45" stroke-width="5"/>')
+
+
+# ------------------------------------------------------------------ "Why Netra-Hb" and "What we found"
+def _person(p: dict, x: float, y: float, s: float = 1.0, fill: str | None = None) -> str:
+    f = fill or p["soft"]
+    return (f'<g transform="translate({x} {y}) scale({s})" stroke="{p["line"]}" stroke-width="{3 / s:.2f}">'
+            f'<circle cx="0" cy="-34" r="13" fill="{p["skin"]}"/>'
+            f'<path d="M-22 22 Q-22 -16 0 -16 Q22 -16 22 22 Z" fill="{f}"/></g>')
+
+
+def why(name: str, mode: str) -> str:
+    p = PALETTES[mode]
+    bg = f'<rect width="240" height="150" rx="18" fill="{p["faint"]}"/>'
+    if name == "worker":      # a health worker with a phone, visiting village homes
+        houses = "".join(f'<path d="M{x} 96 l18 -16 l18 16 v26 h-36 z" fill="{p["surface"]}" stroke="{p["muted"]}" stroke-width="2.5"/>'
+                         f'<rect x="{x + 13}" y="108" width="10" height="14" fill="{p["soft"]}"/>' for x in (130, 176))
+        body = (houses + f'<path d="M20 124h200" stroke="{p["muted"]}" stroke-width="2.5"/>' + _person(p, 76, 100, 1.1, p["normal"]) +
+                f'<rect x="96" y="70" width="16" height="26" rx="3" fill="{p["surface"]}" stroke="{p["line"]}" stroke-width="2.5"/>'
+                '')
+    elif name == "consistent":  # two examiners, two different answers; the app, one answer every time
+        body = (_person(p, 46, 104, 0.9) + _person(p, 104, 104, 0.9) +
+                f'<rect x="20" y="22" width="44" height="26" rx="10" fill="{p["surface"]}" stroke="{p["muted"]}" stroke-width="2.5"/>'
+                f'<rect x="28" y="31" width="28" height="8" rx="4" fill="{STRIP[1]}"/>'
+                f'<rect x="80" y="22" width="44" height="26" rx="10" fill="{p["surface"]}" stroke="{p["muted"]}" stroke-width="2.5"/>'
+                f'<rect x="88" y="31" width="28" height="8" rx="4" fill="{STRIP[3]}"/>'
+                f'<path d="M140 76h12" stroke="{p["muted"]}" stroke-width="3"/>'
+                f'<rect x="160" y="40" width="58" height="84" rx="10" fill="{p["surface"]}" stroke="{p["line"]}" stroke-width="3"/>'
+                + "".join(f'<rect x="170" y="{52 + i * 22}" width="38" height="12" rx="6" fill="{STRIP[2]}"/>' for i in range(3)))
+    else:                       # scarce finger-prick strips: decide who gets one
+        strips = "".join(f'<rect x="{40 + i * 22}" y="44" width="12" height="60" rx="4" fill="{p["surface"]}" '
+                         f'stroke="{p["muted"]}" stroke-width="2.5" stroke-dasharray="{"4 4" if i > 1 else "0"}"/>'
+                         f'<rect x="{42 + i * 22}" y="84" width="8" height="14" rx="2" fill="{p["soft"] if i > 1 else STRIP[2]}"/>'
+                         for i in range(4))
+        body = (f'<rect x="30" y="34" width="96" height="80" rx="10" stroke="{p["line"]}" stroke-width="3"/>' + strips +
+                f'<path d="M178 44 s20 22 20 38 a20 20 0 0 1 -40 0 c0 -16 20 -38 20 -38z" fill="{STRIP[3]}"/>'
+                f'<path d="M150 122h56" stroke="{p["normal"]}" stroke-width="5"/>')
+    return _svg("0 0 240 150", bg + body)
+
+
+def finding(name: str, mode: str, values: tuple[float, ...] = ()) -> str:
+    """Small data-shaped illustrations for the findings panel. Bar heights come from the real numbers passed in."""
+    p = PALETTES[mode]
+    bg = f'<rect width="240" height="130" rx="18" fill="{p["faint"]}"/>'
+    if name == "sites":           # values: eye, palm, nail ROC-AUC at equal size
+        body = ""
+        for i, (v, part) in enumerate(zip(values, ("eye", "palm", "nail"))):
+            h = max((v - 0.5) * 300, 4)
+            x = 44 + i * 64
+            body += f'<rect x="{x}" y="{112 - h}" width="40" height="{h}" rx="6" fill="{[p["line"], p["muted"], p["soft"]][i]}"/>'
+        body += f'<path d="M30 112h180" stroke="{p["muted"]}" stroke-width="2.5"/>'
+    elif name == "honest":        # values: before, after (two pairs)
+        body = ""
+        for j, (a, b) in enumerate(zip(values[::2], values[1::2])):
+            x = 36 + j * 104
+            for k, (v, col) in enumerate(((a, p["soft"]), (b, p["line"]))):
+                h = max(v * 150, 4)
+                body += f'<rect x="{x + k * 34}" y="{112 - h}" width="28" height="{h}" rx="5" fill="{col}"/>'
+            body += f'<path d="M{x + 14} {108 - a * 150} L{x + 48} {104 - b * 150}" stroke="{p["muted"]}" stroke-width="2.5" stroke-dasharray="4 4"/>'
+        body += f'<path d="M24 112h192" stroke="{p["muted"]}" stroke-width="2.5"/>'
+    elif name == "safeguards":    # an eye with kajal, a filter, a shield
+        body = (_eye(p, 78, 62, 0.42, finger=False) +
+                f'<path d="M44 74 Q78 92 112 74" stroke="{p["line"]}" stroke-width="6"/>'
+                f'<path d="M168 30 l32 12 v24 c0 22 -14 36 -32 42 c-18 -6 -32 -20 -32 -42 v-24 z" fill="{p["surface"]}" '
+                f'stroke="{p["normal"]}" stroke-width="4"/><path d="M155 68l9 9 17 -18" stroke="{p["normal"]}" stroke-width="4"/>')
+    else:                         # search: values = BFS evaluations, local beam evaluations to optimum
+        import math
+        total, beam = values if values else (10, 10)
+        w = 180 * min(math.log10(max(beam, 1)) / math.log10(max(total, 10)), 1)   # log scale: both runs stay visible
+        ticks = "".join(f'<path d="M{30 + 180 * k / math.log10(max(total, 10)):.1f} 102v8" stroke="{p["muted"]}" stroke-width="2"/>'
+                        for k in range(1, int(math.log10(max(total, 10))) + 1))
+        body = (f'<rect x="30" y="30" width="180" height="18" rx="9" fill="{p["soft"]}"/>'
+                f'<rect x="30" y="64" width="{w:.1f}" height="18" rx="9" fill="{p["accent"]}"/>'
+                f'<circle cx="{30 + w:.1f}" cy="73" r="7" fill="{p["surface"]}" stroke="{p["accent"]}" stroke-width="3"/>'
+                f'<path d="M30 106h180" stroke="{p["muted"]}" stroke-width="2"/>' + ticks)
+    return _svg("0 0 240 130", bg + body)

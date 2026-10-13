@@ -25,6 +25,54 @@ FEATURES = ["lab_a_med", "lab_L_med", "erythema_index_med", "chrom_r_med", "a_ov
             "lab_b_med", "chrom_g_med", "hsv_h_med"]
 CLUSTER_KEY = {"Pink": "cl_pink", "Pale": "cl_pale", "Very pale": "cl_very_pale", "Red": "cl_red",
                "Intermediate": "cl_intermediate"}
+
+
+def first_hit(algo: str, target: float) -> int | None:
+    """Evaluation index at which a search first reached the target score (from its saved trace)."""
+    path = ui.RESULTS_DIR / f"search_trace_{algo}.json.gz"
+    if not path.exists():
+        return None
+    tr = json.loads(gzip.decompress(path.read_bytes()))
+    ev = pd.DataFrame(tr["evaluations"], columns=tr["columns"])
+    hit = ev[ev.best_objective >= target - 1e-9]
+    return int(hit["eval"].min()) + 1 if len(hit) else None
+
+
+def findings() -> None:
+    """Four findings; every number is read from outputs/results, nothing is typed in."""
+    cards = []
+    curves = ui.read_csv("results/sites/curves.csv")
+    if curves is not None:
+        eq = curves[curves.n_target == 220].groupby("site").roc_auc.mean()
+        cards.append(("sites", (eq["eye"], eq["palm"], eq["nail"]), "f_sites_title",
+                      t("f_sites", eye=f"{eq['eye']:.2f}", palm=f"{eq['palm']:.2f}", nail=f"{eq['nail']:.2f}")))
+    base, se = ui.read_result("baselines.json"), ui.read_result("search.json")
+    if base is not None and se is not None:
+        def best(exp: str) -> float:
+            return max(v["fold_mean"]["roc_auc"]["value"] for k, v in base["experiments"][exp]["models"].items()
+                       if not k.startswith(("all_normal", "scratch")))
+        before, after = best("secondary_all"), best("primary")
+        n = se["nested"]["summary"]
+        cards.append(("honest", (before, after, n["inner_metric"], n["outer_metric"]), "f_honest_title",
+                      t("f_honest", q_before=f"{before:.2f}", q_after=f"{after:.2f}", s_before=f"{n['inner_metric']:.2f}",
+                        s_after=f"{n['outer_metric']:.2f}")))
+    sg = ui.read_result("safeguards.json")
+    if sg is not None:
+        cards.append(("safeguards", (), "f_safe_title", t("f_safe", fp=f"{sg['makeup']['pixels_wrongly_removed']:.2%}")))
+    if se is not None:
+        tab = pd.DataFrame(se["table"])
+        n_bfs = int(tab.loc[tab.algorithm == "bfs", "evaluations"].iloc[0])
+        hit = first_hit("local_beam", tab.best_objective.max())
+        if hit:
+            cards.append(("search", (n_bfs, hit), "f_search_title", t("f_search", beam=f"{hit:,}", bfs=f"{n_bfs:,}")))
+    body = "".join(f'<li class="nh-find-card">{art.img(art.finding(name, m, vals))}<h3>{html.escape(t(title))}</h3>'
+                   f'<p>{html.escape(text)}</p></li>' for name, vals, title, text in cards)
+    st.html(f'<section class="nh-found"><h2 class="nh-section-title">{html.escape(t("found_title"))}</h2>'
+            f'<ul class="nh-find">{body}</ul></section>')
+
+
+findings()
+ui.spacer(small=True)
 tab_data, tab_sites, tab_clusters, tab_search = st.tabs([t("tab_data"), t("tab_sites"), t("tab_clusters"), t("tab_search")])
 
 

@@ -26,6 +26,14 @@ st.html(f'<div class="nh-hero-art">{art.img(art.hero(m), html.escape(ui.t("hero_
         f'<p class="nh-actions-note">{html.escape(ui.t("strip_caption"))}</p>')
 
 ui.spacer()
+ui.section(ui.t("why_title"))
+points = "".join(
+    f'<li class="nh-why-card">{art.img(art.why(name, m))}<h3>{html.escape(ui.t(f"why{i}_title"))}</h3>'
+    f'<p>{html.escape(ui.t(f"why{i}_text"))}</p></li>'
+    for i, name in enumerate(("worker", "consistent", "strips"), 1))
+st.html(f'<ul class="nh-why">{points}</ul>')
+
+ui.spacer()
 ui.section(ui.t("how_title"))
 steps = "".join(
     f'<li class="nh-step-card">{art.img(art.step(name, m))}<div class="nh-step-head"><span class="nh-step-num">{i}</span>'

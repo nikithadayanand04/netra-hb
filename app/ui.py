@@ -50,7 +50,7 @@ PAGES = [
 # WHO anaemia cut-offs, g/dL; keys are STRINGS keys
 AGE_BANDS = {"age_6_59m": 11.0, "age_5_11": 11.5, "age_12_14": 12.0, "age_15_woman": 12.0, "age_15_man": 13.0}
 TRAINED_BAND = "age_6_59m"
-LIMITS = ("limit_makeup", "limit_adult", "limit_light", "limit_children")
+LIMITS = ("limit_skin", "limit_makeup", "limit_adult", "limit_light", "limit_children")
 
 
 def lang() -> str:
