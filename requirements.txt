@@ -142,3 +142,4 @@ websocket-client==1.9.2
 websockets==17.2
 widgetsnbextension==4.0.16
 xlrd==2.0.2
+playwright==1.63.0

@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Kannada:wght@400;700&display=swap");
+
+:root {
+  --porcelain: #F3F5F7;
+  --ink: #1B2340;
+  --slate: #5B6475;
+  --pallor: #F2C4C9;
+  --haem: #B3123A;
+  --clear: #1F7A6D;
+
+  --bg: var(--porcelain);
+  --surface: #FFFFFF;
+  --text: var(--ink);
+  --muted: var(--slate);
+  --line: #D3D8E0;
+  --refer: var(--haem);
+  --refer-rule: var(--haem);
+  --normal: var(--clear);
+  --normal-rule: var(--clear);
+  --btn-bg: var(--ink);
+  --btn-text: #FFFFFF;
+  --focus: #3B5BDB;
+
+  --strip: linear-gradient(90deg, #F7E1E1 0%, #E9A3A8 25%, #CF5B6B 50%, #A3153A 75%, #6E0B24 100%);
+
+  --font-display: "Bricolage Grotesque", "Noto Sans Kannada", "Noto Sans Devanagari", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Noto Sans Kannada", "Noto Sans Devanagari", system-ui, sans-serif;
+
+  --fs-14: 0.875rem;
+  --fs-16: 1rem;
+  --fs-20: 1.25rem;
+  --fs-28: 1.75rem;
+  --fs-40: 2.5rem;
+  --fs-64: 4rem;
+}
+
+/* Dark tokens: set by ui.inject_css when the Dark toggle is on. Text versions of haem/clear are lightened for AA. */
+.nh-dark {
+  --bg: #121624;
+  --surface: #1B2133;
+  --text: #E6E9F0;
+  --muted: #9AA3B5;
+  --line: #2E3650;
+  --refer: #D17189;
+  --refer-rule: #C24161;
+  --normal: #4C958A;
+  --normal-rule: #35877C;
+  --btn-bg: #E6E9F0;
+  --btn-text: #121624;
+  --focus: #8FA8FF;
+}
+
+html, body, .stApp, [data-testid="stAppViewContainer"] {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+.stApp p, .stApp li, .stApp label, .stApp button {
+  font-family: var(--font-body);
+}
+
+.stApp h1, .stApp h2, .stApp h3, .stApp h4,
+.stApp .nh-display, .stApp .nh-step-num, .stApp .nh-step-name, .stApp .nh-stat-num, .stApp .nh-result-word {
+  font-family: var(--font-display);
+  color: var(--text);
+  letter-spacing: -0.015em;
+  font-weight: 650;
+}
+
+/* Material icons must keep their own font */
+.stApp span[data-testid="stIconMaterial"],
+.stApp [class*="material-symbols"] {
+  font-family: "Material Symbols Rounded" !important;
+}
+
+[data-testid="stHeader"] { background: transparent; }
+[data-testid="stMainBlockContainer"], .block-container {
+  max-width: 1180px;
+  padding-top: 4.5rem;
+  padding-bottom: 3rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+@media (max-width: 640px) {
+  [data-testid="stMainBlockContainer"], .block-container {
+    padding-top: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Buttons: ink primary, outlined secondary, never red */
+.stButton > button, .stDownloadButton > button, [data-testid="stPageLink"] a {
+  min-height: 48px;
+  padding: 0.6rem 1.25rem;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-16);
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.stButton > button[kind="primary"], .stDownloadButton > button[kind="primary"] {
+  background: var(--btn-bg);
+  border: 2px solid var(--btn-bg);
+  color: var(--btn-text);
+}
+.stButton > button p, .stDownloadButton > button p { font-size: 1.0625rem; font-weight: 700; }
+.stButton > button[kind="primary"] p { color: var(--btn-text); }
+.stButton > button[kind="primary"]:hover { filter: brightness(1.15); }
+.stButton > button[kind="secondary"], .stDownloadButton > button[kind="secondary"] {
+  background: transparent;
+  border: 2px solid var(--text);
+  color: var(--text);
+}
+.stButton > button[kind="secondary"]:hover { background: color-mix(in srgb, var(--text) 7%, transparent); }
+.stButton > button:focus-visible,
+.stDownloadButton > button:focus-visible,
+[data-testid="stPageLink"] a:focus-visible,
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 3px solid var(--focus) !important;
+  outline-offset: 2px;
+  box-shadow: none !important;
+}
+
+/* Language segmented control and dark toggle */
+.stApp [data-testid="stButtonGroup"] button[data-variant="segmented_control"] {
+  min-height: 44px;
+  padding: 0 0.9rem;
+  background: transparent !important;
+  border-color: var(--line) !important;
+}
+.stApp [data-testid="stButtonGroup"] button[data-variant="segmented_control"] * {
+  color: var(--muted) !important;
+  font-family: var(--font-body);
+  font-size: var(--fs-16);
+}
+.stApp [data-testid="stButtonGroup"] button[data-variant="segmented_control"][aria-checked="true"] {
+  background: var(--text) !important;
+  border-color: var(--text) !important;
+}
+.stApp [data-testid="stButtonGroup"] button[data-variant="segmented_control"][aria-checked="true"] * {
+  color: var(--bg) !important;
+  font-weight: 700;
+}
+[data-testid="stCheckbox"] label, .stToggle label { min-height: 44px; align-items: center; }
+.stApp [data-testid="stWidgetLabel"] p, .stApp label p { color: var(--text); }
+
+/* Sidebar */
+[data-testid="stSidebar"] { background: color-mix(in srgb, var(--bg) 92%, var(--text)); }
+[data-testid="stSidebarNav"] a { min-height: 44px; }
+[data-testid="stSidebarNav"] span { color: var(--text); }
+
+/* ---- Netra-Hb blocks ---- */
+.nh-brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-20);
+  color: var(--text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+}
+.nh-brand-mark {
+  width: 28px; height: 12px; border-radius: 999px;
+  background: var(--strip);
+  display: inline-block;
+}
+
+.nh-hero-title {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: clamp(2.25rem, 5vw, var(--fs-64));
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0.5rem 0 1rem;
+  max-width: 14ch;
+}
+.nh-hero-title em { font-style: normal; color: var(--refer); }
+.nh-lede {
+  font-size: var(--fs-20);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 34ch;
+  margin: 0;
+}
+.nh-actions-note { font-size: var(--fs-14); color: var(--muted); margin-top: 0.5rem; }
+
+.nh-section-title {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: var(--fs-28);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0 0 0.25rem;
+}
+.nh-section-lede { color: var(--muted); font-size: var(--fs-16); max-width: 62ch; margin: 0 0 1.5rem; }
+.nh-spacer { height: 3.5rem; }
+.nh-spacer-sm { height: 1.5rem; }
+
+/* How it works */
+.nh-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin: 0; padding: 0; list-style: none; }
+.nh-step { border-top: 2px solid var(--text); padding-top: 1rem; }
+.nh-step-head { display: flex; align-items: baseline; gap: 0.75rem; }
+.nh-step-num { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-40); line-height: 1; color: var(--text); }
+.nh-step-name { font-family: var(--font-display); font-weight: 650; font-size: var(--fs-20); color: var(--text); }
+.nh-step p { color: var(--muted); margin: 0.6rem 0 0; line-height: 1.5; max-width: 34ch; }
+@media (max-width: 760px) { .nh-steps { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+/* Results in brief */
+.nh-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+.nh-stat-num { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-64); line-height: 1; letter-spacing: -0.03em; color: var(--text); }
+.nh-stat-num small { font-size: var(--fs-28); font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.nh-stat-label { font-size: var(--fs-16); color: var(--text); margin: 0.5rem 0 0.25rem; max-width: 30ch; line-height: 1.4; }
+.nh-stat-ci { font-size: var(--fs-14); color: var(--muted); margin: 0; }
+.stApp .nh-stat-refer .nh-stat-num { color: var(--refer); }
+.stApp .nh-stat-normal .nh-stat-num { color: var(--normal); }
+@media (max-width: 760px) {
+  .nh-stats { grid-template-columns: 1fr; gap: 1.5rem; }
+  .nh-stat-num { font-size: var(--fs-40); }
+}
+.nh-notes { margin: 1.75rem 0 0; padding: 1rem 1.25rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; max-width: 70ch; }
+.nh-notes p { margin: 0.35rem 0; color: var(--text); font-size: var(--fs-16); line-height: 1.5; }
+.nh-notes strong { font-weight: 700; }
+
+/* Result panel: square corners, thick left rule in state colour */
+.nh-result { border-left: 8px solid var(--rule); background: var(--surface); padding: 1.25rem 1.5rem 1.5rem; border-radius: 0; }
+.nh-result.refer { --rule: var(--refer-rule); --state: var(--refer); }
+.nh-result.normal { --rule: var(--normal-rule); --state: var(--normal); }
+.stApp .nh-result-word { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.5rem, 7vw, var(--fs-64)); line-height: 1.02; letter-spacing: -0.03em; color: var(--state); margin: 0 0 0.5rem; }
+.nh-result-prob { font-size: var(--fs-20); color: var(--text); margin: 0 0 0.25rem; }
+.nh-result-band { font-size: var(--fs-14); color: var(--muted); margin: 0 0 1rem; }
+.nh-result h4 { font-family: var(--font-display); font-size: var(--fs-20); margin: 1rem 0 0.4rem; }
+.nh-result ul { margin: 0; padding-left: 1.2rem; }
+.nh-result li { margin: 0.3rem 0; line-height: 1.5; max-width: 60ch; }
+.nh-result-caveat { font-size: var(--fs-14); color: var(--muted); margin-top: 1rem; }
+
+/* Quality chips */
+.nh-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0; }
+.nh-chip { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 36px; padding: 0.3rem 0.8rem; border-radius: 999px; font-size: var(--fs-14); font-weight: 700; border: 2px solid var(--normal-rule); color: var(--normal); background: transparent; }
+.nh-chip.retake { border-color: var(--text); background: var(--text); color: var(--bg); }
+.stApp ul.nh-fixes { margin: 0.25rem 0 0; padding: 0; list-style: none; }
+.stApp .nh-fixes li { margin-left: 0; color: var(--text); font-size: var(--fs-16); margin: 0.25rem 0; }
+
+/* Empty state */
+.nh-empty { border: 2px dashed var(--line); border-radius: 12px; padding: 2rem 1.5rem; color: var(--muted); font-size: var(--fs-20); max-width: 60ch; }
+
+/* Missing results */
+.nh-missing { color: var(--muted); font-size: var(--fs-16); }
+.nh-missing code { font-family: var(--font-body); font-weight: 700; color: var(--text); background: transparent; padding: 0; }
+
+/* Footer */
+.nh-footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: var(--fs-14); }
+
+/* Plotly / iframe blocks sit on the page without frames */
+iframe { border: 0; color-scheme: normal; }
+
+/* Line icons as masks (st.html strips inline SVG); they take currentColor */
+.nh-icon { display: inline-block; flex: none; background-color: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
+.nh-icon-lg { width: 56px; height: 40px; display: block; margin-top: 1rem; color: var(--text); }
+.nh-icon-sm { width: 16px; height: 16px; }
+.nh-icon-eye { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20viewBox%3D%220%200%2056%2040%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M4%2018c7-9%2016-13%2024-13s17%204%2024%2013%22/%3E%3Cpath%20d%3D%22M4%2018c7%208%2016%2012%2024%2012s17-4%2024-12%22/%3E%3Cpath%20d%3D%22M12%2027c4%205%2010%208%2016%208s12-3%2016-8%22%20stroke-dasharray%3D%222%204%22/%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2217%22%20r%3D%226%22/%3E%3C/svg%3E"); }
+.nh-icon-checks { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20viewBox%3D%220%200%2056%2040%22%20stroke-width%3D%222%22%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2220%22%20r%3D%227%22/%3E%3Cpath%20d%3D%22M7%2020l2%202%204-4%22/%3E%3Ccircle%20cx%3D%2228%22%20cy%3D%2220%22%20r%3D%227%22/%3E%3Cpath%20d%3D%22M25%2020l2%202%204-4%22/%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2220%22%20r%3D%227%22/%3E%3Cpath%20d%3D%22M43%2020l2%202%204-4%22/%3E%3C/svg%3E"); }
+.nh-icon-slip { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20viewBox%3D%220%200%2056%2040%22%20stroke-width%3D%222%22%3E%3Crect%20x%3D%2214%22%20y%3D%223%22%20width%3D%2228%22%20height%3D%2234%22%20rx%3D%222%22/%3E%3Cpath%20d%3D%22M20%2012h16M20%2018h16M20%2024h10%22/%3E%3Cpath%20d%3D%22M33%2030l3%203%206-6%22/%3E%3C/svg%3E"); }
+.nh-icon-ok { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20viewBox%3D%220%200%2016%2016%22%20stroke-width%3D%222.2%22%3E%3Cpath%20d%3D%22M3%208.5l3.2%203L13%204.5%22/%3E%3C/svg%3E"); }
+.nh-icon-retake { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20viewBox%3D%220%200%2016%2016%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M13%208a5%205%200%201%201-1.6-3.7M13%202.5v3h-3%22/%3E%3C/svg%3E"); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
