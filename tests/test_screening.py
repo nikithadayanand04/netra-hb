@@ -120,7 +120,7 @@ def test_familiarity_flags_far_photos_only() -> None:
 
 def test_saved_eye_bundle_flags_a_cool_webcam_tint() -> None:
     """Measured behaviour (not a promise): a strong blue webcam cast is flagged, the sample itself is not.
-    Warm indoor light, washed-out photos and palm or nail photos offered as an eye are NOT flagged."""
+    What else is caught depends on the photo; see outputs/results/safeguards.json (scripts.check_safeguards)."""
     import joblib
     from netra.masks import load_image
     path = config.OUT_DIR / "models" / "screen_eye.joblib"

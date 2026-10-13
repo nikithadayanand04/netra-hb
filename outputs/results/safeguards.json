@@ -1,0 +1,67 @@
+{
+  "meta": "Measures the Screen-page safeguards on the training data -> outputs/results/safeguards.json.\n\n1. Makeup/lash filter: share of real CP-AnemiC conjunctiva pixels it wrongly removes, and the share of images over\n   the warning line. Also the best rejected skin-tone rule (Lab a* < 15) for comparison.\n2. KNN unfamiliar-photo check: per-site thresholds, and the distance for simple variations of the eye refer sample\n   (colour casts, washed out, half skin) and for palm / nail samples offered as an eye.",
+  "makeup": {
+    "images": 220,
+    "pixels_wrongly_removed": 0.000556426351755848,
+    "max_per_image": 0.019218449711723255,
+    "images_over_warning": 0,
+    "rule": "V < 0.3 and S < 0.4; warning above 15%",
+    "rejected_skin_rule_lab_a_lt_15_wrongly_removed": 0.0897833663297472
+  },
+  "unfamiliar": {
+    "thresholds": {
+      "eye": 3.093736786334906,
+      "palm": 2.124897143658296,
+      "nail": 2.2820028408503323
+    },
+    "k": 5,
+    "percentile": 95,
+    "eye_variations": {
+      "original": {
+        "distance": 0.3465205195598076,
+        "threshold": 3.093736786334906,
+        "unfamiliar": false
+      },
+      "cool webcam cast (R x0.8, B x1.25)": {
+        "distance": 3.6259220971732815,
+        "threshold": 3.093736786334906,
+        "unfamiliar": true
+      },
+      "warm indoor light (R x1.1, B x0.6)": {
+        "distance": 4.8947751126107875,
+        "threshold": 3.093736786334906,
+        "unfamiliar": true
+      },
+      "washed out": {
+        "distance": 2.4181152886906454,
+        "threshold": 3.093736786334906,
+        "unfamiliar": false
+      },
+      "box half skin": {
+        "distance": 1.4953323657011321,
+        "threshold": 3.093736786334906,
+        "unfamiliar": false
+      },
+      "palm_refer sample offered as an eye": {
+        "distance": 1.9353118179336435,
+        "threshold": 3.093736786334906,
+        "unfamiliar": false
+      },
+      "palm_normal sample offered as an eye": {
+        "distance": 2.142323825874118,
+        "threshold": 3.093736786334906,
+        "unfamiliar": false
+      },
+      "nail_refer sample offered as an eye": {
+        "distance": 4.446795033057816,
+        "threshold": 3.093736786334906,
+        "unfamiliar": true
+      },
+      "nail_normal sample offered as an eye": {
+        "distance": 1.3847304718532343,
+        "threshold": 3.093736786334906,
+        "unfamiliar": false
+      }
+    }
+  }
+}

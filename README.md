@@ -87,8 +87,9 @@ Run the scripts from the repository root, in this order. Each step writes CSVs, 
 | 7 | `python -m scripts.run_search` | Cheapest-protocol search: 8 search algorithms compared, plus a nested honest re-evaluation -> `outputs/results/search.json`, `search_trace_<algo>.json.gz` (~5 min) |
 | 8 | `python -m scripts.build_screen_models` | Screen-page bundles per site (eye = P6 model; palm, nail = same procedure on folder labels) with out-of-fold scores for the uncertainty band and the KNN unfamiliar-photo reference -> `outputs/models/screen_<site>.joblib` (~4 min; `--reference-only` refreshes just the references) |
 | 9 | `python -m scripts.make_samples` | The 6 demo patients in `app/samples/` (one refer and one normal per site, each correct out-of-fold) |
+| 10 | `python -m scripts.check_safeguards` | Measures the Screen-page makeup filter and KNN unfamiliar-photo check -> `outputs/results/safeguards.json` |
 
-`compare_sites` and `run_search` accept stage names to run part of the pipeline, for example `python -m scripts.run_search report`. Optional extras: `scripts.inspect_images` (sample image grid) and `scripts.plot_scratch_logreg` (from-scratch loss curve). The notebooks `notebooks/01_eda.ipynb` (EDA) and `notebooks/02_clustering.ipynb` (K-means, Unit V) import from `src/netra`.
+`compare_sites` and `run_search` accept stage names to run part of the pipeline, for example `python -m scripts.run_search report`. Optional extras: `scripts.inspect_images` (sample image grid) and `scripts.plot_scratch_logreg` (from-scratch loss curve). The notebooks `notebooks/01_eda.ipynb` (EDA, run after step 2) and `notebooks/02_clustering.ipynb` (K-means, Unit V, run after step 6; writes `outputs/results/clustering.json`) import from `src/netra`. Every headline number and its source file is collected in `docs/results_summary.md`.
 
 Search traces load with:
 
@@ -126,7 +127,7 @@ The fusion gain does not depend on correct pairing (shifted pairs score the same
 
 **Cheapest screening protocol** (objective = specificity at sensitivity ≥ 0.80 from 3-fold grouped CV logistic regression, minus 0.02 x photo cost (eye 3, palm 1, nail 1) and 0.005 per feature):
 
-- Exhaustive search finds an eye protocol (3 features, specificity 0.51) as the in-sample optimum. Local beam search reaches it with 1,321 of 22,402 evaluations (9 of 10 seeds). Hill climbing and simulated annealing reach it in 7 of 10 seeds, the genetic algorithm in 3 of 10. A* with a provably admissible heuristic cannot prune and evaluates everything. A tighter, inadmissible heuristic misses the optimum.
+- Exhaustive search finds an eye protocol (3 features, specificity 0.51) as the in-sample optimum. Local beam search first reaches it after 957 evaluations, in a run of 1,321 against exhaustive search's 22,402 (9 of 10 seeds). Hill climbing and simulated annealing reach it in 7 of 10 seeds, the genetic algorithm in 3 of 10. A* with a provably admissible heuristic cannot prune and evaluates everything. A tighter, inadmissible heuristic misses the optimum.
 - **Search optimism is large.** Rerunning the search inside the training folds of a 1x5 outer CV, the in-sample score of 0.50 falls to 0.31 on held-out folds, with sensitivity 0.70, below the 0.80 target. The chosen features change every fold.
 - Restricted to one site, the honest held-out scores (after cost) are nail 0.33, palm 0.28, palm+nail 0.24 and eye 0.22. Eye's in-sample win is mostly selection optimism on the smallest dataset. Fold-to-fold spread is large (SD up to 0.14).
 
@@ -137,15 +138,17 @@ The fusion gain does not depend on correct pairing (shifted pairs score the same
 ```
 config.py             paths, thresholds, seeds, costs (edit here, not in code)
 src/netra/            library: labels, masks, features, normalise, cleaning, ghana, models, tuning,
-                      evaluate, clustering, search, scratch/ (NumPy LogReg, NB, KNN, K-means)
+                      evaluate, clustering, search, screening, scratch/ (NumPy LogReg, NB, KNN, K-means)
 scripts/              command-line entry points (python -m scripts.<name>)
 notebooks/            EDA and clustering notebooks
 tests/                pytest suite
 outputs/results/      JSON/CSV results and search traces (tracked)
 outputs/figures/      figures (tracked)
-outputs/models/       saved models (not tracked)
-app/                  Streamlit app (to be built)
+outputs/models/       saved models (the app's screen_*.joblib bundles are tracked, the rest are not)
+app/                  Streamlit app, 5 pages (run ./run_demo.sh); fonts in app/static, demo patients in app/samples
 docs/brief.md         full project brief
+docs/results_summary.md  every headline number with its source file
+docs/ui_spec.md       app design spec
 data/                 datasets (not tracked, see Datasets)
 ```
 

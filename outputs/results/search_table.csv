@@ -1,9 +1,9 @@
 algorithm,best_objective,gap_to_optimum,best_state,metric,evaluations,requests,runtime_s,optimum_hit_rate_10_seeds,mean_best_10_seeds
-bfs,0.4368,0.0,"eye: R_med, hsv_s_med, chrom_r_p90",0.512,22402,22402,15.8,1.0,0.4368
-iddfs,0.4368,0.0,"eye: R_med, hsv_s_med, chrom_r_p90",0.512,22402,24426,64.1,1.0,0.4368
-hill_climbing,0.4132,0.0236,"eye: G_med, lab_L_med, chrom_r_p90",0.488,1785,2526,3.1,0.7,0.4242
-simulated_annealing,0.4053,0.0315,"eye: chrom_r_med, lab_L_med, chrom_r_p90",0.48,907,3001,2.8,0.7,0.4252
-local_beam,0.4368,0.0,"eye: R_med, hsv_s_med, chrom_r_p90",0.512,1321,1799,0.8,0.9,0.4352
-genetic,0.4132,0.0236,"eye: G_med, lab_L_med, chrom_r_p90",0.488,446,1640,1.0,0.3,0.4117
-astar,0.4368,0.0,"eye: R_med, hsv_s_med, chrom_r_p90",0.512,22402,22402,65.1,1.0,0.4368
-astar_resub,0.4024,0.0344,"eye: R_med, chrom_r_p90",0.472,16321,16321,49.3,0.0,0.4024
+bfs,0.4368,0.0,"eye: R_med, hsv_s_med, chrom_r_p90",0.512,22402,22402,19.5,1.0,0.4368
+iddfs,0.4368,0.0,"eye: R_med, hsv_s_med, chrom_r_p90",0.512,22402,24426,68.1,1.0,0.4368
+hill_climbing,0.4132,0.0236,"eye: G_med, lab_L_med, chrom_r_p90",0.488,1785,2526,3.2,0.7,0.4242
+simulated_annealing,0.4053,0.0315,"eye: chrom_r_med, lab_L_med, chrom_r_p90",0.48,907,3001,2.7,0.7,0.4252
+local_beam,0.4368,0.0,"eye: R_med, hsv_s_med, chrom_r_p90",0.512,1321,1799,0.7,0.9,0.4352
+genetic,0.4132,0.0236,"eye: G_med, lab_L_med, chrom_r_p90",0.488,446,1640,1.1,0.3,0.4117
+astar,0.4368,0.0,"eye: R_med, hsv_s_med, chrom_r_p90",0.512,22402,22402,63.1,1.0,0.4368
+astar_resub,0.4024,0.0344,"eye: R_med, chrom_r_p90",0.472,16321,16321,45.7,0.0,0.4024

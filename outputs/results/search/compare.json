@@ -19,7 +19,7 @@
     ],
     "evaluations": 22402,
     "requests": 22402,
-    "runtime_s": 15.754971125003067
+    "runtime_s": 19.468332083997666
   },
   {
     "algo": "iddfs",
@@ -41,7 +41,7 @@
     ],
     "evaluations": 22402,
     "requests": 24426,
-    "runtime_s": 64.06290000000445
+    "runtime_s": 68.05665574999875
   },
   {
     "algo": "hill_climbing",
@@ -63,7 +63,7 @@
     ],
     "evaluations": 1785,
     "requests": 2526,
-    "runtime_s": 3.1371810839918908,
+    "runtime_s": 3.1530225410097046,
     "seeds": {
       "n": 10,
       "hit_rate": 0.7,
@@ -92,7 +92,7 @@
     ],
     "evaluations": 907,
     "requests": 3001,
-    "runtime_s": 2.8113718329987023,
+    "runtime_s": 2.730574249988422,
     "seeds": {
       "n": 10,
       "hit_rate": 0.7,
@@ -121,7 +121,7 @@
     ],
     "evaluations": 1321,
     "requests": 1799,
-    "runtime_s": 0.7926074999995762,
+    "runtime_s": 0.7425669579970418,
     "seeds": {
       "n": 10,
       "hit_rate": 0.9,
@@ -150,7 +150,7 @@
     ],
     "evaluations": 446,
     "requests": 1640,
-    "runtime_s": 1.0365894159913296,
+    "runtime_s": 1.084298250003485,
     "seeds": {
       "n": 10,
       "hit_rate": 0.3,
@@ -179,7 +179,7 @@
     ],
     "evaluations": 22402,
     "requests": 22402,
-    "runtime_s": 65.06434729100147
+    "runtime_s": 63.09300575000816
   },
   {
     "algo": "astar_resub",
@@ -199,6 +199,6 @@
     ],
     "evaluations": 16321,
     "requests": 16321,
-    "runtime_s": 49.26922387500235
+    "runtime_s": 45.67541016699397
   }
 ]
