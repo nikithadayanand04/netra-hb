@@ -157,8 +157,9 @@ def severity(position: float, cutoff: float) -> str:
 
 
 def reasons(bundle: dict, feats: dict[str, float], refer: bool, n: int = 3) -> list[dict]:
-    """Rank reason groups by how much the probability moves when that group is set to the healthy median;
-    each reason carries the patient's percentile among healthy children for its feature."""
+    """Rank reason groups by how much the probability moves when that group is set to the healthy median, listing
+    first the groups whose value points the same way as the result; each reason carries the patient's percentile
+    among healthy children for its feature."""
     cols = bundle["input_columns"]
     base = probability(bundle, feats)
     rows = []
@@ -169,5 +170,7 @@ def reasons(bundle: dict, feats: dict[str, float], refer: bool, n: int = 3) -> l
         anaemic_low = bundle["anaemic_median"][feat] < bundle["healthy_median"][feat]
         rows.append({"group": name, "feature": feat, "delta": delta, "pct": pct, "anaemic_low": anaemic_low})
     sign = 1 if refer else -1
-    rows.sort(key=lambda r: -sign * r["delta"])
+    for r in rows:   # does this child's value sit on the anaemic side of the healthy median, as the result says?
+        r["agrees"] = ((r["pct"] < 50) == r["anaemic_low"]) == refer
+    rows.sort(key=lambda r: (not r["agrees"], -sign * r["delta"]))   # agreeing reasons first, then by effect
     return rows[:n]

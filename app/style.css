@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..700&display=swap");
+/* Local fonts (app/static/fonts, OFL): the app needs no internet */
+@font-face { font-family: "Atkinson Hyperlegible"; src: url("/app/static/fonts/AtkinsonHyperlegible-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Atkinson Hyperlegible"; src: url("/app/static/fonts/AtkinsonHyperlegible-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Bricolage Grotesque"; src: url("/app/static/fonts/BricolageGrotesque-VF.ttf") format("truetype"); font-weight: 200 800; font-display: swap; }
 
 :root {
   --porcelain: #F3F5F7;
@@ -121,6 +124,15 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .stApp [data-testid="stButtonGroup"] button * { color: var(--text); font-family: var(--font-body); font-size: var(--fs-16); }
 .stApp [data-testid="stButtonGroup"] button[aria-checked="true"] { background: var(--text) !important; border-color: var(--text) !important; }
 .stApp [data-testid="stButtonGroup"] button[aria-checked="true"] * { color: #FFFFFF !important; font-weight: 700; }
+
+/* Demo mode: no Streamlit header, toolbar, main menu, Deploy button or footer */
+[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stMainMenu"], [data-testid="stAppDeployButton"],
+[data-testid="stDecoration"], .stDeployButton, footer:not(.nh-footer) { display: none !important; }
+
+/* Streamlit widget text that ships below AA: slider min/max labels, disabled camera button, captions */
+.stApp [data-testid="stSlider"] [data-testid="stMarkdownContainer"], .stApp [data-testid="stSlider"] [data-testid="stMarkdownContainer"] * { color: var(--text) !important; opacity: 1 !important; }
+.stApp [data-testid="stCameraInput"] button, .stApp [data-testid="stCameraInput"] button * { color: var(--text) !important; }
+.stApp [data-testid="stCameraInput"] button:disabled, .stApp [data-testid="stCameraInput"] button:disabled * { color: var(--muted) !important; }
 
 /* No Streamlit sidebar: navigation is the top nav bar and in-page buttons */
 [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stExpandSidebarButton"],
@@ -350,7 +362,7 @@ iframe { border: 0; color-scheme: normal; }
 .nh-table .nh-num { display: block; font-weight: 700; }
 .nh-table .nh-ci { display: block; font-size: var(--fs-14); color: var(--muted); }
 .nh-table td.nh-numcell { text-align: right; }
-.nh-table tr.nh-row-final th, .nh-table tr.nh-row-final td { background: color-mix(in srgb, var(--text) 5%, var(--surface)); }
+.nh-table tr.nh-row-final th, .nh-table tr.nh-row-final td { background: #EEF0F4; }
 .nh-table tr.nh-row-final th { box-shadow: inset 4px 0 0 var(--text); }
 .nh-table-text td { max-width: 60ch; line-height: 1.5; }
 .nh-table a { color: var(--text); }

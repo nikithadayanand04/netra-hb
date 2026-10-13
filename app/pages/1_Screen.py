@@ -34,7 +34,7 @@ def cutoff() -> float:
 
 def scroll_to(anchor: str) -> None:
     st.iframe(f"<script>const e = window.parent.document.getElementById('{anchor}');"
-              "if (e) e.scrollIntoView({behavior: 'instant', block: 'start'});</script>", height=1)
+              "if (e) e.scrollIntoView({behavior: 'instant', block: 'start'});</script>", height=1, tab_index=-1)
 
 
 def choose_site(site: str) -> None:
@@ -297,8 +297,12 @@ if res is not None:
                     bar_height=26)
         if res["site"] != "eye":
             ui.note("Palm and nail have no Hb values: the strip position is a colour position only.")
-        items = "".join(f"<li>{html.escape(core.reason_text(res['site'], r))}</li>"
-                        for r in reasons_for(res["site"], res["feats_key"], refer))
+        rs = reasons_for(res["site"], res["feats_key"], refer)
+        items = "".join(f"<li>{html.escape(core.reason_text(res['site'], r))}</li>" for r in rs)
+        if not any(r["agrees"] for r in rs):
+            items += ("<li><strong>None of these measures is on the "
+                      f"{'anaemic' if refer else 'healthy'} side by itself: the model combines them, so treat this "
+                      "result with extra care.</strong></li>")
         st.html(f'<div class="nh-result-body"><h4>Why</h4><ul>{items}</ul><h4>Rough severity</h4>'
                 f'<p class="nh-result-sev">{html.escape(severity_text(res, refer))}</p>'
                 '<p class="nh-result-caveat">Severity is a rough guide from colour only. Only a blood test gives the '

@@ -133,3 +133,17 @@ def test_saved_eye_bundle_flags_a_cool_webcam_tint() -> None:
     tinted = screening.analyse_photo(cool, alpha > 0, "eye")
     assert not screening.familiarity(eye, screening.features(own))["unfamiliar"]
     assert screening.familiarity(eye, screening.features(tinted))["unfamiliar"]
+
+
+def test_reasons_list_agreeing_directions_first() -> None:
+    import joblib
+    path = config.OUT_DIR / "models" / "screen_palm.joblib"
+    if not path.exists():
+        pytest.skip("run python -m scripts.build_screen_models")
+    b = joblib.load(path)
+    from netra.masks import load_image
+    rgb, _ = load_image(config.ROOT / "app" / "samples" / "palm_refer.png")
+    feats = screening.features(screening.analyse_photo(rgb, np.ones(rgb.shape[:2], bool), "palm"))
+    rows = screening.reasons(b, feats, refer=True, n=5)
+    flags = [r["agrees"] for r in rows]
+    assert flags == sorted(flags, reverse=True)   # every agreeing reason comes before any disagreeing one

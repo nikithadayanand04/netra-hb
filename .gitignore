@@ -3,14 +3,19 @@ outputs/*
 !outputs/results/
 !outputs/figures/
 outputs/results/oof_*.csv
+!outputs/results/oof_tuned.csv
+!outputs/features_cp_anemic.csv
 .venv/
 __pycache__/
 *.pyc
 .pytest_cache/
 .ipynb_checkpoints/
 .DS_Store
-outputs/models/
 *.joblib
+# the app's model bundles (zlib-compressed, each < 3 MB) are committed so a fresh clone runs without rebuilding
+!outputs/models/
+outputs/models/*
+!outputs/models/screen_*.joblib
 *.rar
 *.zip
 *.xlsx

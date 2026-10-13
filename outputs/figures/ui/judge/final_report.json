@@ -1,0 +1,289 @@
+{
+ "pages": {
+  "Home": 0.1,
+  "Screen": 0.13,
+  "Results": 0.13,
+  "Insights": 1.0,
+  "About": 0.13
+ },
+ "samples": [
+  {
+   "sample": 1,
+   "seconds": 0.24,
+   "result": "Refer for Hb test",
+   "prob": "Likely anaemic, 81% chance",
+   "low_conf": false
+  },
+  {
+   "sample": 2,
+   "seconds": 0.05,
+   "result": "Normal",
+   "prob": "Likely not anaemic, 28% chance",
+   "low_conf": false
+  },
+  {
+   "sample": 3,
+   "seconds": 0.04,
+   "result": "Refer for Hb test",
+   "prob": "Likely anaemic, 74% chance",
+   "low_conf": false
+  },
+  {
+   "sample": 4,
+   "seconds": 0.04,
+   "result": "Normal",
+   "prob": "Likely not anaemic, 12% chance",
+   "low_conf": false
+  },
+  {
+   "sample": 5,
+   "seconds": 0.05,
+   "result": "Refer for Hb test",
+   "prob": "Likely anaemic, 66% chance",
+   "low_conf": false
+  },
+  {
+   "sample": 6,
+   "seconds": 0.04,
+   "result": "Normal",
+   "prob": "Likely not anaemic, 20% chance",
+   "low_conf": false
+  }
+ ],
+ "contrast": [
+  {
+   "page": "Results",
+   "text": "0.33",
+   "ratio": 1,
+   "need": 4.5,
+   "size": 14,
+   "color": "rgb(27, 35, 64)"
+  }
+ ],
+ "fonts": {
+  "Home": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Screen": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Results": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Insights": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Source Sans 100 900",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Insights/Eye vs palm vs nail": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Source Sans 100 900",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Insights/Clusters": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Source Sans 100 900",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Insights/Search": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Source Sans 100 900",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "About": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Sample 1": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Sample 2": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Sample 3": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Sample 4": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Sample 5": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  },
+  "Sample 6": {
+   "atk": true,
+   "atkb": true,
+   "bric": false,
+   "loaded": [
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Atkinson Hyperlegible 400",
+    "Atkinson Hyperlegible 700",
+    "Bricolage Grotesque 200 800"
+   ]
+  }
+ },
+ "focus": [
+  {
+   "tag": "A",
+   "text": "Home",
+   "outline": "solid 3px rgb(59, 91, 219)",
+   "shadow": "none"
+  },
+  {
+   "tag": "A",
+   "text": "Screen",
+   "outline": "solid 3px rgb(59, 91, 219)",
+   "shadow": "none"
+  },
+  {
+   "tag": "A",
+   "text": "Results",
+   "outline": "solid 3px rgb(59, 91, 219)",
+   "shadow": "none"
+  },
+  {
+   "tag": "A",
+   "text": "Insights",
+   "outline": "solid 3px rgb(59, 91, 219)",
+   "shadow": "none"
+  },
+  {
+   "tag": "A",
+   "text": "About",
+   "outline": "solid 3px rgb(59, 91, 219)",
+   "shadow": "none"
+  },
+  {
+   "tag": "BUTTON",
+   "text": "Start a screening",
+   "outline": "solid 3px rgb(59, 91, 219)",
+   "shadow": "none"
+  },
+  {
+   "tag": "BUTTON",
+   "text": "Try a sample patient",
+   "outline": "solid 3px rgb(59, 91, 219)",
+   "shadow": "none"
+  },
+  {
+   "tag": "BODY",
+   "text": "Netra-Hb\n\nHome\n\nScreen\n\nResult",
+   "outline": "none 3px rgb(27, 35, 64)",
+   "shadow": "none"
+  }
+ ],
+ "blocked": [],
+ "first_load_s": 0.93
+}

@@ -97,7 +97,9 @@ from netra.search import load_trace
 t = load_trace("simulated_annealing")   # meta, summary, feature_names, columns, evaluations, steps
 ```
 
-**App:** the Streamlit screening app (`streamlit run app/Home.py`) is not built yet. `app/` is a placeholder.
+**App (lab demo):** run `./run_demo.sh` from the repository root. It activates `.venv`, checks that the saved screen models in `outputs/models/` exist (and builds them with `python -m scripts.build_screen_models` if not), then starts Streamlit and opens the browser on Home. Set `PORT=8600 ./run_demo.sh` to change the port.
+
+The app runs fully offline: fonts are served from `app/static/fonts`, and the small model bundles (`outputs/models/screen_*.joblib`, about 1 to 2.4 MB each) plus the out-of-fold predictions it reads are committed, so a fresh clone works without rebuilding. It has five pages: Home, Screen (age band, site, photo or sample patient, quality check, result), Results (model comparison and threshold trade-off), Insights (data, sites, clusters, search) and About. Equivalent manual start: `source .venv/bin/activate && streamlit run app/Home.py`.
 
 ## Key results
 

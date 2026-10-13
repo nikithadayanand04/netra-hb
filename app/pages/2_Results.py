@@ -83,7 +83,8 @@ st.html(
     f'<li><span class="nh-kid sent"></span>Healthy, sent for a test ({false_ref})</li>'
     f'<li><span class="nh-kid cleared"></span>Healthy, cleared ({100 - n_an - false_ref})</li></ul></div>'
     f'<p class="nh-note">Sensitivity {sens:.0%}, specificity {spec:.0%} at threshold {thr:.2f}, from the first '
-    'repeat\'s pooled out-of-fold predictions (220 children), scaled to 100.</p>')
+    'repeat\'s pooled out-of-fold predictions (220 children), scaled to 100. The table above and Home report the '
+    'mean over 25 folds, each at its own learned threshold, so they differ by a few points.</p>')
 
 ui.spacer(small=True)
 left, right = st.columns(2, gap="large")

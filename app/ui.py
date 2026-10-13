@@ -18,8 +18,9 @@ STRIP_STOPS = ["#F7E1E1", "#E9A3A8", "#CF5B6B", "#A3153A", "#6E0B24"]
 HB_MIN, HB_MAX = 6.0, 15.0
 LIGHT = {"bg": PORCELAIN, "surface": "#FFFFFF", "text": INK, "muted": SLATE, "line": "#D3D8E0", "grid": "#E1E5EB"}
 
-FONTS_URL = ("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700"
-             "&family=Bricolage+Grotesque:opsz,wght@12..96,600..700&display=swap")
+FONT_FACES = """@font-face { font-family: "Atkinson Hyperlegible"; src: url("/app/static/fonts/AtkinsonHyperlegible-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Atkinson Hyperlegible"; src: url("/app/static/fonts/AtkinsonHyperlegible-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Bricolage Grotesque"; src: url("/app/static/fonts/BricolageGrotesque-VF.ttf") format("truetype"); font-weight: 200 800; font-display: swap; }"""
 DISPLAY_FONT = "Bricolage Grotesque, sans-serif"
 BODY_FONT = "Atkinson Hyperlegible, sans-serif"
 
@@ -54,7 +55,7 @@ def inject_css() -> None:
 
 def setup_page(title: str, script: str) -> None:
     """script is this page's entry in PAGES, e.g. "pages/1_Screen.py"; it marks the current nav item."""
-    st.set_page_config(page_title=f"{title} | Netra-Hb", page_icon=":material/opacity:", layout="wide",
+    st.set_page_config(page_title=f"{title} | Netra-Hb", page_icon=str(APP_DIR / "static" / "favicon.png"), layout="wide",
                        initial_sidebar_state="collapsed")
     inject_css()
     pio.templates.default = "netra"
@@ -118,8 +119,8 @@ def _hb_frac(hb: float) -> float:
 
 
 _STRIP_HTML = """<!doctype html><html><head><meta charset="utf-8">
-<link rel="stylesheet" href="__FONTS__">
 <style>
+__FACES__
 :root { --text: __TEXT__; --muted: __MUTED__; --bg: __BG__; }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: transparent; color: var(--text);
@@ -224,14 +225,14 @@ def hb_strip(hb: float | None = None, swatch_rgb: tuple[int, int, int] | None = 
         f'<div class="tick{" first" if v == HB_MIN else " last" if v == HB_MAX else ""}" '
         f'style="left:{_hb_frac(v) * 100:.2f}%"><i></i><b>{v:g}</b></div>'
         for v in range(int(HB_MIN), int(HB_MAX) + 1))
-    doc = (_STRIP_HTML.replace("__TICKS__", ticks).replace("__FONTS__", FONTS_URL).replace("__TEXT__", tk["text"])
+    doc = (_STRIP_HTML.replace("__TICKS__", ticks).replace("__FACES__", FONT_FACES).replace("__TEXT__", tk["text"])
            .replace("__MUTED__", tk["muted"]).replace("__BG__", tk["bg"]).replace("__STOPS__", ", ".join(STRIP_STOPS))
            .replace("__ARIA__", "Haemoglobin colour scale from 6 to 15 g/dL").replace("__PHOTO__", photo).replace("__CUT__", cut)
            .replace("__SWATCH__", swatch).replace("__ANIMATE__", "true" if animate else "false"))
     doc = doc.replace("<style>", f"<style>:root{{--top:{top}px;--bh:{bar_height}px;--pw:{photo_width}px}}", 1)
     label_room = 60
     height = max(top + bar_height + label_room + 6, photo_width + 12 if photo_url else 0)
-    st.iframe(doc, height=height)
+    st.iframe(doc, height=height, tab_index=-1)   # decorative: the result is also given as text
 
 
 _ICON_OK = '<span class="nh-icon nh-icon-sm nh-icon-ok" aria-hidden="true"></span>'
@@ -295,5 +296,6 @@ def class_color(anaemic: bool) -> str:
 def chart(fig: go.Figure, takeaway: str, height: int | None = None, key: str | None = None) -> None:
     """Every chart carries a one-line plain-language takeaway above it."""
     st.html(f'<p class="nh-takeaway">{html.escape(takeaway)}</p>')
-    fig.update_layout(template="netra", **({"height": height} if height else {}))
-    st.plotly_chart(fig, config={"displayModeBar": False}, key=key)
+    fig.update_layout(template="netra", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+                      **({"height": height} if height else {}))
+    st.plotly_chart(fig, config={"displayModeBar": False}, key=key, theme=None)   # our template, not Streamlit's

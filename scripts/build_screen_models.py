@@ -106,7 +106,7 @@ def main() -> None:
             b = eye_bundle(df) if site == "eye" else ghana_bundle(site, df)
         b |= {"site": site, "input_columns": COLS, "n": len(df), "n_anaemic": int(df.label.sum()),
               **healthy_reference(df), "nn": nn_reference(df)}
-        joblib.dump(b, MODELS / f"screen_{site}.joblib")
+        joblib.dump(b, MODELS / f"screen_{site}.joblib", compress=3)   # committed: keep each well under 5 MB
         summary["sites"][site] = {k: b[k] for k in ("n", "n_anaemic", "threshold", "members", "label_source",
                                                      "trained_on", "hb_mae")} | {"oof_roc_auc": b.get("oof_roc_auc")}
         summary["sites"][site]["unfamiliar_threshold"] = b["nn"]["threshold"]
