@@ -67,15 +67,6 @@ def test_photo_checks_flag_dark_and_blurred_photos() -> None:
     assert not photo_checks(sharp, tissue, config.GLARE_MAX_FRAC + 0.01)["glare"]["ok"]
 
 
-def test_referral_slip_is_a_pdf() -> None:
-    from datetime import datetime
-    import slip
-    r = {"site": "eye", "p": 0.7, "refer": True, "position": 9.5, "swatch": (200, 120, 120)}
-    pdf = slip.referral_slip({"name": "", "age_key": "age_6_59m", "cutoff": 11.0, "refer": True,
-                              "time": datetime(2026, 1, 1), "results": [r], "combined": None})
-    assert pdf[:4] == b"%PDF" and len(pdf) > 5000
-
-
 def test_samples_cover_every_site_with_both_results() -> None:
     import json
     s = json.loads((config.ROOT / "app" / "samples" / "samples.json").read_text())["samples"]

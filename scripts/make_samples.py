@@ -52,7 +52,7 @@ def main() -> None:
             name = f"{site}_{'refer' if label else 'normal'}.png"
             shutil.copy(source(site, row), OUT / name)
             samples.append({"id": f"{site}_{'refer' if label else 'normal'}", "site": site, "file": name,
-                            "age_band": "age_6_59m", "whole_image_is_tissue": whole,
+                            "age_band": "6–59 months", "whole_image_is_tissue": whole,
                             "label": int(label), "hb": None if pd.isna(row.get("hb")) else float(row["hb"]),
                             "label_source": bundle["label_source"], "source_id": str(row.get("patient_id")),
                             "oof_p": float(row["oof"]), "app_p": p})

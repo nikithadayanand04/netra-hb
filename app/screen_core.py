@@ -118,7 +118,7 @@ def on_black(rgb: np.ndarray, alpha: np.ndarray | None) -> np.ndarray:
     """Transparent pixels shown on the page background colour rather than black noise."""
     if alpha is None:
         return rgb
-    bg = np.array(ui_rgb(ui.tokens()["surface"]), float)
+    bg = np.array(ui_rgb(ui.LIGHT["surface"]), float)
     a = (alpha.astype(float) / 255)[..., None]
     return (rgb * a + bg * (1 - a)).astype(np.uint8)
 
@@ -126,7 +126,7 @@ def on_black(rgb: np.ndarray, alpha: np.ndarray | None) -> np.ndarray:
 def measured_preview(photo: screening.Photo, long_side: int = 420) -> str:
     """Zoomed view of exactly the measured pixels: colour = measured, slate = removed (makeup, lashes, glare),
     surface = not selected. Nearest-neighbour enlargement so every pixel stays a pixel."""
-    bg, grey = ui_rgb(ui.tokens()["surface"]), ui_rgb(ui.SLATE)
+    bg, grey = ui_rgb(ui.LIGHT["surface"]), ui_rgb(ui.SLATE)
     out = np.empty_like(photo.rgb)
     out[:] = bg
     out[photo.tissue & ~photo.mask] = grey
@@ -148,7 +148,7 @@ def square_thumb(photo: screening.Photo, point: tuple[float, float]) -> tuple[st
     """Tissue crop padded to a square on the surface colour, with the point re-expressed in the square."""
     h, w = photo.rgb.shape[:2]
     s = max(h, w)
-    bg = ui_rgb(ui.tokens()["surface"])
+    bg = ui_rgb(ui.LIGHT["surface"])
     canvas = np.full((s, s, 3), bg, np.uint8)
     oy, ox = (s - h) // 2, (s - w) // 2
     crop = np.where(photo.tissue[..., None], photo.rgb, np.array(bg, np.uint8))
@@ -171,21 +171,25 @@ def analyse(site: str, photo: screening.Photo, p_override: float | None = None) 
             "thumb": thumb, "thumb_point": thumb_pt, "checks": photo.checks}
 
 
-def combine(results: list[dict], cutoff: float) -> dict | None:
-    """Experimental: mean calibrated probability and mean strip position over the sites of one visit."""
-    if len(results) < 2:
-        return None
-    pos = float(np.mean([r["position"] for r in results]))
-    sw = tuple(int(np.mean([r["swatch"][k] for r in results])) for k in range(3))
-    return {"site": "combined", "p": float(np.mean([r["p"] for r in results])), "position": pos,
-            "refer": bool(pos < cutoff), "swatch": sw}
+NOUNS = {"eye": "eyelid", "palm": "palm", "nail": "nail bed"}
+REASONS = {
+    ("redness", False): "The {site} is less red than {pct}% of healthy children.",
+    ("redness", True): "The {site} is redder than {pct}% of healthy children.",
+    ("lightness", False): "The {site} is darker than {pct}% of healthy children.",
+    ("lightness", True): "The {site} is paler than {pct}% of healthy children.",
+    ("blood_index", False): "Its blood-colour index is lower than in {pct}% of healthy children.",
+    ("blood_index", True): "Its blood-colour index is higher than in {pct}% of healthy children.",
+    ("red_share", False): "Red makes up less of its colour than in {pct}% of healthy children.",
+    ("red_share", True): "Red makes up more of its colour than in {pct}% of healthy children.",
+    ("tone", False): "Its colour is less yellow than in {pct}% of healthy children.",
+    ("tone", True): "Its colour is more yellow than in {pct}% of healthy children.",
+}
 
 
 def reason_text(site: str, r: dict) -> str:
     high = r["pct"] >= 50
-    pct = round(r["pct"]) if high else round(100 - r["pct"])
-    pct = min(max(pct, 1), 99)
-    return ui.t(f"r_{r['group']}_{'high' if high else 'low'}", site=ui.t(f"noun_{site}"), pct=pct)
+    pct = min(max(round(r["pct"]) if high else round(100 - r["pct"]), 1), 99)
+    return REASONS[(r["group"], high)].format(site=NOUNS[site], pct=pct)
 
 
 # ---- Line illustrations: CSS masks (st.html strips inline SVG), lines in currentColor and tissue in pallor ----

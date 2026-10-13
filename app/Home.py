@@ -6,32 +6,39 @@ import ui
 
 ui.setup_page("Home", "Home.py")
 
-STEP_ICONS = {1: "eye", 2: "checks", 3: "slip"}
+STEPS = [
+    ("eye", "Photograph", "Gently pull down the lower eyelid, or show the palm or a nail, in daylight without flash."),
+    ("checks", "Quality check", "Light, glare, sharpness and makeup are checked at once. If one fails, you get one "
+                                "plain fix and retake."),
+    ("slip", "Result", "Refer for Hb test or Normal, with the chance, its uncertainty band and three plain reasons."),
+]
 
 hero_text, hero_actions = st.columns([1.35, 1], gap="large", vertical_alignment="bottom")
 with hero_text:
-    st.html(f'<h1 class="nh-hero-title">{html.escape(ui.t("hero_title"))}</h1>'
-            f'<p class="nh-lede">{html.escape(ui.t("hero_lede"))}</p>')
+    st.html('<h1 class="nh-hero-title">Needle-free anaemia screening</h1>'
+            '<p class="nh-lede">From one phone photo of the inner eyelid, palm or nail bed, Netra-Hb suggests whether '
+            'to refer a child for a blood Hb test.</p>')
 with hero_actions:
-    if st.button(ui.t("start"), type="primary", width="stretch", key="home_start"):
+    if st.button("Start a screening", type="primary", width="stretch", key="home_start"):
         st.session_state["sample_mode"] = False
         st.switch_page("pages/1_Screen.py")
-    if st.button(ui.t("try_sample"), type="secondary", width="stretch", key="home_sample"):
+    if st.button("Try a sample patient", type="secondary", width="stretch", key="home_sample"):
         st.session_state["sample_mode"] = True
         st.switch_page("pages/1_Screen.py")
-    st.html(f'<p class="nh-actions-note">{html.escape(ui.t("actions_note"))}</p>')
+    st.html('<p class="nh-actions-note">Classical machine learning on colour features. No needle, no test strips.</p>')
 
 ui.spacer(small=True)
 ui.hb_strip(bar_height=40)
-st.html(f'<p class="nh-actions-note">{html.escape(ui.t("strip_caption"))}</p>')
+st.html('<p class="nh-actions-note">The haemoglobin colour scale. Paler tissue sits to the left, richer red to the '
+        'right.</p>')
 
 ui.spacer()
-ui.section(ui.t("how_title"))
+ui.section("How it works")
 steps = "".join(
     f'<li class="nh-step"><div class="nh-step-head"><span class="nh-step-num">{i}</span>'
-    f'<span class="nh-step-name">{html.escape(ui.t(f"step{i}_name"))}</span></div>'
-    f'<p>{html.escape(ui.t(f"step{i}_text"))}</p><span class="nh-icon nh-icon-lg nh-icon-{STEP_ICONS[i]}" aria-hidden="true"></span></li>'
-    for i in (1, 2, 3)
+    f'<span class="nh-step-name">{html.escape(name)}</span></div>'
+    f'<p>{html.escape(text)}</p><span class="nh-icon nh-icon-lg nh-icon-{icon}" aria-hidden="true"></span></li>'
+    for i, (icon, name, text) in enumerate(STEPS, 1)
 )
 st.html(f'<ol class="nh-steps">{steps}</ol>')
 
@@ -47,7 +54,7 @@ def pct(m: dict) -> tuple[int, int, int]:
 
 final = ui.read_result("final.json")
 if final is None:
-    ui.missing("final.json", "tune_models")
+    ui.missing("results/final.json", "tune_models")
 else:
     fm = final["headline"]["fold_mean"]
     sens, spec, auc = pct(fm["sensitivity"]), pct(fm["specificity"]), fm["roc_auc"]

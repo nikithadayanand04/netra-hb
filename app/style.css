@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Kannada:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600..700&display=swap");
 
 :root {
   --porcelain: #F3F5F7;
@@ -23,8 +23,8 @@
 
   --strip: linear-gradient(90deg, #F7E1E1 0%, #E9A3A8 25%, #CF5B6B 50%, #A3153A 75%, #6E0B24 100%);
 
-  --font-display: "Bricolage Grotesque", "Noto Sans Kannada", "Noto Sans Devanagari", system-ui, sans-serif;
-  --font-body: "Atkinson Hyperlegible", "Noto Sans Kannada", "Noto Sans Devanagari", system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", system-ui, sans-serif;
 
   --fs-14: 0.875rem;
   --fs-16: 1rem;
@@ -34,21 +34,6 @@
   --fs-64: 4rem;
 }
 
-/* Dark tokens: set by ui.inject_css when the Dark toggle is on. Text versions of haem/clear are lightened for AA. */
-.nh-dark {
-  --bg: #121624;
-  --surface: #1B2133;
-  --text: #E6E9F0;
-  --muted: #9AA3B5;
-  --line: #2E3650;
-  --refer: #D17189;
-  --refer-rule: #C24161;
-  --normal: #4C958A;
-  --normal-rule: #35877C;
-  --btn-bg: #E6E9F0;
-  --btn-text: #121624;
-  --focus: #8FA8FF;
-}
 
 html, body, .stApp, [data-testid="stAppViewContainer"] {
   background: var(--bg);
@@ -130,32 +115,12 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   box-shadow: none !important;
 }
 
-/* Language segmented control and dark toggle */
-.stApp [data-testid="stButtonGroup"] button[data-variant="segmented_control"] {
-  min-height: 44px;
-  padding: 0 0.9rem;
-  background: transparent !important;
-  border-color: var(--line) !important;
-}
-.stApp [data-testid="stButtonGroup"] button[data-variant="segmented_control"] * {
-  color: var(--muted) !important;
-  font-family: var(--font-body);
-  font-size: var(--fs-16);
-}
-.stApp [data-testid="stButtonGroup"] button[data-variant="segmented_control"][aria-checked="true"] {
-  background: var(--text) !important;
-  border-color: var(--text) !important;
-}
-.stApp [data-testid="stButtonGroup"] button[data-variant="segmented_control"][aria-checked="true"] * {
-  color: var(--bg) !important;
-  font-weight: 700;
-}
-[data-testid="stCheckbox"] label, .stToggle label { min-height: 44px; align-items: center; }
-/* Toggle track: slate when off, ink (or light text in dark mode) when on; both clear 3:1 against the page */
-.stApp [data-testid="stCheckbox"] label > div:not([data-testid]) { background: var(--muted) !important; }
-.stApp [data-testid="stCheckbox"] label > div:not([data-testid]) > div { background: var(--bg) !important; }
-.stApp [data-testid="stCheckbox"] label:has(input:checked) > div:not([data-testid]) { background: var(--text) !important; }
-.stApp [data-testid="stWidgetLabel"] p, .stApp label p { color: var(--text); }
+
+/* Segmented control (age band): the selected option is filled in ink */
+.stApp [data-testid="stButtonGroup"] button { min-height: 44px; padding: 0 0.9rem; background: var(--surface); border-color: var(--line); }
+.stApp [data-testid="stButtonGroup"] button * { color: var(--text); font-family: var(--font-body); font-size: var(--fs-16); }
+.stApp [data-testid="stButtonGroup"] button[aria-checked="true"] { background: var(--text) !important; border-color: var(--text) !important; }
+.stApp [data-testid="stButtonGroup"] button[aria-checked="true"] * { color: #FFFFFF !important; font-weight: 700; }
 
 /* No Streamlit sidebar: navigation is the top nav bar and in-page buttons */
 [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stExpandSidebarButton"],
@@ -311,14 +276,6 @@ iframe { border: 0; color-scheme: normal; }
 .nh-note { color: var(--muted); font-size: var(--fs-16); line-height: 1.5; margin: 0.4rem 0; max-width: 62ch; }
 .stApp .nh-note-warn, .stApp .nh-error { color: var(--text); font-weight: 700; }
 
-/* Stepper: a genuine sequence, so numbers are fine */
-.nh-stepper { display: flex; gap: 0.5rem; list-style: none; margin: 0 0 1.5rem; padding: 0; }
-.nh-stepper-item { flex: 1; display: flex; align-items: center; gap: 0.5rem; padding-top: 0.6rem;
-  border-top: 3px solid var(--line); color: var(--muted); font-size: var(--fs-16); min-width: 0; }
-.nh-stepper-num { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-20); line-height: 1; }
-.nh-stepper-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.nh-stepper-item.done { border-top-color: var(--muted); color: var(--text); }
-.nh-stepper-item.current { border-top-color: var(--text); color: var(--text); font-weight: 700; }
 
 /* WHO cut-off block */
 .nh-cutoff { margin: 0 0 0.75rem; }
@@ -349,22 +306,18 @@ iframe { border: 0; color-scheme: normal; }
 [data-testid="stCameraInput"] video, [data-testid="stCameraInput"] img { border-radius: 12px; }
 
 /* Result: square corners, thick left rule in the state colour, the strip inside the panel */
-.st-key-nh_result_refer, .st-key-nh_result_normal, .st-key-nh_result_refer_combined, .st-key-nh_result_normal_combined {
+.st-key-nh_result_refer, .st-key-nh_result_normal {
   background: var(--surface); border-left: 8px solid var(--rule); padding: 1.25rem 1.5rem 1.5rem; border-radius: 0; gap: 0.5rem; }
-.st-key-nh_result_refer, .st-key-nh_result_refer_combined { --rule: var(--refer-rule); --state: var(--refer); }
-.st-key-nh_result_normal, .st-key-nh_result_normal_combined { --rule: var(--normal-rule); --state: var(--normal); }
-.stApp .nh-result-word-sm { font-size: var(--fs-40); }
+.st-key-nh_result_refer { --rule: var(--refer-rule); --state: var(--refer); }
+.st-key-nh_result_normal { --rule: var(--normal-rule); --state: var(--normal); }
 .nh-result-sev { margin: 0; font-size: var(--fs-16); color: var(--text); }
 .nh-result-body h4, .nh-result-head + h4 { font-family: var(--font-display); font-weight: 650; font-size: var(--fs-20); margin: 1rem 0 0.4rem; color: var(--text); }
-.nh-result-body ul, .nh-site-list { margin: 0; padding-left: 1.2rem; }
-.nh-result-body li, .nh-site-list li { margin: 0.3rem 0; line-height: 1.5; max-width: 60ch; color: var(--text); }
+.nh-result-body ul { margin: 0; padding-left: 1.2rem; }
+.nh-result-body li { margin: 0.3rem 0; line-height: 1.5; max-width: 60ch; color: var(--text); }
 .nh-result-body .nh-result-caveat { margin-top: 0.5rem; }
 .st-key-nh_result_actions { align-items: center; }
 
-.nh-register-totals { font-size: var(--fs-20); color: var(--text); margin: 0 0 0.5rem; }
 @media (max-width: 640px) {
-  .nh-stepper-name { display: none; }
-  .nh-stepper-item.current .nh-stepper-name { display: inline; }
   .stApp .nh-cutoff-num { font-size: var(--fs-40); }
   .st-key-nh_result_refer, .st-key-nh_result_normal { padding: 1rem; border-left-width: 6px; }
 }
@@ -380,6 +333,53 @@ iframe { border: 0; color-scheme: normal; }
 .nh-conf-why li { color: var(--text); margin: 0.2rem 0; line-height: 1.5; max-width: 60ch; }
 .nh-preview { display: block; max-width: 100%; max-height: 260px; border-radius: 12px; border: 1px solid var(--line);
   image-rendering: pixelated; background: var(--surface); }
+
+/* Screen page step headings: a genuine sequence, so numbers are fine */
+.nh-step-title { display: flex; align-items: baseline; gap: 0.75rem; scroll-margin-top: 1rem; }
+.nh-step-n { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-40); line-height: 1; color: var(--text); }
+.stApp .nh-step-todo, .stApp .nh-step-todo .nh-step-n { color: var(--muted); }
+
+/* Charts and tables: a plain-language takeaway sits above every chart */
+.nh-takeaway { font-size: var(--fs-16); color: var(--text); font-weight: 700; line-height: 1.45; max-width: 70ch; margin: 0 0 0.5rem; }
+.nh-table-wrap { overflow-x: auto; max-width: 100%; }
+.nh-table { border-collapse: collapse; width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; font-size: var(--fs-16); }
+.nh-table th, .nh-table td { text-align: left; padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--text); }
+.nh-table thead th { font-weight: 700; font-size: var(--fs-14); color: var(--muted); background: var(--bg); }
+.nh-table tbody th { font-weight: 700; }
+.nh-table tbody tr:last-child th, .nh-table tbody tr:last-child td { border-bottom: 0; }
+.nh-table .nh-num { display: block; font-weight: 700; }
+.nh-table .nh-ci { display: block; font-size: var(--fs-14); color: var(--muted); }
+.nh-table td.nh-numcell { text-align: right; }
+.nh-table tr.nh-row-final th, .nh-table tr.nh-row-final td { background: color-mix(in srgb, var(--text) 5%, var(--surface)); }
+.nh-table tr.nh-row-final th { box-shadow: inset 4px 0 0 var(--text); }
+.nh-table-text td { max-width: 60ch; line-height: 1.5; }
+.nh-table a { color: var(--text); }
+
+/* 100-child icon grid */
+.nh-grid-wrap { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; margin: 0.5rem 0; }
+.nh-kids { display: grid; grid-template-columns: repeat(10, 28px); gap: 8px; }
+.nh-kid { width: 28px; height: 34px; display: inline-block; flex: none; --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2028%2034%22%3E%3Ccircle%20cx%3D%2214%22%20cy%3D%228%22%20r%3D%227%22/%3E%3Cpath%20d%3D%22M2%2034c0-9%205-15%2012-15s12%206%2012%2015z%22/%3E%3C/svg%3E");
+  -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
+.nh-kid.caught { background: var(--haem); }
+.nh-kid.missed { background: repeating-linear-gradient(135deg, var(--haem) 0 3px, #F2C4C9 3px 6px); }
+.nh-kid.sent { background: repeating-linear-gradient(135deg, var(--clear) 0 3px, #CDE4E0 3px 6px); }
+.nh-kid.cleared { background: var(--clear); }
+.nh-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.nh-legend li { display: flex; align-items: center; gap: 0.6rem; color: var(--text); font-size: var(--fs-16); }
+.nh-legend .nh-kid { width: 20px; height: 24px; }
+
+/* Cluster centroid swatches */
+.nh-centroids { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin: 0.75rem 0; }
+.nh-centroid { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0.9rem; }
+.nh-centroid-swatch { display: block; height: 56px; border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(27,35,64,.12); }
+.nh-centroid-name { font-family: var(--font-display); font-weight: 650; font-size: var(--fs-20); margin: 0.6rem 0 0.2rem; color: var(--text); }
+.nh-centroid-meta { margin: 0; color: var(--muted); font-size: var(--fs-14); line-height: 1.5; }
+
+/* About */
+.nh-prose p { max-width: 70ch; line-height: 1.6; color: var(--text); font-size: var(--fs-16); margin: 0 0 0.8rem; }
+.nh-disclaimer { border-left: 8px solid var(--text); background: var(--surface); padding: 1rem 1.25rem; max-width: 70ch; }
+.nh-disclaimer h4 { font-family: var(--font-display); font-weight: 650; font-size: var(--fs-20); margin: 0 0 0.3rem; color: var(--text); }
+.nh-disclaimer p { margin: 0; line-height: 1.55; color: var(--text); }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
