@@ -4,7 +4,7 @@ import streamlit as st
 
 import ui
 
-ui.setup_page("Home")
+ui.setup_page("Home", "Home.py")
 
 STEP_ICONS = {1: "eye", 2: "checks", 3: "slip"}
 

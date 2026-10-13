@@ -31,8 +31,29 @@ BODY_FONT = "Atkinson Hyperlegible, Noto Sans Kannada, Noto Sans Devanagari, san
 
 LANGS = {"en": "English", "kn": "ಕನ್ನಡ", "hi": "हिंदी"}
 
+# (script, nav label key, URL path) in the order of docs/ui_spec.md
+PAGES = [
+    ("Home.py", "nav_home", ""),
+    ("pages/1_Screen.py", "nav_screen", "Screen"),
+    ("pages/2_How_sure.py", "nav_how_sure", "How_sure"),
+    ("pages/3_Sites.py", "nav_sites", "Sites"),
+    ("pages/4_Lighting.py", "nav_lighting", "Lighting"),
+    ("pages/5_Patterns.py", "nav_patterns", "Patterns"),
+    ("pages/6_Protocol_finder.py", "nav_protocol", "Protocol_finder"),
+    ("pages/7_About.py", "nav_about", "About"),
+]
+
 # Screening-flow strings in all three languages. Science-page strings may be English only: t() falls back to "en".
 STRINGS: dict[str, dict[str, str]] = {
+    "nav_home": {"en": "Home", "kn": "ಮುಖಪುಟ", "hi": "होम"},
+    "nav_screen": {"en": "Screen", "kn": "ತಪಾಸಣೆ", "hi": "जाँच"},
+    "nav_how_sure": {"en": "How sure is it?"},
+    "nav_sites": {"en": "Eye, palm or nail?"},
+    "nav_lighting": {"en": "Lighting"},
+    "nav_patterns": {"en": "Patterns"},
+    "nav_protocol": {"en": "Protocol finder"},
+    "nav_about": {"en": "About and limits"},
+    "nav_label": {"en": "Pages", "kn": "ಪುಟಗಳು", "hi": "पेज"},
     "dark": {"en": "Dark", "kn": "ಡಾರ್ಕ್", "hi": "डार्क"},
     "language": {"en": "Language", "kn": "ಭಾಷೆ", "hi": "भाषा"},
     "hero_title": {"en": "Needle-free anaemia screening", "kn": "ಸೂಜಿ ಇಲ್ಲದೆ ರಕ್ತಹೀನತೆ ತಪಾಸಣೆ",
@@ -111,6 +132,7 @@ STRINGS: dict[str, dict[str, str]] = {
     "no_photo": {"en": "No photo yet. Take one or pick a sample patient.",
                  "kn": "ಇನ್ನೂ ಫೋಟೋ ಇಲ್ಲ. ಒಂದನ್ನು ತೆಗೆಯಿರಿ ಅಥವಾ ಮಾದರಿ ರೋಗಿಯನ್ನು ಆರಿಸಿ.",
                  "hi": "अभी कोई फ़ोटो नहीं। एक फ़ोटो लें या नमूना मरीज़ चुनें।"},
+    "page_building": {"en": "This page is being built. Start a screening from Home in the meantime."},
     "screen_title": {"en": "Screen a patient", "kn": "ರೋಗಿಯ ತಪಾಸಣೆ", "hi": "मरीज़ की जाँच"},
     "slip_button": {"en": "Download referral slip", "kn": "ಶಿಫಾರಸು ಚೀಟಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
                     "hi": "रेफ़रल पर्ची डाउनलोड करें"},
@@ -168,14 +190,16 @@ def inject_css() -> None:
     st.html(f"<style>{css}</style>")
 
 
-def setup_page(title: str) -> None:
+def setup_page(title: str, script: str) -> None:
+    """script is this page's entry in PAGES, e.g. "pages/1_Screen.py"; it marks the current nav item."""
     st.set_page_config(page_title=f"{title} | Netra-Hb", page_icon=":material/opacity:", layout="wide",
                        initial_sidebar_state="collapsed")
-    st.session_state.setdefault("dark", st.context.theme.type == "dark")
+    st.session_state.setdefault("dark", False)  # light by default: the exhibition hall is bright
     st.session_state.setdefault("lang", "en")
     inject_css()
     pio.templates.default = "netra_dark" if is_dark() else "netra"
     header()
+    nav(script)
 
 
 def header() -> None:
@@ -187,6 +211,16 @@ def header() -> None:
             st.segmented_control(t("language"), list(LANGS), format_func=LANGS.get, key="lang", required=True,
                                  label_visibility="collapsed", persist_state="session")
             st.toggle(t("dark"), key="dark", persist_state="session")
+
+
+def nav(current: str) -> None:
+    path = next(p for s, _, p in PAGES if s == current)
+    sels = [f'a[href="{path}"]', f'a[href$="/{path}"]'] if path else ['a[href=""]', 'a[href="/"]']
+    sel = ", ".join(f'.stApp .st-key-nh_nav [data-testid="stPageLink"] {s}' for s in sels)
+    st.html(f'<style>{sel} {{ color: var(--text); box-shadow: inset 0 -3px 0 var(--text); font-weight: 700; }}</style>')
+    with st.container(horizontal=True, wrap=False, gap="small", key="nh_nav"):
+        for script, key, _ in PAGES:
+            st.page_link(script, label=t(key))
 
 
 def footer() -> None:
@@ -226,7 +260,8 @@ _STRIP_HTML = """<!doctype html><html><head><meta charset="utf-8">
 :root { --text: __TEXT__; --muted: __MUTED__; --bg: __BG__; }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: transparent; color: var(--text);
-  font-family: "Atkinson Hyperlegible", "Noto Sans Kannada", "Noto Sans Devanagari", sans-serif; }
+  font-family: "Atkinson Hyperlegible", "Noto Sans Kannada", "Noto Sans Devanagari", sans-serif;
+  font-variant-numeric: tabular-nums; }
 .wrap { display: flex; align-items: flex-end; gap: 20px; padding: 4px 1px 0; }
 .photo { position: relative; flex: none; width: var(--pw); }
 .photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; }
@@ -234,7 +269,7 @@ html, body { margin: 0; padding: 0; background: transparent; color: var(--text);
   border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(27,35,64,.5); }
 .scale { position: relative; flex: 1; min-width: 0; padding-top: var(--top); }
 .bar { position: relative; height: var(--bh); border-radius: 999px; background: linear-gradient(90deg, __STOPS__);
-  box-shadow: inset 0 0 0 1px rgba(27,35,64,.08); overflow: hidden; }
+  box-shadow: inset 0 0 0 1px rgba(27,35,64,.16), 0 1px 2px rgba(27,35,64,.10); overflow: hidden; }
 .bar::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
   background: linear-gradient(180deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.08) 46%, rgba(0,0,0,0) 54%, rgba(0,0,0,.08) 100%); }
 .cut { position: absolute; top: calc(var(--top) - 10px); height: calc(var(--bh) + 20px); width: 0;
@@ -244,7 +279,7 @@ html, body { margin: 0; padding: 0; background: transparent; color: var(--text);
 .ticks { position: relative; height: 30px; margin-top: 2px; }
 .tick { position: absolute; top: 0; width: 0; display: flex; flex-direction: column; align-items: center; }
 .tick i { display: block; width: 1px; height: 7px; background: var(--muted); }
-.tick b { white-space: nowrap; font-weight: 400; font-size: 14px; color: var(--muted); margin-top: 3px; font-variant-numeric: tabular-nums; }
+.tick b { white-space: nowrap; font-weight: 400; font-size: 14px; color: var(--muted); margin-top: 3px; }
 .unit { position: absolute; left: 0; top: calc(var(--top) + var(--bh) + 40px); font-size: 14px; color: var(--muted); }
 .tick.first b { transform: translateX(50%); }
 .tick.last b { transform: translateX(-50%); }

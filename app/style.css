@@ -54,7 +54,11 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
 }
+
+/* No monospace anywhere */
+.stApp code, .stApp pre, .stApp kbd, .stApp samp, .stApp tt { font-family: var(--font-body) !important; }
 
 .stApp p, .stApp li, .stApp label, .stApp button {
   font-family: var(--font-body);
@@ -144,12 +148,41 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   font-weight: 700;
 }
 [data-testid="stCheckbox"] label, .stToggle label { min-height: 44px; align-items: center; }
+/* Toggle track: slate when off, ink (or light text in dark mode) when on; both clear 3:1 against the page */
+.stApp [data-testid="stCheckbox"] label > div:not([data-testid]) { background: var(--muted) !important; }
+.stApp [data-testid="stCheckbox"] label > div:not([data-testid]) > div { background: var(--bg) !important; }
+.stApp [data-testid="stCheckbox"] label:has(input:checked) > div:not([data-testid]) { background: var(--text) !important; }
 .stApp [data-testid="stWidgetLabel"] p, .stApp label p { color: var(--text); }
 
-/* Sidebar */
-[data-testid="stSidebar"] { background: color-mix(in srgb, var(--bg) 92%, var(--text)); }
-[data-testid="stSidebarNav"] a { min-height: 44px; }
-[data-testid="stSidebarNav"] span { color: var(--text); }
+/* No Streamlit sidebar: navigation is the top nav bar and in-page buttons */
+[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stExpandSidebarButton"],
+[data-testid="stSidebarNav"], [data-testid="stSidebarCollapseButton"] { display: none !important; }
+
+/* Top nav bar */
+.st-key-nh_nav {
+  border-bottom: 1px solid var(--line);
+  margin: 0.25rem 0 2.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.st-key-nh_nav::-webkit-scrollbar { display: none; }
+.st-key-nh_nav { align-items: stretch; height: auto !important; min-height: 44px; padding-top: 0 !important; }
+.stApp .st-key-nh_nav [data-testid="stElementContainer"] { margin: 0 !important; }
+.stApp .st-key-nh_nav [data-testid="stPageLink"], .stApp .st-key-nh_nav [data-testid="stPageLink"] > div { flex: none; height: 44px; display: flex; margin: 0 !important; padding: 0 !important; }
+.st-key-nh_nav [data-testid="stPageLink"] a { height: 44px; box-sizing: border-box; }
+.stApp .st-key-nh_nav [data-testid="stPageLink"] a {
+  min-height: 44px;
+  padding: 0 0.15rem;
+  margin: 0 0.6rem 0 0;
+  border-radius: 0;
+  border: 0 !important;
+  box-shadow: inset 0 -3px 0 transparent;
+  background: transparent !important;
+  color: var(--muted);
+  font-weight: 400;
+}
+.stApp .st-key-nh_nav [data-testid="stPageLink"] a * { color: inherit !important; font-weight: inherit; font-size: var(--fs-16); }
+.stApp .st-key-nh_nav [data-testid="stPageLink"] a:hover { color: var(--text); box-shadow: inset 0 -3px 0 var(--line); }
 
 /* ---- Netra-Hb blocks ---- */
 .nh-brand {
