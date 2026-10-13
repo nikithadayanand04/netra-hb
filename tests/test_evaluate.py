@@ -4,7 +4,7 @@ import pytest
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 import config
-from netra.evaluate import bootstrap_ci, cross_validate, metrics_at
+from netra.evaluate import bootstrap_ci, corrected_ci, cross_validate, metrics_at
 from netra.models import build_models
 
 
@@ -39,12 +39,31 @@ def test_cv_never_trains_on_test_patients():
     X = np.column_stack([np.arange(n), rng.normal(size=n)])
     y = (groups % 3 == 0).astype(int)
     _FitSpy.seen = []
-    res = cross_validate(_FitSpy(), X, y, groups, n_boot=20)
+    res = cross_validate(_FitSpy(), X, y, groups, n_repeats=3, n_boot=20)
     assert not np.isnan(res.proba).any()
-    for k, train_rows in enumerate(_FitSpy.seen):
-        test_rows = set(np.flatnonzero(res.fold == k))
+    assert len(_FitSpy.seen) == len(res.fold_metrics) == 3 * config.N_FOLDS
+    for i, train_rows in enumerate(_FitSpy.seen):
+        r, k = divmod(i, config.N_FOLDS)
+        test_rows = set(np.flatnonzero(res.fold[r] == k))
         assert not train_rows & test_rows
         assert not set(groups[list(train_rows)]) & set(groups[list(test_rows)])
+
+
+def test_repeats_reshuffle_folds():
+    groups = np.arange(100)
+    y = (groups % 4 == 0).astype(int)
+    res = cross_validate(_FitSpy(), np.column_stack([groups, groups]), y, groups, n_repeats=2, n_boot=10)
+    assert [f["seed"] for f in res.fold_metrics[::config.N_FOLDS]] == [config.SEED, config.SEED + 1]
+    assert not np.array_equal(res.fold[0], res.fold[1])
+
+
+def test_corrected_ci_is_wider_than_naive():
+    v = np.random.default_rng(2).normal(0.7, 0.05, 25)
+    lo, hi = corrected_ci(v, 0.25)
+    naive = 2.064 * v.std(ddof=1) / np.sqrt(25)
+    assert lo < v.mean() < hi
+    assert hi - lo > 2 * naive
+    assert corrected_ci([0.9, 1.0, 1.0], 0.25)[1] == 1.0
 
 
 def test_bootstrap_ci_brackets_point_estimate():

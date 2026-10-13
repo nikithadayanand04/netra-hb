@@ -1,3 +1,5 @@
+import re
+
 import numpy as np
 import pandas as pd
 
@@ -12,7 +14,8 @@ from netra.normalise import grey_world
 def find_col(df: pd.DataFrame, given: str | None, keys: tuple[str, ...]) -> str | None:
     if given:
         return given
-    return next((c for c in df.columns if any(k in c.lower() for k in keys)), None)
+    # whole-word match: a substring match picks "Image_ID" as the age column ("im-age")
+    return next((c for c in df.columns if set(re.split(r"[^a-z]+", str(c).lower())) & set(keys)), None)
 
 
 def load_meta() -> pd.DataFrame:
@@ -56,6 +59,8 @@ def main() -> None:
         thumbs.append(cleaning.thumbnail(rgb, m.tissue))
 
     dups = cleaning.find_duplicates(list(meta["patient_id"]), hashes, thumbs)
+    # kept near-duplicates are likely the same child under two IDs: CV must keep them in one fold
+    meta.insert(1, "cv_group", np.where(dups["dup_of"] != "", dups["dup_of"], dups["id"]))
     log = pd.DataFrame(quality).merge(dups, on="id")
     log.insert(1, "hb", meta["hb"].values)
     log.insert(2, "label", meta["label"].values)

@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 
 import numpy as np
+from scipy import stats
 from sklearn.base import clone
 from sklearn.metrics import average_precision_score, confusion_matrix, f1_score, roc_auc_score
 from sklearn.model_selection import StratifiedGroupKFold
@@ -12,22 +13,35 @@ METRICS = ["sensitivity", "specificity", "roc_auc", "pr_auc", "f1"]
 
 @dataclass
 class CVResult:
-    proba: np.ndarray
-    fold: np.ndarray
-    fold_metrics: list[dict]
-    pooled: dict
-    ci: dict = field(default_factory=dict)
+    proba: np.ndarray           # (n_repeats, n) out-of-fold probabilities
+    fold: np.ndarray            # (n_repeats, n) fold index per repeat
+    fold_metrics: list[dict]    # one entry per (repeat, fold)
+    pooled: dict                # first repeat's pooled out-of-fold metrics
+    ci: dict = field(default_factory=dict)          # patient bootstrap CI on `pooled`
+    test_train_ratio: float = 0.25
 
     def summary(self) -> dict:
         per_fold = {m: [np.nan if f[m] is None else f[m] for f in self.fold_metrics] for m in METRICS}
         return {
+            "fold_mean": {m: {"value": float(np.nanmean(v)), "sd": float(np.nanstd(v, ddof=1)),
+                              **dict(zip(("ci_low", "ci_high"), corrected_ci(v, self.test_train_ratio)))}
+                          for m, v in per_fold.items()},
             "pooled": {m: {"value": self.pooled[m], "ci_low": self.ci[m][0], "ci_high": self.ci[m][1]}
                        for m in METRICS},
             "confusion_matrix": self.pooled["confusion_matrix"],
-            "fold_mean": {m: float(np.nanmean(v)) for m, v in per_fold.items()},
-            "fold_sd": {m: float(np.nanstd(v, ddof=1)) for m, v in per_fold.items()},
             "folds": self.fold_metrics,
         }
+
+
+def corrected_ci(values, test_train_ratio: float, alpha: float = 0.05) -> tuple[float, float]:
+    """Nadeau-Bengio corrected t-interval for the mean over repeated-CV folds. Folds share training rows,
+    so the naive standard error is too small; the variance is inflated by n_test / n_train."""
+    v = np.asarray(values, float)
+    v = v[~np.isnan(v)]
+    if len(v) < 2:
+        return float("nan"), float("nan")
+    half = stats.t.ppf(1 - alpha / 2, len(v) - 1) * np.sqrt((1 / len(v) + test_train_ratio) * v.var(ddof=1))
+    return float(max(v.mean() - half, 0.0)), float(min(v.mean() + half, 1.0))
 
 
 def metrics_at(y: np.ndarray, proba: np.ndarray, threshold: float = 0.5) -> dict:
@@ -62,25 +76,32 @@ def bootstrap_ci(y: np.ndarray, proba: np.ndarray, groups: np.ndarray, threshold
     return {m: tuple(float(v) for v in np.nanpercentile(d, q)) for m, d in draws.items()}
 
 
-def cross_validate(pipe, X, y, groups, n_splits: int = config.N_FOLDS, seed: int = config.SEED,
-                   threshold: float = 0.5, n_boot: int = config.N_BOOT) -> CVResult:
-    """Stratified patient-grouped K-fold. The pipeline is cloned and refit per fold, so every learned
-    preprocessing step (scaler, SMOTE, ...) only ever sees that fold's training patients."""
+def cross_validate(pipe, X, y, groups, n_splits: int = config.N_FOLDS, n_repeats: int = config.N_REPEATS,
+                   seed: int = config.SEED, threshold: float = 0.5, n_boot: int = config.N_BOOT) -> CVResult:
+    """Repeated stratified patient-grouped K-fold (repeat r shuffles with seed + r). The pipeline is cloned and
+    refit per fold, so every learned preprocessing step (scaler, SMOTE, pruning, ...) only ever sees that
+    fold's training patients."""
     X = np.asarray(X, dtype=float)
     y = np.asarray(y)
     groups = np.asarray(groups)
-    proba = np.full(len(y), np.nan)
-    fold = np.full(len(y), -1)
-    fold_metrics = []
-    cv = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed)
-    for k, (tr, te) in enumerate(cv.split(X, y, groups)):
-        assert not set(groups[tr]) & set(groups[te]), "patient leaked across folds"
-        model = clone(pipe).fit(X[tr], y[tr])
-        proba[te] = model.predict_proba(X[te])[:, 1]
-        fold[te] = k
-        fold_metrics.append({"fold": k, "n": int(len(te)), **_jsonable(metrics_at(y[te], proba[te], threshold))})
-    pooled = _jsonable(metrics_at(y, proba, threshold))
-    return CVResult(proba, fold, fold_metrics, pooled, bootstrap_ci(y, proba, groups, threshold, n_boot, seed))
+    proba = np.full((n_repeats, len(y)), np.nan)
+    fold = np.full((n_repeats, len(y)), -1)
+    fold_metrics, ratios = [], []
+    for r in range(n_repeats):
+        cv = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed + r)
+        for k, (tr, te) in enumerate(cv.split(X, y, groups)):
+            assert not set(groups[tr]) & set(groups[te]), "patient leaked across folds"
+            model = clone(pipe).fit(X[tr], y[tr])
+            proba[r, te] = model.predict_proba(X[te])[:, 1]
+            fold[r, te] = k
+            ratios.append(len(te) / len(tr))
+            prune = getattr(model, "named_steps", {}).get("prune")
+            kept = {"features": prune.keep_} if prune is not None else {}
+            fold_metrics.append({"repeat": r, "seed": seed + r, "fold": k, "n": int(len(te)),
+                                 **_jsonable(metrics_at(y[te], proba[r, te], threshold)), **kept})
+    pooled = _jsonable(metrics_at(y, proba[0], threshold))
+    ci = bootstrap_ci(y, proba[0], groups, threshold, n_boot, seed)
+    return CVResult(proba, fold, fold_metrics, pooled, ci, float(np.mean(ratios)))
 
 
 def _jsonable(d: dict) -> dict:

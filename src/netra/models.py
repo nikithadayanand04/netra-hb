@@ -12,12 +12,13 @@ from sklearn.tree import DecisionTreeClassifier
 
 import config
 from netra import scratch
+from netra.features import RedundancyPruner
 
 # Imbalance: class_weight="balanced" where the estimator supports it, SMOTE (inside the pipeline, so only on
 # training folds) where it does not. Scratch models mirror their sklearn twin's scaling and k / C settings.
 IMBALANCE = {
     "all_normal": "-", "decision_tree": "class_weight", "knn": "SMOTE", "gaussian_nb": "SMOTE",
-    "logreg": "class_weight", "bagging": "class_weight", "adaboost": "class_weight",
+    "logreg": "class_weight", "bagging": "class_weight", "adaboost": "SMOTE",
     "gradient_boosting": "SMOTE", "random_forest": "class_weight",
     "scratch_logreg": "SMOTE", "scratch_nb": "SMOTE", "scratch_knn": "SMOTE",
 }
@@ -52,7 +53,20 @@ def _smote(seed: int) -> SMOTE:
     return SMOTE(random_state=seed)
 
 
-def build_models(seed: int = config.SEED) -> dict[str, Pipeline]:
+def pruner(columns: list[str]) -> RedundancyPruner:
+    return RedundancyPruner(tuple(columns), tuple(config.INTERPRETABILITY), config.REDUNDANCY_RHO,
+                            tuple(config.COLLINEAR_DROP))
+
+
+def build_models(seed: int = config.SEED, columns: list[str] | None = None) -> dict[str, Pipeline]:
+    """With `columns`, every pipeline starts with in-fold redundancy pruning over those candidate columns."""
+    models = _models(seed)
+    if columns is None:
+        return models
+    return {name: Pipeline([("prune", pruner(columns)), *p.steps]) for name, p in models.items()}
+
+
+def _models(seed: int) -> dict[str, Pipeline]:
     tree = dict(class_weight="balanced", random_state=seed)
     return {
         "all_normal": Pipeline([("clf", DummyClassifier(strategy="constant", constant=0))]),
@@ -64,7 +78,10 @@ def build_models(seed: int = config.SEED) -> dict[str, Pipeline]:
                             ("clf", LogisticRegression(C=1.0, class_weight="balanced", max_iter=5000))]),
         "bagging": Pipeline([("clf", BaggingClassifier(DecisionTreeClassifier(min_samples_leaf=3, **tree),
                                                        n_estimators=200, random_state=seed, n_jobs=-1))]),
-        "adaboost": Pipeline([("clf", AdaBoostClassifier(DecisionTreeClassifier(max_depth=1, **tree),
+        # SMOTE, not class_weight: AdaBoost scores each stump by plain weighted error, so a class-weighted stump
+        # can look "worse than random" and abort the fit
+        "adaboost": Pipeline([("smote", _smote(seed)),
+                              ("clf", AdaBoostClassifier(DecisionTreeClassifier(max_depth=1, random_state=seed),
                                                          n_estimators=200, learning_rate=0.5,
                                                          random_state=seed))]),
         "gradient_boosting": Pipeline([("smote", _smote(seed)),

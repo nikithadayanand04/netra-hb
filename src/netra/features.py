@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from skimage.color import rgb2lab
+from sklearn.base import BaseEstimator, TransformerMixin
 
 EPS = 1e-6
 PCT_FEATURES = ("chrom_r", "lab_a", "a_over_L", "erythema_index", "hsv_s")
@@ -72,3 +73,23 @@ def prune_redundant(X: pd.DataFrame, preference: list[str], thresh: float) -> tu
             keep.remove(loser)
             dropped.append((loser, b if loser == a else a, float(r)))
     return keep, dropped
+
+
+class RedundancyPruner(TransformerMixin, BaseEstimator):
+    """prune_redundant as a pipeline step, so the kept columns are chosen from training-fold rows only."""
+
+    def __init__(self, columns=(), preference=(), thresh: float = 0.95, always_drop=()):
+        self.columns = columns
+        self.preference = preference
+        self.thresh = thresh
+        self.always_drop = always_drop
+
+    def fit(self, X, y=None) -> "RedundancyPruner":
+        cols = list(self.columns)
+        keep, _ = prune_redundant(pd.DataFrame(np.asarray(X, float), columns=cols), list(self.preference), self.thresh)
+        self.keep_ = [c for c in keep if c not in self.always_drop]
+        self.idx_ = [cols.index(c) for c in self.keep_]
+        return self
+
+    def transform(self, X):
+        return np.asarray(X, float)[:, self.idx_]

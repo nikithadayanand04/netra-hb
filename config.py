@@ -30,6 +30,7 @@ MIN_PIXELS = 500       # images with fewer valid pixels are dropped
 # ---- Modelling ----
 SEED = 42
 N_FOLDS = 5
+N_REPEATS = 5          # repeated grouped CV: repeat r uses seed SEED + r
 SENS_FLOOR = 0.80      # screening target
 N_BOOT = 1000
 
@@ -52,7 +53,8 @@ _PCT = ["chrom_r", "lab_a", "a_over_L", "erythema_index", "hsv_s"]
 CANDIDATE_FEATURES = [f"{c}_med" for c in _MED] + [f"{c}_p{q}" for c in _PCT for q in (10, 90)]
 
 # Label-free redundancy pruning (scripts.prune_features): for every candidate pair with |Spearman rho| > REDUNDANCY_RHO,
-# drop the one later in INTERPRETABILITY. Uses no labels, so it cannot leak label information into feature choice.
+# drop the one later in INTERPRETABILITY. Uses no labels; in CV it is refit inside each training fold
+# (netra.features.RedundancyPruner). MODEL_FEATURES is the result on all rows, i.e. the final refit's inputs.
 REDUNDANCY_RHO = 0.95
 INTERPRETABILITY = ["lab_a", "erythema_index", "chrom_r", "lab_L", "lab_b", "a_over_L",
                     "R", "G", "B", "hsv_s", "hsv_h", "chrom_g", "chrom_b"]
