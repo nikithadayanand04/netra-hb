@@ -44,6 +44,16 @@ DUP_HB_TOL = 1.0        # duplicate groups whose Hb spans more than this (or who
 # Quality flags that exclude an image from the PRIMARY dataset (kept in the secondary all-images analysis).
 # low_tissue and conflicting duplicates are hard drops, removed from both.
 QUALITY_EXCLUDE = ["high_glare", "blur", "upscaled"]
+# live photo check, per site: ~5th percentile of tissue Laplacian variance in that site's training images
+# (nail crops are tiny and smooth, so the eye threshold would reject a third of them)
+BLUR_VAR_MIN_SITE = {"eye": BLUR_VAR_MIN, "palm": 4.5, "nail": 2.0}
+LIGHT_V_MIN = 0.35      # live photo check: median tissue brightness (max channel / 255) below this is too dark (~min of training sets)
+
+# ---- Live screening (app) ----
+SCREEN_LONG_SIDE = 240  # tissue crop is downscaled to this long side before checks/features (training images are ~100-350 px)
+REGION_TOL = 22         # click-to-select: flood-fill tolerance per Lab channel (0-255 scale) around the clicked colour
+REGION_RADIUS = 0.30    # ... limited to a disc of this fraction of the shorter image side
+BAND_NEIGHBOURS = 40    # uncertainty band: out-of-fold patients with the nearest scores
 
 # ---- Model inputs ----
 # Raw colour features only. glare_frac, tissue_px, quality flags and gw_* stay in the CSV for EDA/ablations.

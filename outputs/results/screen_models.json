@@ -1,0 +1,47 @@
+{
+  "meta": "Bundles the Screen page reads: one per site, so the app never retrains.\n\neye: the P6 final model (outputs/models/final.joblib) unchanged, with its outer out-of-fold probabilities.\npalm, nail: the same P6 procedure (TunedScreen, soft vote of top 3) fit on all rows (folder labels), plus 1 x 5\ngrouped out-of-fold probabilities from cross_validate for the uncertainty band.\nEach bundle adds a healthy-class reference (per-feature quantiles) for the plain-language reasons and, for the eye,\na probability-to-Hb map from the outer out-of-fold probabilities (CP-AnemiC is the only set with Hb).",
+  "sites": {
+    "eye": {
+      "n": 220,
+      "n_anaemic": 93,
+      "threshold": 0.3604424842606838,
+      "members": [
+        "knn",
+        "adaboost",
+        "random_forest"
+      ],
+      "label_source": "Hb, WHO < 11 g/dL",
+      "trained_on": "cp_anemic primary, n=220",
+      "hb_mae": 1.5004277278452065,
+      "oof_roc_auc": null
+    },
+    "palm": {
+      "n": 522,
+      "n_anaemic": 301,
+      "threshold": 0.5057560256494051,
+      "members": [
+        "knn",
+        "random_forest",
+        "bagging"
+      ],
+      "label_source": "folder labels (file names), no Hb",
+      "trained_on": "Ghana palm originals, n=522",
+      "hb_mae": null,
+      "oof_roc_auc": 0.7924193851079097
+    },
+    "nail": {
+      "n": 530,
+      "n_anaemic": 310,
+      "threshold": 0.4946769448386178,
+      "members": [
+        "knn",
+        "random_forest",
+        "bagging"
+      ],
+      "label_source": "folder labels (file names), no Hb",
+      "trained_on": "Ghana nail originals, n=530",
+      "hb_mae": null,
+      "oof_roc_auc": 0.7060117302052786
+    }
+  }
+}

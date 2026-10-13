@@ -1,0 +1,83 @@
+{
+  "note": "Six demo patients for the Screen page (app/samples/): per site one Refer and one Normal, each correctly classified\nboth out-of-fold and by the saved bundle through the app's own photo pipeline, and passing the quality gate.\nThey come from the training sets, so they show the flow; they are not test results.",
+  "samples": [
+    {
+      "id": "eye_refer",
+      "site": "eye",
+      "file": "eye_refer.png",
+      "age_band": "age_6_59m",
+      "whole_image_is_tissue": false,
+      "label": 1,
+      "hb": 8.6,
+      "label_source": "Hb, WHO < 11 g/dL",
+      "source_id": "Image_245",
+      "oof_p": 0.7497605227143175,
+      "app_p": 0.8795411567099407
+    },
+    {
+      "id": "palm_normal",
+      "site": "palm",
+      "file": "palm_normal.png",
+      "age_band": "age_6_59m",
+      "whole_image_is_tissue": true,
+      "label": 0,
+      "hb": null,
+      "label_source": "folder labels (file names), no Hb",
+      "source_id": "palm:Non-AnemicP-075",
+      "oof_p": 0.14566316615449684,
+      "app_p": 0.018723160588438884
+    },
+    {
+      "id": "nail_refer",
+      "site": "nail",
+      "file": "nail_refer.png",
+      "age_band": "age_6_59m",
+      "whole_image_is_tissue": false,
+      "label": 1,
+      "hb": null,
+      "label_source": "folder labels (file names), no Hb",
+      "source_id": "nail:Anemic-FN-243",
+      "oof_p": 0.7504892683328581,
+      "app_p": 0.8972955598306923
+    },
+    {
+      "id": "eye_normal",
+      "site": "eye",
+      "file": "eye_normal.png",
+      "age_band": "age_6_59m",
+      "whole_image_is_tissue": false,
+      "label": 0,
+      "hb": 11.7,
+      "label_source": "Hb, WHO < 11 g/dL",
+      "source_id": "Image_418",
+      "oof_p": 0.1490615233024261,
+      "app_p": 0.08169790851321668
+    },
+    {
+      "id": "palm_refer",
+      "site": "palm",
+      "file": "palm_refer.png",
+      "age_band": "age_6_59m",
+      "whole_image_is_tissue": true,
+      "label": 1,
+      "hb": null,
+      "label_source": "folder labels (file names), no Hb",
+      "source_id": "palm:AnemicP-170",
+      "oof_p": 0.7500808800676446,
+      "app_p": 0.982024729058718
+    },
+    {
+      "id": "nail_normal",
+      "site": "nail",
+      "file": "nail_normal.png",
+      "age_band": "age_6_59m",
+      "whole_image_is_tissue": false,
+      "label": 0,
+      "hb": null,
+      "label_source": "folder labels (file names), no Hb",
+      "source_id": "nail:Non-Anrmic-FN-086",
+      "oof_p": 0.1663210181891589,
+      "app_p": 0.07538828985047911
+    }
+  ]
+}

@@ -8,7 +8,6 @@ from typing import Any
 import plotly.graph_objects as go
 import plotly.io as pio
 import streamlit as st
-import streamlit.components.v1 as components
 
 APP_DIR = Path(__file__).resolve().parent
 ROOT = APP_DIR.parent
@@ -155,6 +154,185 @@ STRINGS: dict[str, dict[str, str]] = {
     "register": {"en": "Visit register", "kn": "ಭೇಟಿ ದಾಖಲೆ", "hi": "भ्रमण रजिस्टर"},
     "export_register": {"en": "Export register (CSV)", "kn": "ದಾಖಲೆ ರಫ್ತು ಮಾಡಿ (CSV)",
                         "hi": "रजिस्टर निर्यात करें (CSV)"},
+    # ---- Screen page ----
+    "step_patient": {"en": "Patient", "kn": "ರೋಗಿ", "hi": "मरीज़"},
+    "step_site": {"en": "Site", "kn": "ಭಾಗ", "hi": "अंग"},
+    "step_photo": {"en": "Photo", "kn": "ಫೋಟೋ", "hi": "फ़ोटो"},
+    "step_result": {"en": "Result", "kn": "ಫಲಿತಾಂಶ", "hi": "नतीजा"},
+    "steps_aria": {"en": "Screening steps", "kn": "ತಪಾಸಣೆಯ ಹಂತಗಳು", "hi": "जाँच के चरण"},
+    "step_of": {"en": "Step {i} of 4", "kn": "ಹಂತ {i} / 4", "hi": "चरण {i} / 4"},
+    "screen_lede": {"en": "A guided visit: who, where to photograph, the photo, then the result.",
+                    "kn": "ಮಾರ್ಗದರ್ಶಿತ ಭೇಟಿ: ಯಾರು, ಎಲ್ಲಿ ಫೋಟೋ ತೆಗೆಯಬೇಕು, ಫೋಟೋ, ನಂತರ ಫಲಿತಾಂಶ.",
+                    "hi": "एक निर्देशित विज़िट: कौन, कहाँ की फ़ोटो, फ़ोटो, फिर नतीजा।"},
+    "name_label": {"en": "Name (optional)", "kn": "ಹೆಸರು (ಐಚ್ಛಿಕ)", "hi": "नाम (वैकल्पिक)"},
+    "name_help": {"en": "Stays on this device for this session only.",
+                  "kn": "ಈ ಸೆಷನ್‌ಗೆ ಮಾತ್ರ ಈ ಸಾಧನದಲ್ಲಿ ಉಳಿಯುತ್ತದೆ.", "hi": "केवल इस सत्र के लिए इसी डिवाइस पर रहता है।"},
+    "cutoff_title": {"en": "WHO anaemia cut-off", "kn": "WHO ರಕ್ತಹೀನತೆ ಮಿತಿ", "hi": "WHO एनीमिया सीमा"},
+    "cutoff_text": {"en": "Below {c} g/dL counts as anaemia for this age band.",
+                    "kn": "ಈ ವಯಸ್ಸಿನ ಗುಂಪಿಗೆ {c} g/dL ಗಿಂತ ಕಡಿಮೆ ಇದ್ದರೆ ರಕ್ತಹೀನತೆ.",
+                    "hi": "इस आयु वर्ग में {c} g/dL से कम को एनीमिया माना जाता है।"},
+    "cutoff_note": {
+        "en": "The models learned from children aged 6 to 59 months. For other age bands the cut-off moves on "
+              "the colour scale, which has not been validated.",
+        "kn": "ಮಾದರಿಗಳು 6 ರಿಂದ 59 ತಿಂಗಳ ಮಕ್ಕಳಿಂದ ಕಲಿತಿವೆ. ಇತರ ವಯಸ್ಸಿನ ಗುಂಪುಗಳಿಗೆ ಮಿತಿ ಬಣ್ಣದ ಮಾಪಕದಲ್ಲಿ "
+              "ಸರಿಯುತ್ತದೆ; ಇದನ್ನು ಇನ್ನೂ ಪರಿಶೀಲಿಸಲಾಗಿಲ್ಲ.",
+        "hi": "मॉडल 6 से 59 महीने के बच्चों से सीखे हैं। दूसरे आयु वर्गों के लिए सीमा रंग पैमाने पर खिसकती है, "
+              "जिसकी अभी पुष्टि नहीं हुई है।",
+    },
+    "next": {"en": "Next", "kn": "ಮುಂದೆ", "hi": "आगे"},
+    "back": {"en": "Back", "kn": "ಹಿಂದೆ", "hi": "पीछे"},
+    "site_title": {"en": "Where will you take the photo?", "kn": "ಎಲ್ಲಿಯ ಫೋಟೋ ತೆಗೆಯುತ್ತೀರಿ?",
+                   "hi": "किसकी फ़ोटो लेंगे?"},
+    "site_lede": {"en": "Daylight, no flash, phone held still about a hand's length away.",
+                  "kn": "ಹಗಲು ಬೆಳಕು, ಫ್ಲ್ಯಾಶ್ ಬೇಡ, ಫೋನನ್ನು ಸುಮಾರು ಒಂದು ಕೈ ಅಂತರದಲ್ಲಿ ಸ್ಥಿರವಾಗಿ ಹಿಡಿಯಿರಿ.",
+                  "hi": "दिन की रोशनी, फ़्लैश नहीं, फ़ोन को लगभग एक हाथ की दूरी पर स्थिर रखें।"},
+    "how_eye": {"en": "Gently pull down the lower eyelid with one finger. Photograph the red inner rim.",
+                "kn": "ಒಂದು ಬೆರಳಿನಿಂದ ಕೆಳ ರೆಪ್ಪೆಯನ್ನು ನಿಧಾನವಾಗಿ ಕೆಳಗೆ ಎಳೆಯಿರಿ. ಒಳಗಿನ ಕೆಂಪು ಅಂಚಿನ ಫೋಟೋ ತೆಗೆಯಿರಿ.",
+                "hi": "एक उँगली से निचली पलक को धीरे से नीचे खींचें। भीतर के लाल किनारे की फ़ोटो लें।"},
+    "how_palm": {"en": "Open the hand flat, palm up. Fill the frame with the centre of the palm.",
+                 "kn": "ಕೈಯನ್ನು ಚಪ್ಪಟೆಯಾಗಿ ತೆರೆಯಿರಿ, ಅಂಗೈ ಮೇಲಕ್ಕೆ. ಅಂಗೈಯ ಮಧ್ಯಭಾಗ ಚೌಕಟ್ಟು ತುಂಬಲಿ.",
+                 "hi": "हाथ को सीधा खोलें, हथेली ऊपर। हथेली का बीच वाला हिस्सा फ़्रेम में भरें।"},
+    "how_nail": {"en": "Rest the fingers flat. Photograph the nail beds from above, no nail polish.",
+                 "kn": "ಬೆರಳುಗಳನ್ನು ಚಪ್ಪಟೆಯಾಗಿ ಇಡಿ. ಮೇಲಿನಿಂದ ಉಗುರಿನ ಫೋಟೋ ತೆಗೆಯಿರಿ, ನೇಲ್ ಪಾಲಿಶ್ ಬೇಡ.",
+                 "hi": "उँगलियाँ सीधी रखें। ऊपर से नाखूनों की फ़ोटो लें, नेल पॉलिश नहीं।"},
+    "choose_site": {"en": "Use {site}", "kn": "{site} ಆಯ್ಕೆಮಾಡಿ", "hi": "{site} चुनें"},
+    "site_data_eye": {"en": "Tested on 220 children with lab Hb.", "kn": "ಪ್ರಯೋಗಾಲಯ Hb ಇರುವ 220 ಮಕ್ಕಳ ಮೇಲೆ ಪರೀಕ್ಷಿಸಲಾಗಿದೆ.",
+                      "hi": "लैब Hb वाले 220 बच्चों पर जाँचा गया।"},
+    "site_data_palm": {"en": "Tested on 522 children, folder labels.", "kn": "522 ಮಕ್ಕಳ ಮೇಲೆ ಪರೀಕ್ಷಿಸಲಾಗಿದೆ, ಫೋಲ್ಡರ್ ಲೇಬಲ್‌ಗಳು.",
+                       "hi": "522 बच्चों पर जाँचा गया, फ़ोल्डर लेबल।"},
+    "site_data_nail": {"en": "Tested on 530 children, folder labels.", "kn": "530 ಮಕ್ಕಳ ಮೇಲೆ ಪರೀಕ್ಷಿಸಲಾಗಿದೆ, ಫೋಲ್ಡರ್ ಲೇಬಲ್‌ಗಳು.",
+                       "hi": "530 बच्चों पर जाँचा गया, फ़ोल्डर लेबल।"},
+    "photo_title": {"en": "Take or upload a photo of the {site}", "kn": "{site} ಫೋಟೋ ತೆಗೆಯಿರಿ ಅಥವಾ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+                    "hi": "{site} की फ़ोटो लें या अपलोड करें"},
+    "camera": {"en": "Camera", "kn": "ಕ್ಯಾಮೆರಾ", "hi": "कैमरा"},
+    "upload": {"en": "Upload", "kn": "ಅಪ್‌ಲೋಡ್", "hi": "अपलोड"},
+    "camera_label": {"en": "Take a photo", "kn": "ಫೋಟೋ ತೆಗೆಯಿರಿ", "hi": "फ़ोटो लें"},
+    "upload_label": {"en": "Choose a photo (JPG or PNG)", "kn": "ಫೋಟೋ ಆರಿಸಿ (JPG ಅಥವಾ PNG)",
+                     "hi": "फ़ोटो चुनें (JPG या PNG)"},
+    "tissue_auto": {"en": "Tissue found automatically from the clear background.",
+                    "kn": "ಖಾಲಿ ಹಿನ್ನೆಲೆಯಿಂದ ಅಂಗಾಂಶವನ್ನು ಸ್ವಯಂ ಗುರುತಿಸಲಾಗಿದೆ.",
+                    "hi": "साफ़ पृष्ठभूमि से ऊतक अपने-आप पहचाना गया।"},
+    "tissue_whole": {"en": "This photo is already cropped to the tissue.",
+                     "kn": "ಈ ಫೋಟೋವನ್ನು ಈಗಾಗಲೇ ಅಂಗಾಂಶಕ್ಕೆ ಕತ್ತರಿಸಲಾಗಿದೆ.", "hi": "यह फ़ोटो पहले से ऊतक तक कटी हुई है।"},
+    "tissue_click": {"en": "Tap the {site} on the photo to select it.",
+                     "kn": "ಆಯ್ಕೆ ಮಾಡಲು ಫೋಟೋದಲ್ಲಿ {site} ಮೇಲೆ ತಟ್ಟಿ.", "hi": "चुनने के लिए फ़ोटो पर {site} को टैप करें।"},
+    "tissue_selected": {"en": "Selected. Tap again to change.", "kn": "ಆಯ್ಕೆಯಾಗಿದೆ. ಬದಲಿಸಲು ಮತ್ತೆ ತಟ್ಟಿ.",
+                        "hi": "चुना गया। बदलने के लिए फिर से टैप करें।"},
+    "tissue_small": {"en": "That area is too small. Tap the middle of the {site}.",
+                     "kn": "ಆ ಭಾಗ ತುಂಬಾ ಚಿಕ್ಕದು. {site} ಮಧ್ಯದಲ್ಲಿ ತಟ್ಟಿ.", "hi": "वह हिस्सा बहुत छोटा है। {site} के बीच में टैप करें।"},
+    "quality_title": {"en": "Photo check", "kn": "ಫೋಟೋ ಪರಿಶೀಲನೆ", "hi": "फ़ोटो जाँच"},
+    "quality_wait": {"en": "Select the tissue to run the light, glare and sharpness checks.",
+                     "kn": "ಬೆಳಕು, ಹೊಳಪು ಮತ್ತು ಸ್ಪಷ್ಟತೆ ಪರಿಶೀಲನೆಗೆ ಅಂಗಾಂಶವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+                     "hi": "रोशनी, चमक और साफ़पन की जाँच के लिए ऊतक चुनें।"},
+    "quality_pass": {"en": "All three checks passed.", "kn": "ಮೂರೂ ಪರಿಶೀಲನೆಗಳು ಸರಿ.", "hi": "तीनों जाँच ठीक हैं।"},
+    "analyse": {"en": "See result", "kn": "ಫಲಿತಾಂಶ ನೋಡಿ", "hi": "नतीजा देखें"},
+    "retake": {"en": "Retake photo", "kn": "ಮತ್ತೆ ಫೋಟೋ ತೆಗೆಯಿರಿ", "hi": "फ़ोटो दोबारा लें"},
+    "bad_image": {"en": "This file could not be read as a photo. Try a JPG or PNG.",
+                  "kn": "ಈ ಫೈಲನ್ನು ಫೋಟೋ ಆಗಿ ಓದಲಾಗಲಿಲ್ಲ. JPG ಅಥವಾ PNG ಪ್ರಯತ್ನಿಸಿ.",
+                  "hi": "यह फ़ाइल फ़ोटो के रूप में नहीं पढ़ी जा सकी। JPG या PNG आज़माएँ।"},
+    "samples_title": {"en": "Sample patients", "kn": "ಮಾದರಿ ರೋಗಿಗಳು", "hi": "नमूना मरीज़"},
+    "samples_lede": {"en": "Real photos from the training sets, to show the flow. Not a test of accuracy.",
+                     "kn": "ಹರಿವನ್ನು ತೋರಿಸಲು ತರಬೇತಿ ಸೆಟ್‌ಗಳ ನಿಜವಾದ ಫೋಟೋಗಳು. ನಿಖರತೆಯ ಪರೀಕ್ಷೆಯಲ್ಲ.",
+                     "hi": "प्रक्रिया दिखाने के लिए ट्रेनिंग सेट की असली फ़ोटो। सटीकता की जाँच नहीं।"},
+    "sample_n": {"en": "Sample {n}", "kn": "ಮಾದರಿ {n}", "hi": "नमूना {n}"},
+    "sample_banner": {"en": "Sample patient {n}: {site} photo from the training data.",
+                      "kn": "ಮಾದರಿ ರೋಗಿ {n}: ತರಬೇತಿ ದತ್ತಾಂಶದ {site} ಫೋಟೋ.",
+                      "hi": "नमूना मरीज़ {n}: ट्रेनिंग डेटा से {site} की फ़ोटो।"},
+    "sample_truth_hb": {"en": "Lab Hb {hb} g/dL.", "kn": "ಪ್ರಯೋಗಾಲಯ Hb {hb} g/dL.", "hi": "लैब Hb {hb} g/dL।"},
+    "sample_truth_folder": {"en": "Folder label: {label}.", "kn": "ಫೋಲ್ಡರ್ ಲೇಬಲ್: {label}.",
+                            "hi": "फ़ोल्डर लेबल: {label}।"},
+    "anaemic_word": {"en": "anaemic", "kn": "ರಕ್ತಹೀನತೆ", "hi": "एनीमिया"},
+    "not_anaemic_word": {"en": "not anaemic", "kn": "ರಕ್ತಹೀನತೆ ಇಲ್ಲ", "hi": "एनीमिया नहीं"},
+    "sev_title": {"en": "Rough severity", "kn": "ಅಂದಾಜು ತೀವ್ರತೆ", "hi": "अनुमानित गंभीरता"},
+    "sev_mild": {"en": "Mild", "kn": "ಸೌಮ್ಯ", "hi": "हल्का"},
+    "sev_moderate": {"en": "Moderate", "kn": "ಮಧ್ಯಮ", "hi": "मध्यम"},
+    "sev_severe": {"en": "Severe", "kn": "ತೀವ್ರ", "hi": "गंभीर"},
+    "sev_none": {"en": "None expected", "kn": "ನಿರೀಕ್ಷಿತವಿಲ್ಲ", "hi": "अपेक्षित नहीं"},
+    "sev_line": {"en": "{sev}: colour suggests about {hb} g/dL, give or take {mae}.",
+                 "kn": "{sev}: ಬಣ್ಣದ ಪ್ರಕಾರ ಸುಮಾರು {hb} g/dL, ±{mae}.",
+                 "hi": "{sev}: रंग से लगभग {hb} g/dL, ±{mae}।"},
+    "sev_none_ghana": {"en": "Not available for palm or nail: those photo sets have no Hb values.",
+                       "kn": "ಅಂಗೈ ಅಥವಾ ಉಗುರಿಗೆ ಲಭ್ಯವಿಲ್ಲ: ಆ ಫೋಟೋ ಸೆಟ್‌ಗಳಲ್ಲಿ Hb ಮೌಲ್ಯಗಳಿಲ್ಲ.",
+                       "hi": "हथेली या नाखून के लिए उपलब्ध नहीं: उन फ़ोटो सेट में Hb मान नहीं हैं।"},
+    "band_explain": {"en": "Among children who scored like this, {lo}–{hi}% were anaemic.",
+                     "kn": "ಇದೇ ರೀತಿ ಅಂಕ ಪಡೆದ ಮಕ್ಕಳಲ್ಲಿ {lo}–{hi}% ರಕ್ತಹೀನರಾಗಿದ್ದರು.",
+                     "hi": "इसी तरह स्कोर करने वाले बच्चों में {lo}–{hi}% को एनीमिया था।"},
+    "strip_ghana_note": {"en": "Palm and nail have no Hb values: the strip position is a colour position only.",
+                         "kn": "ಅಂಗೈ ಮತ್ತು ಉಗುರಿಗೆ Hb ಮೌಲ್ಯಗಳಿಲ್ಲ: ಪಟ್ಟಿಯ ಸ್ಥಾನ ಬಣ್ಣದ ಸ್ಥಾನ ಮಾತ್ರ.",
+                         "hi": "हथेली और नाखून के Hb मान नहीं हैं: पट्टी पर स्थिति केवल रंग की स्थिति है।"},
+    "noun_eye": {"en": "eyelid", "kn": "ಕಣ್ಣಿನ ರೆಪ್ಪೆ", "hi": "पलक"},
+    "noun_palm": {"en": "palm", "kn": "ಅಂಗೈ", "hi": "हथेली"},
+    "noun_nail": {"en": "nail bed", "kn": "ಉಗುರಿನ ತಳ", "hi": "नाखून"},
+    "r_redness_low": {"en": "The {site} is less red than {pct}% of healthy children.",
+                      "kn": "{site} {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಕಡಿಮೆ ಕೆಂಪಾಗಿದೆ.",
+                      "hi": "{site} {pct}% स्वस्थ बच्चों से कम लाल है।"},
+    "r_redness_high": {"en": "The {site} is redder than {pct}% of healthy children.",
+                       "kn": "{site} {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಹೆಚ್ಚು ಕೆಂಪಾಗಿದೆ.",
+                       "hi": "{site} {pct}% स्वस्थ बच्चों से ज़्यादा लाल है।"},
+    "r_lightness_low": {"en": "The {site} is darker than {pct}% of healthy children.",
+                        "kn": "{site} {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಗಾಢವಾಗಿದೆ.",
+                        "hi": "{site} {pct}% स्वस्थ बच्चों से गहरा है।"},
+    "r_lightness_high": {"en": "The {site} is paler than {pct}% of healthy children.",
+                         "kn": "{site} {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಬಿಳಿಚಿದೆ.",
+                         "hi": "{site} {pct}% स्वस्थ बच्चों से फीका है।"},
+    "r_blood_index_low": {"en": "Its blood-colour index is lower than in {pct}% of healthy children.",
+                          "kn": "ಇದರ ರಕ್ತ-ಬಣ್ಣ ಸೂಚ್ಯಂಕ {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಕಡಿಮೆ.",
+                          "hi": "इसका रक्त-रंग सूचकांक {pct}% स्वस्थ बच्चों से कम है।"},
+    "r_blood_index_high": {"en": "Its blood-colour index is higher than in {pct}% of healthy children.",
+                           "kn": "ಇದರ ರಕ್ತ-ಬಣ್ಣ ಸೂಚ್ಯಂಕ {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಹೆಚ್ಚು.",
+                           "hi": "इसका रक्त-रंग सूचकांक {pct}% स्वस्थ बच्चों से ज़्यादा है।"},
+    "r_red_share_low": {"en": "Red makes up less of its colour than in {pct}% of healthy children.",
+                        "kn": "ಇದರ ಬಣ್ಣದಲ್ಲಿ ಕೆಂಪಿನ ಪಾಲು {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಕಡಿಮೆ.",
+                        "hi": "इसके रंग में लाल का हिस्सा {pct}% स्वस्थ बच्चों से कम है।"},
+    "r_red_share_high": {"en": "Red makes up more of its colour than in {pct}% of healthy children.",
+                         "kn": "ಇದರ ಬಣ್ಣದಲ್ಲಿ ಕೆಂಪಿನ ಪಾಲು {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಹೆಚ್ಚು.",
+                         "hi": "इसके रंग में लाल का हिस्सा {pct}% स्वस्थ बच्चों से ज़्यादा है।"},
+    "r_tone_low": {"en": "Its colour is less yellow than in {pct}% of healthy children.",
+                   "kn": "ಇದರ ಬಣ್ಣ {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಕಡಿಮೆ ಹಳದಿ.",
+                   "hi": "इसका रंग {pct}% स्वस्थ बच्चों से कम पीला है।"},
+    "r_tone_high": {"en": "Its colour is more yellow than in {pct}% of healthy children.",
+                    "kn": "ಇದರ ಬಣ್ಣ {pct}% ಆರೋಗ್ಯವಂತ ಮಕ್ಕಳಿಗಿಂತ ಹೆಚ್ಚು ಹಳದಿ.",
+                    "hi": "इसका रंग {pct}% स्वस्थ बच्चों से ज़्यादा पीला है।"},
+    "add_site": {"en": "Add a {site} photo", "kn": "{site} ಫೋಟೋ ಸೇರಿಸಿ", "hi": "{site} की फ़ोटो जोड़ें"},
+    "new_patient": {"en": "Next patient", "kn": "ಮುಂದಿನ ರೋಗಿ", "hi": "अगला मरीज़"},
+    "no_referral": {"en": "No referral needed today. Screen again at the next visit.",
+                    "kn": "ಇಂದು ಶಿಫಾರಸು ಅಗತ್ಯವಿಲ್ಲ. ಮುಂದಿನ ಭೇಟಿಯಲ್ಲಿ ಮತ್ತೆ ತಪಾಸಣೆ ಮಾಡಿ.",
+                    "hi": "आज रेफ़रल की ज़रूरत नहीं। अगली विज़िट पर फिर जाँच करें।"},
+    "combined_lede": {
+        "en": "Average of the site results for this visit. Eye, palm and nail models were trained on different "
+              "children, so the combination has not been validated.",
+        "kn": "ಈ ಭೇಟಿಯ ಭಾಗಗಳ ಫಲಿತಾಂಶಗಳ ಸರಾಸರಿ. ಕಣ್ಣು, ಅಂಗೈ ಮತ್ತು ಉಗುರಿನ ಮಾದರಿಗಳು ಬೇರೆ ಬೇರೆ ಮಕ್ಕಳಿಂದ ಕಲಿತಿವೆ, "
+              "ಆದ್ದರಿಂದ ಈ ಸಂಯೋಜನೆಯನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿಲ್ಲ.",
+        "hi": "इस विज़िट के अंगों के नतीजों का औसत। आँख, हथेली और नाखून के मॉडल अलग-अलग बच्चों से सीखे हैं, "
+              "इसलिए इस मेल की पुष्टि नहीं हुई है।",
+    },
+    "site_result": {"en": "{site}: {word}, {p}%", "kn": "{site}: {word}, {p}%", "hi": "{site}: {word}, {p}%"},
+    "register_lede": {"en": "This session's screenings. Nothing leaves this device unless you export it.",
+                      "kn": "ಈ ಸೆಷನ್‌ನ ತಪಾಸಣೆಗಳು. ನೀವು ರಫ್ತು ಮಾಡದ ಹೊರತು ಏನೂ ಈ ಸಾಧನದಿಂದ ಹೊರಹೋಗುವುದಿಲ್ಲ.",
+                      "hi": "इस सत्र की जाँचें। जब तक आप निर्यात न करें, कुछ भी इस डिवाइस से बाहर नहीं जाता।"},
+    "register_empty": {"en": "No screenings yet. Finish one and it appears here.",
+                       "kn": "ಇನ್ನೂ ತಪಾಸಣೆಗಳಿಲ್ಲ. ಒಂದನ್ನು ಮುಗಿಸಿದರೆ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.",
+                       "hi": "अभी कोई जाँच नहीं। एक पूरी करें, वह यहाँ दिखेगी।"},
+    "register_totals": {"en": "{n} screened: {r} referred, {k} normal.",
+                        "kn": "{n} ತಪಾಸಣೆ: {r} ಶಿಫಾರಸು, {k} ಸಾಮಾನ್ಯ.",
+                        "hi": "{n} जाँचे गए: {r} रेफ़र, {k} सामान्य।"},
+    "col_time": {"en": "Time", "kn": "ಸಮಯ", "hi": "समय"},
+    "col_name": {"en": "Name", "kn": "ಹೆಸರು", "hi": "नाम"},
+    "col_age": {"en": "Age band", "kn": "ವಯಸ್ಸಿನ ಗುಂಪು", "hi": "आयु वर्ग"},
+    "col_site": {"en": "Site", "kn": "ಭಾಗ", "hi": "अंग"},
+    "col_result": {"en": "Result", "kn": "ಫಲಿತಾಂಶ", "hi": "नतीजा"},
+    "col_chance": {"en": "Chance", "kn": "ಸಾಧ್ಯತೆ", "hi": "संभावना"},
+    "combined_short": {"en": "combined", "kn": "ಸಂಯೋಜಿತ", "hi": "संयुक्त"},
+    "slip_title": {"en": "Referral slip", "kn": "ಶಿಫಾರಸು ಚೀಟಿ", "hi": "रेफ़रल पर्ची"},
+    "slip_patient": {"en": "Patient", "kn": "ರೋಗಿ", "hi": "मरीज़"},
+    "slip_date": {"en": "Date", "kn": "ದಿನಾಂಕ", "hi": "तारीख"},
+    "slip_sites": {"en": "Photos used", "kn": "ಬಳಸಿದ ಫೋಟೋಗಳು", "hi": "इस्तेमाल हुई फ़ोटो"},
+    "slip_result": {"en": "Screening result", "kn": "ತಪಾಸಣೆಯ ಫಲಿತಾಂಶ", "hi": "जाँच का नतीजा"},
+    "slip_next": {"en": "Next step", "kn": "ಮುಂದಿನ ಹೆಜ್ಜೆ", "hi": "अगला कदम"},
+    "slip_unnamed": {"en": "Not recorded", "kn": "ದಾಖಲಿಸಿಲ್ಲ", "hi": "दर्ज नहीं"},
+    "slip_phc": {"en": "For the PHC: Hb result (g/dL) ____________   Checked by ____________",
+                 "kn": "PHCಗಾಗಿ: Hb ಫಲಿತಾಂಶ (g/dL) ____________   ಪರಿಶೀಲಿಸಿದವರು ____________",
+                 "hi": "PHC के लिए: Hb नतीजा (g/dL) ____________   जाँचकर्ता ____________"},
     "footer": {
         "en": "Screening aid for health workers. Not a diagnosis. Confirm with a blood Hb test.",
         "kn": "ಆರೋಗ್ಯ ಕಾರ್ಯಕರ್ತರಿಗೆ ತಪಾಸಣಾ ಸಹಾಯಕ. ಇದು ರೋಗನಿರ್ಣಯವಲ್ಲ. ರಕ್ತದ Hb ಪರೀಕ್ಷೆಯಿಂದ ಖಚಿತಪಡಿಸಿ.",
@@ -283,11 +461,12 @@ html, body { margin: 0; padding: 0; background: transparent; color: var(--text);
 .unit { position: absolute; left: 0; top: calc(var(--top) + var(--bh) + 40px); font-size: 14px; color: var(--muted); }
 .tick.first b { transform: translateX(50%); }
 .tick.last b { transform: translateX(-50%); }
-.swatch { position: absolute; top: 0; width: 44px; margin-left: -22px; display: flex; flex-direction: column;
+@media (max-width: 480px) { .tick:nth-child(even):not(.last) b { display: none; } .unit { display: none; } }
+.swatch { position: absolute; top: 24px; width: 44px; margin-left: -22px; display: flex; flex-direction: column;
   align-items: center; will-change: transform; }
 .chip { width: 44px; height: 44px; border-radius: 10px; border: 3px solid #fff;
   box-shadow: 0 6px 18px rgba(27,35,64,.28), 0 0 0 1px rgba(27,35,64,.18); }
-.stem { width: 2px; height: calc(var(--top) - 50px); background: var(--text); opacity: .6; }
+.stem { width: 2px; height: calc(var(--top) - 74px); background: var(--text); opacity: .6; }
 .swatch span { position: absolute; bottom: calc(100% + 4px); white-space: nowrap; font-size: 14px; font-weight: 700; }
 .hidden { opacity: 0; }
 </style></head><body>
@@ -313,7 +492,7 @@ html, body { margin: 0; padding: 0; background: transparent; color: var(--text);
   if (ring) {
     const r = ring.getBoundingClientRect();
     dx = (r.left + r.width / 2) - (end.left + end.width / 2);
-    dy = (r.top + r.height / 2) - (end.top + 22);
+    dy = (r.top + r.height / 2) - (end.top + 42);
   } else { dx = -end.left + 12; dy = 6; }
   const travel = sw.animate([
     { transform: `translate(${dx}px, ${dy}px) scale(.35)`, opacity: 0 },
@@ -333,12 +512,13 @@ html, body { margin: 0; padding: 0; background: transparent; color: var(--text);
 
 def hb_strip(hb: float | None = None, swatch_rgb: tuple[int, int, int] | None = None, threshold: float = 11.0,
              photo_url: str | None = None, photo_point: tuple[float, float] = (0.5, 0.5),
-             animate: bool = True, show_cutoff: bool = True, photo_width: int = 120, bar_height: int = 30) -> None:
+             animate: bool = True, show_cutoff: bool = True, photo_width: int = 120, bar_height: int = 30,
+             swatch_label: str | None = None) -> None:
     """The digital Hb colour scale. With hb and swatch_rgb, the tissue swatch lifts out of the photo (if given)
     and settles at its position; then the cut-off marker drops. prefers-reduced-motion shows the final state."""
     tk = tokens()
     has_swatch = hb is not None and swatch_rgb is not None
-    top = 96 if has_swatch else 14
+    top = 116 if has_swatch else 14
     photo = ""
     if photo_url:
         px, py = photo_point
@@ -353,7 +533,7 @@ def hb_strip(hb: float | None = None, swatch_rgb: tuple[int, int, int] | None = 
     if has_swatch:
         r, g, b = (int(c) for c in swatch_rgb)
         swatch = (f'<div class="swatch{" hidden" if animate else ""}" id="swatch" style="left:{_hb_frac(hb) * 100:.2f}%">'
-                  f'<span>{html.escape(t("this_photo"))}</span>'
+                  f'<span>{html.escape(swatch_label or t("this_photo"))}</span>'
                   f'<div class="chip" style="background:rgb({r},{g},{b})"></div><div class="stem"></div></div>')
     ticks = "".join(
         f'<div class="tick{" first" if v == HB_MIN else " last" if v == HB_MAX else ""}" '
@@ -366,7 +546,7 @@ def hb_strip(hb: float | None = None, swatch_rgb: tuple[int, int, int] | None = 
     doc = doc.replace("<style>", f"<style>:root{{--top:{top}px;--bh:{bar_height}px;--pw:{photo_width}px}}", 1)
     label_room = 60
     height = max(top + bar_height + label_room + 6, photo_width + 12 if photo_url else 0)
-    components.html(doc, height=height)
+    st.iframe(doc, height=height)
 
 
 def result_panel(refer: bool, prob: float, band: tuple[float, float], reasons: list[str],

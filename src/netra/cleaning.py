@@ -39,6 +39,19 @@ def thumbnail(rgb: np.ndarray, tissue: np.ndarray) -> np.ndarray:
     return _tissue_crop(rgb, tissue, 64).astype(float)
 
 
+def light_level(rgb: np.ndarray, tissue: np.ndarray) -> float:
+    return float(np.median(rgb[tissue].max(axis=1)) / 255.0) if tissue.any() else float("nan")
+
+
+def photo_checks(rgb: np.ndarray, tissue: np.ndarray, glare_frac: float,
+                 blur_min: float = config.BLUR_VAR_MIN) -> dict[str, dict]:
+    """Live quality gate with the same thresholds as the dataset cleaning flags."""
+    light, sharp = light_level(rgb, tissue), laplacian_var(rgb, tissue)
+    return {"light": {"value": light, "ok": bool(light >= config.LIGHT_V_MIN)},
+            "glare": {"value": glare_frac, "ok": bool(glare_frac <= config.GLARE_MAX_FRAC)},
+            "sharp": {"value": sharp, "ok": bool(np.isfinite(sharp) and sharp >= blur_min)}}
+
+
 def quality_row(rgb: np.ndarray, tissue: np.ndarray, glare_frac: float) -> dict:
     return {
         "tissue_px": int(tissue.sum()),
