@@ -1,0 +1,5305 @@
+{
+  "eye": {
+    "source": "P6 outputs/results/final.json headline (same TunedScreen top-3 procedure)",
+    "fold_mean": {
+      "sensitivity": {
+        "value": 0.7928654970760235,
+        "sd": 0.14318203223106682,
+        "ci_low": 0.6337267737921259,
+        "ci_high": 0.952004220359921
+      },
+      "specificity": {
+        "value": 0.5854769230769231,
+        "sd": 0.12922854088432906,
+        "ci_low": 0.44184671551718613,
+        "ci_high": 0.7291071306366601
+      },
+      "roc_auc": {
+        "value": 0.7589020242914981,
+        "sd": 0.09532608379005901,
+        "ci_low": 0.6529524785725045,
+        "ci_high": 0.8648515700104917
+      },
+      "pr_auc": {
+        "value": 0.6940369796571829,
+        "sd": 0.11438082254472778,
+        "ci_low": 0.5669091705019462,
+        "ci_high": 0.8211647888124196
+      },
+      "f1": {
+        "value": 0.6702728210101935,
+        "sd": 0.08167924674005228,
+        "ci_low": 0.5794909621242567,
+        "ci_high": 0.7610546798961303
+      }
+    },
+    "pooled": {
+      "sensitivity": {
+        "value": 0.8387096774193549,
+        "ci_low": 0.7544318181818181,
+        "ci_high": 0.9090909090909091
+      },
+      "specificity": {
+        "value": 0.5748031496062992,
+        "ci_low": 0.4921811995967742,
+        "ci_high": 0.6569692822384428
+      },
+      "roc_auc": {
+        "value": 0.762001524003048,
+        "ci_low": 0.6857043134633639,
+        "ci_high": 0.8238296172708451
+      },
+      "pr_auc": {
+        "value": 0.6294522311753499,
+        "ci_low": 0.529437158052839,
+        "ci_high": 0.7484954222490267
+      },
+      "f1": {
+        "value": 0.6933333333333334,
+        "ci_low": 0.6091260207459722,
+        "ci_high": 0.7553648068669528
+      }
+    },
+    "confusion_matrix": {
+      "tn": 73,
+      "fp": 54,
+      "fn": 15,
+      "tp": 78
+    },
+    "folds": [
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 0,
+        "n": 44,
+        "sensitivity": 0.9473684210526315,
+        "specificity": 0.56,
+        "roc_auc": 0.8042105263157895,
+        "pr_auc": 0.7413106484159115,
+        "f1": 0.75,
+        "confusion_matrix": {
+          "tn": 14,
+          "fp": 11,
+          "fn": 1,
+          "tp": 18
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "gradient_boosting"
+        ],
+        "threshold": 0.3309226870499306,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 2,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 100
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6448253968253969,
+          "knn": 0.7621587301587301,
+          "gaussian_nb": 0.6298730158730159,
+          "logreg": 0.6421859410430839,
+          "bagging": 0.6740702947845805,
+          "random_forest": 0.6791904761904762,
+          "gradient_boosting": 0.6882630385487529,
+          "adaboost": 0.6944444444444444
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 1,
+        "n": 44,
+        "sensitivity": 0.9473684210526315,
+        "specificity": 0.44,
+        "roc_auc": 0.8105263157894737,
+        "pr_auc": 0.7659727378101664,
+        "f1": 0.7058823529411765,
+        "confusion_matrix": {
+          "tn": 11,
+          "fp": 14,
+          "fn": 1,
+          "tp": 18
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "bagging"
+        ],
+        "threshold": 0.2957697161994378,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6683219954648526,
+          "knn": 0.7515102040816327,
+          "gaussian_nb": 0.6328662131519275,
+          "logreg": 0.6693514739229024,
+          "bagging": 0.6913990929705215,
+          "random_forest": 0.6849569160997733,
+          "gradient_boosting": 0.6781814058956916,
+          "adaboost": 0.6957596371882087
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 2,
+        "n": 44,
+        "sensitivity": 0.7222222222222222,
+        "specificity": 0.6923076923076923,
+        "roc_auc": 0.8055555555555556,
+        "pr_auc": 0.7508083051251933,
+        "f1": 0.6666666666666666,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 8,
+          "fn": 5,
+          "tp": 13
+        },
+        "members": [
+          "adaboost",
+          "knn",
+          "gradient_boosting"
+        ],
+        "threshold": 0.37277466025051464,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 2,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          },
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.652888888888889,
+          "knn": 0.7646984126984127,
+          "gaussian_nb": 0.6135873015873015,
+          "logreg": 0.6357142857142857,
+          "bagging": 0.7167619047619047,
+          "random_forest": 0.740111111111111,
+          "gradient_boosting": 0.7582539682539683,
+          "adaboost": 0.7727936507936508
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 3,
+        "n": 44,
+        "sensitivity": 0.9473684210526315,
+        "specificity": 0.6,
+        "roc_auc": 0.8694736842105264,
+        "pr_auc": 0.7943408993482712,
+        "f1": 0.7659574468085106,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 10,
+          "fn": 1,
+          "tp": 18
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "random_forest"
+        ],
+        "threshold": 0.3289530152230175,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6698503401360545,
+          "knn": 0.7723197278911564,
+          "gaussian_nb": 0.608517006802721,
+          "logreg": 0.6150884353741496,
+          "bagging": 0.7231451247165535,
+          "random_forest": 0.7320634920634921,
+          "gradient_boosting": 0.7261768707482994,
+          "adaboost": 0.7471746031746032
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 4,
+        "n": 44,
+        "sensitivity": 0.6111111111111112,
+        "specificity": 0.5769230769230769,
+        "roc_auc": 0.5918803418803419,
+        "pr_auc": 0.45376564046125034,
+        "f1": 0.55,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 11,
+          "fn": 7,
+          "tp": 11
+        },
+        "members": [
+          "adaboost",
+          "gradient_boosting",
+          "random_forest"
+        ],
+        "threshold": 0.3712604666192752,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 100
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7306507936507936,
+          "knn": 0.8167619047619047,
+          "gaussian_nb": 0.6302222222222222,
+          "logreg": 0.6606031746031746,
+          "bagging": 0.8238095238095238,
+          "random_forest": 0.8280793650793651,
+          "gradient_boosting": 0.8290793650793651,
+          "adaboost": 0.8537777777777779
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 0,
+        "n": 44,
+        "sensitivity": 0.7894736842105263,
+        "specificity": 0.6,
+        "roc_auc": 0.7852631578947369,
+        "pr_auc": 0.7521573475952241,
+        "f1": 0.6818181818181818,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 10,
+          "fn": 4,
+          "tp": 15
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.32669461374445263,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.638312925170068,
+          "knn": 0.7811700680272109,
+          "gaussian_nb": 0.5836145124716554,
+          "logreg": 0.5968616780045352,
+          "bagging": 0.7142630385487527,
+          "random_forest": 0.7336009070294784,
+          "gradient_boosting": 0.7018004535147393,
+          "adaboost": 0.7229297052154194
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 1,
+        "n": 44,
+        "sensitivity": 0.5789473684210527,
+        "specificity": 0.64,
+        "roc_auc": 0.7094736842105263,
+        "pr_auc": 0.6234837267753686,
+        "f1": 0.5641025641025641,
+        "confusion_matrix": {
+          "tn": 16,
+          "fp": 9,
+          "fn": 8,
+          "tp": 11
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.3449698822428322,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7322879818594105,
+          "knn": 0.770013605442177,
+          "gaussian_nb": 0.6212789115646258,
+          "logreg": 0.6364625850340135,
+          "bagging": 0.7373333333333333,
+          "random_forest": 0.7529455782312924,
+          "gradient_boosting": 0.7259773242630385,
+          "adaboost": 0.7461995464852608
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 2,
+        "n": 44,
+        "sensitivity": 0.9444444444444444,
+        "specificity": 0.5,
+        "roc_auc": 0.8034188034188035,
+        "pr_auc": 0.6853345042347257,
+        "f1": 0.7083333333333334,
+        "confusion_matrix": {
+          "tn": 13,
+          "fp": 13,
+          "fn": 1,
+          "tp": 17
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "gradient_boosting"
+        ],
+        "threshold": 0.3416230975245549,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 21,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.03,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7037142857142857,
+          "knn": 0.7535555555555555,
+          "gaussian_nb": 0.593968253968254,
+          "logreg": 0.654,
+          "bagging": 0.7085238095238096,
+          "random_forest": 0.7006984126984127,
+          "gradient_boosting": 0.710190476190476,
+          "adaboost": 0.7199047619047618
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 3,
+        "n": 44,
+        "sensitivity": 1.0,
+        "specificity": 0.64,
+        "roc_auc": 0.9094736842105262,
+        "pr_auc": 0.873294168840959,
+        "f1": 0.8085106382978723,
+        "confusion_matrix": {
+          "tn": 16,
+          "fp": 9,
+          "fn": 0,
+          "tp": 19
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.3366481770005982,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6456190476190475,
+          "knn": 0.7667482993197279,
+          "gaussian_nb": 0.6153922902494331,
+          "logreg": 0.654344671201814,
+          "bagging": 0.6916575963718821,
+          "random_forest": 0.690501133786848,
+          "gradient_boosting": 0.6386621315192744,
+          "adaboost": 0.6866303854875284
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 4,
+        "n": 44,
+        "sensitivity": 0.7777777777777778,
+        "specificity": 0.5384615384615384,
+        "roc_auc": 0.6538461538461539,
+        "pr_auc": 0.5313453820834322,
+        "f1": 0.6363636363636364,
+        "confusion_matrix": {
+          "tn": 14,
+          "fp": 12,
+          "fn": 4,
+          "tp": 14
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "gradient_boosting"
+        ],
+        "threshold": 0.3569290707597546,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6966666666666667,
+          "knn": 0.8233650793650792,
+          "gaussian_nb": 0.5963174603174604,
+          "logreg": 0.6102857142857142,
+          "bagging": 0.7562063492063492,
+          "random_forest": 0.7550158730158729,
+          "gradient_boosting": 0.760031746031746,
+          "adaboost": 0.7829206349206349
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 0,
+        "n": 44,
+        "sensitivity": 0.8888888888888888,
+        "specificity": 0.5769230769230769,
+        "roc_auc": 0.7735042735042735,
+        "pr_auc": 0.6714002131485791,
+        "f1": 0.7111111111111111,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 11,
+          "fn": 2,
+          "tp": 16
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "random_forest"
+        ],
+        "threshold": 0.3447708370005784,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 9,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6618253968253969,
+          "knn": 0.7577777777777779,
+          "gaussian_nb": 0.6375873015873015,
+          "logreg": 0.6603174603174603,
+          "bagging": 0.7437301587301588,
+          "random_forest": 0.7463174603174603,
+          "gradient_boosting": 0.7292698412698414,
+          "adaboost": 0.7570476190476191
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 1,
+        "n": 44,
+        "sensitivity": 0.8947368421052632,
+        "specificity": 0.8,
+        "roc_auc": 0.8547368421052632,
+        "pr_auc": 0.7988729705815301,
+        "f1": 0.8292682926829268,
+        "confusion_matrix": {
+          "tn": 20,
+          "fp": 5,
+          "fn": 2,
+          "tp": 17
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.3680531978984487,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6274467120181406,
+          "knn": 0.7593287981859411,
+          "gaussian_nb": 0.5915736961451248,
+          "logreg": 0.609437641723356,
+          "bagging": 0.7031292517006802,
+          "random_forest": 0.7083083900226758,
+          "gradient_boosting": 0.6790884353741496,
+          "adaboost": 0.7021269841269842
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 2,
+        "n": 44,
+        "sensitivity": 0.6842105263157895,
+        "specificity": 0.56,
+        "roc_auc": 0.7873684210526315,
+        "pr_auc": 0.7834026242075776,
+        "f1": 0.6046511627906976,
+        "confusion_matrix": {
+          "tn": 14,
+          "fp": 11,
+          "fn": 6,
+          "tp": 13
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "random_forest"
+        ],
+        "threshold": 0.3459492203921858,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": 8,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6796145124716554,
+          "knn": 0.7561519274376417,
+          "gaussian_nb": 0.5609342403628117,
+          "logreg": 0.6327709750566894,
+          "bagging": 0.7144807256235828,
+          "random_forest": 0.7232743764172336,
+          "gradient_boosting": 0.7230340136054421,
+          "adaboost": 0.7362222222222222
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 3,
+        "n": 44,
+        "sensitivity": 0.9473684210526315,
+        "specificity": 0.36,
+        "roc_auc": 0.6378947368421053,
+        "pr_auc": 0.5629397360005177,
+        "f1": 0.6792452830188679,
+        "confusion_matrix": {
+          "tn": 9,
+          "fp": 16,
+          "fn": 1,
+          "tp": 18
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "random_forest"
+        ],
+        "threshold": 0.34050893193248366,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 25,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6782743764172335,
+          "knn": 0.7684489795918367,
+          "gaussian_nb": 0.6593605442176871,
+          "logreg": 0.6653151927437642,
+          "bagging": 0.746532879818594,
+          "random_forest": 0.7506848072562359,
+          "gradient_boosting": 0.7455510204081632,
+          "adaboost": 0.7657823129251701
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 4,
+        "n": 44,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.5,
+        "roc_auc": 0.688034188034188,
+        "pr_auc": 0.579042802488515,
+        "f1": 0.6521739130434783,
+        "confusion_matrix": {
+          "tn": 13,
+          "fp": 13,
+          "fn": 3,
+          "tp": 15
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.3649279305073671,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6796507936507936,
+          "knn": 0.7816031746031745,
+          "gaussian_nb": 0.5996507936507938,
+          "logreg": 0.6357142857142857,
+          "bagging": 0.7554603174603175,
+          "random_forest": 0.7511111111111111,
+          "gradient_boosting": 0.7151746031746032,
+          "adaboost": 0.7364126984126985
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 0,
+        "n": 44,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.46153846153846156,
+        "roc_auc": 0.6858974358974359,
+        "pr_auc": 0.5881508234740993,
+        "f1": 0.6382978723404256,
+        "confusion_matrix": {
+          "tn": 12,
+          "fp": 14,
+          "fn": 3,
+          "tp": 15
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "bagging"
+        ],
+        "threshold": 0.3701457677251001,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.714047619047619,
+          "knn": 0.7892063492063492,
+          "gaussian_nb": 0.5826349206349206,
+          "logreg": 0.6047936507936508,
+          "bagging": 0.7627142857142857,
+          "random_forest": 0.7605079365079366,
+          "gradient_boosting": 0.7614920634920634,
+          "adaboost": 0.7851428571428571
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 1,
+        "n": 44,
+        "sensitivity": 0.7368421052631579,
+        "specificity": 0.68,
+        "roc_auc": 0.8189473684210526,
+        "pr_auc": 0.7914150692326563,
+        "f1": 0.6829268292682927,
+        "confusion_matrix": {
+          "tn": 17,
+          "fp": 8,
+          "fn": 5,
+          "tp": 14
+        },
+        "members": [
+          "adaboost",
+          "knn",
+          "gradient_boosting"
+        ],
+        "threshold": 0.3414032872894003,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          },
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 21,
+            "clf__weights": "distance"
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 100
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6989591836734694,
+          "knn": 0.7599909297052154,
+          "gaussian_nb": 0.6112789115646258,
+          "logreg": 0.6494058956916099,
+          "bagging": 0.734204081632653,
+          "random_forest": 0.7539863945578231,
+          "gradient_boosting": 0.7581995464852608,
+          "adaboost": 0.7846167800453515
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 2,
+        "n": 44,
+        "sensitivity": 0.6111111111111112,
+        "specificity": 0.8846153846153846,
+        "roc_auc": 0.829059829059829,
+        "pr_auc": 0.8325907171495408,
+        "f1": 0.6875,
+        "confusion_matrix": {
+          "tn": 23,
+          "fp": 3,
+          "fn": 7,
+          "tp": 11
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "random_forest"
+        ],
+        "threshold": 0.3177766916151995,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 2,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6737777777777778,
+          "knn": 0.7940952380952381,
+          "gaussian_nb": 0.575968253968254,
+          "logreg": 0.6365396825396827,
+          "bagging": 0.7129682539682541,
+          "random_forest": 0.7222380952380952,
+          "gradient_boosting": 0.715015873015873,
+          "adaboost": 0.7346031746031747
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 3,
+        "n": 44,
+        "sensitivity": 0.5789473684210527,
+        "specificity": 0.36,
+        "roc_auc": 0.5094736842105263,
+        "pr_auc": 0.4716664167883046,
+        "f1": 0.4782608695652174,
+        "confusion_matrix": {
+          "tn": 9,
+          "fp": 16,
+          "fn": 8,
+          "tp": 11
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.3840492997475872,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 31,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.744111111111111,
+          "knn": 0.7800816326530613,
+          "gaussian_nb": 0.6859092970521542,
+          "logreg": 0.6840544217687075,
+          "bagging": 0.7654807256235828,
+          "random_forest": 0.7706530612244898,
+          "gradient_boosting": 0.7536870748299319,
+          "adaboost": 0.7556553287981859
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 4,
+        "n": 44,
+        "sensitivity": 0.9473684210526315,
+        "specificity": 0.44,
+        "roc_auc": 0.8421052631578948,
+        "pr_auc": 0.7921767871888692,
+        "f1": 0.7058823529411765,
+        "confusion_matrix": {
+          "tn": 11,
+          "fp": 14,
+          "fn": 1,
+          "tp": 18
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.33329748520411684,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 7,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.708687074829932,
+          "knn": 0.7584308390022676,
+          "gaussian_nb": 0.6049750566893424,
+          "logreg": 0.6174421768707483,
+          "bagging": 0.7181882086167801,
+          "random_forest": 0.725281179138322,
+          "gradient_boosting": 0.7108027210884353,
+          "adaboost": 0.7188390022675736
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 0,
+        "n": 44,
+        "sensitivity": 0.6842105263157895,
+        "specificity": 0.6,
+        "roc_auc": 0.6568421052631579,
+        "pr_auc": 0.5823743235306029,
+        "f1": 0.6190476190476191,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 10,
+          "fn": 6,
+          "tp": 13
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.33606684565485234,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 11,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6846734693877552,
+          "knn": 0.8007120181405896,
+          "gaussian_nb": 0.6097913832199546,
+          "logreg": 0.6358820861678005,
+          "bagging": 0.776922902494331,
+          "random_forest": 0.7750816326530613,
+          "gradient_boosting": 0.7415691609977324,
+          "adaboost": 0.7562539682539682
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 1,
+        "n": 44,
+        "sensitivity": 0.631578947368421,
+        "specificity": 0.6,
+        "roc_auc": 0.7326315789473683,
+        "pr_auc": 0.7266159898097238,
+        "f1": 0.5853658536585366,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 10,
+          "fn": 7,
+          "tp": 12
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.3892952387936971,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7124149659863945,
+          "knn": 0.7882879818594104,
+          "gaussian_nb": 0.632984126984127,
+          "logreg": 0.653514739229025,
+          "bagging": 0.7862290249433106,
+          "random_forest": 0.7855736961451247,
+          "gradient_boosting": 0.7760725623582767,
+          "adaboost": 0.7756553287981859
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 2,
+        "n": 44,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.5384615384615384,
+        "roc_auc": 0.8247863247863249,
+        "pr_auc": 0.756751408665587,
+        "f1": 0.6666666666666666,
+        "confusion_matrix": {
+          "tn": 14,
+          "fp": 12,
+          "fn": 3,
+          "tp": 15
+        },
+        "members": [
+          "adaboost",
+          "knn",
+          "gradient_boosting"
+        ],
+        "threshold": 0.35130564137784714,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 100
+          },
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6976507936507937,
+          "knn": 0.7290634920634921,
+          "gaussian_nb": 0.5059365079365079,
+          "logreg": 0.5897142857142856,
+          "bagging": 0.6689206349206349,
+          "random_forest": 0.6977142857142857,
+          "gradient_boosting": 0.7010793650793652,
+          "adaboost": 0.7332063492063492
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 3,
+        "n": 44,
+        "sensitivity": 0.8947368421052632,
+        "specificity": 0.68,
+        "roc_auc": 0.8210526315789474,
+        "pr_auc": 0.7403742416808652,
+        "f1": 0.7727272727272727,
+        "confusion_matrix": {
+          "tn": 17,
+          "fp": 8,
+          "fn": 2,
+          "tp": 17
+        },
+        "members": [
+          "adaboost",
+          "knn",
+          "gradient_boosting"
+        ],
+        "threshold": 0.3010413297939296,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7011587301587301,
+          "knn": 0.7465238095238096,
+          "gaussian_nb": 0.6053287981859411,
+          "logreg": 0.6284353741496599,
+          "bagging": 0.7184263038548753,
+          "random_forest": 0.7297800453514739,
+          "gradient_boosting": 0.7321950113378685,
+          "adaboost": 0.7640952380952382
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 4,
+        "n": 44,
+        "sensitivity": 0.5555555555555556,
+        "specificity": 0.8076923076923077,
+        "roc_auc": 0.7670940170940171,
+        "pr_auc": 0.7013370067921026,
+        "f1": 0.6060606060606061,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 5,
+          "fn": 8,
+          "tp": 10
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.35718215899590466,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 2,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6818888888888889,
+          "knn": 0.7677936507936508,
+          "gaussian_nb": 0.5782539682539682,
+          "logreg": 0.6257777777777778,
+          "bagging": 0.7242539682539683,
+          "random_forest": 0.734952380952381,
+          "gradient_boosting": 0.6976825396825397,
+          "adaboost": 0.7257142857142858
+        }
+      }
+    ],
+    "brier_pooled": 0.19693552066544687,
+    "fold_sens_floor_met": 0.52
+  },
+  "palm": {
+    "fold_mean": {
+      "sensitivity": {
+        "value": 0.8284918032786885,
+        "sd": 0.059708754115829925,
+        "ci_low": 0.7621287062668846,
+        "ci_high": 0.8948549002904925
+      },
+      "specificity": {
+        "value": 0.598989898989899,
+        "sd": 0.09252354327740621,
+        "ci_low": 0.49615491324420774,
+        "ci_high": 0.7018248847355901
+      },
+      "roc_auc": {
+        "value": 0.7974425346359775,
+        "sd": 0.048252913103971666,
+        "ci_low": 0.7438119941760476,
+        "ci_high": 0.8510730750959073
+      },
+      "pr_auc": {
+        "value": 0.8336043549995091,
+        "sd": 0.04169791096927612,
+        "ci_low": 0.787259349952586,
+        "ci_high": 0.8799493600464323
+      },
+      "f1": {
+        "value": 0.7803573194688398,
+        "sd": 0.03960372274437913,
+        "ci_low": 0.7363398929887078,
+        "ci_high": 0.8243747459489718
+      }
+    },
+    "pooled": {
+      "sensitivity": {
+        "value": 0.8006644518272426,
+        "ci_low": 0.7475712027868271,
+        "ci_high": 0.8417551806727065
+      },
+      "specificity": {
+        "value": 0.6063348416289592,
+        "ci_low": 0.5384529147982062,
+        "ci_high": 0.6747127686001738
+      },
+      "roc_auc": {
+        "value": 0.7965454518122097,
+        "ci_low": 0.7560062482326276,
+        "ci_high": 0.8363180970143065
+      },
+      "pr_auc": {
+        "value": 0.828182849519972,
+        "ci_low": 0.7797233393251599,
+        "ci_high": 0.8754881959792652
+      },
+      "f1": {
+        "value": 0.766295707472178,
+        "ci_low": 0.7246209126841537,
+        "ci_high": 0.803711629135445
+      }
+    },
+    "confusion_matrix": {
+      "tn": 134,
+      "fp": 87,
+      "fn": 60,
+      "tp": 241
+    },
+    "folds": [
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 0,
+        "n": 105,
+        "sensitivity": 0.85,
+        "specificity": 0.7555555555555555,
+        "roc_auc": 0.8707407407407407,
+        "pr_auc": 0.8895271777732996,
+        "f1": 0.8360655737704918,
+        "confusion_matrix": {
+          "tn": 34,
+          "fp": 11,
+          "fn": 9,
+          "tp": 51
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "adaboost"
+        ],
+        "threshold": 0.4883119648209375,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6743191879926573,
+          "knn": 0.7122671687722708,
+          "gaussian_nb": 0.5743694660403843,
+          "logreg": 0.6383850286146204,
+          "bagging": 0.7243663953676709,
+          "random_forest": 0.7432445200302342,
+          "gradient_boosting": 0.7097596776805961,
+          "adaboost": 0.7229039790519382
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 1,
+        "n": 105,
+        "sensitivity": 0.7213114754098361,
+        "specificity": 0.5,
+        "roc_auc": 0.768628912071535,
+        "pr_auc": 0.8330063740415485,
+        "f1": 0.6929133858267716,
+        "confusion_matrix": {
+          "tn": 22,
+          "fp": 22,
+          "fn": 17,
+          "tp": 44
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.49470995638016707,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 11,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 0.6
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6782837301587301,
+          "knn": 0.7363326719576719,
+          "gaussian_nb": 0.6189715608465608,
+          "logreg": 0.6570502645502646,
+          "bagging": 0.7285714285714285,
+          "random_forest": 0.7299735449735449,
+          "gradient_boosting": 0.695221560846561,
+          "adaboost": 0.7130588624338625
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 2,
+        "n": 104,
+        "sensitivity": 0.85,
+        "specificity": 0.6363636363636364,
+        "roc_auc": 0.7882575757575757,
+        "pr_auc": 0.8147212558849276,
+        "f1": 0.8031496062992126,
+        "confusion_matrix": {
+          "tn": 28,
+          "fp": 16,
+          "fn": 9,
+          "tp": 51
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.4918762414243204,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7083536470143613,
+          "knn": 0.7775148134650685,
+          "gaussian_nb": 0.6207710425440017,
+          "logreg": 0.6571930002159594,
+          "bagging": 0.7554974489795918,
+          "random_forest": 0.7710046161321672,
+          "gradient_boosting": 0.7244659728970954,
+          "adaboost": 0.7511826476622395
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 3,
+        "n": 104,
+        "sensitivity": 0.7166666666666667,
+        "specificity": 0.6136363636363636,
+        "roc_auc": 0.7215909090909091,
+        "pr_auc": 0.7732877402530803,
+        "f1": 0.7166666666666667,
+        "confusion_matrix": {
+          "tn": 27,
+          "fp": 17,
+          "fn": 17,
+          "tp": 43
+        },
+        "members": [
+          "random_forest",
+          "adaboost",
+          "knn"
+        ],
+        "threshold": 0.4716509225661861,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 25,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6696090122556959,
+          "knn": 0.7545874500593889,
+          "gaussian_nb": 0.6673843604902279,
+          "logreg": 0.6841149713853795,
+          "bagging": 0.7508872219522731,
+          "random_forest": 0.7656562466256343,
+          "gradient_boosting": 0.7337607304826693,
+          "adaboost": 0.7622056203433754
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 4,
+        "n": 104,
+        "sensitivity": 0.8666666666666667,
+        "specificity": 0.5227272727272727,
+        "roc_auc": 0.8128787878787879,
+        "pr_auc": 0.8690728121032428,
+        "f1": 0.7819548872180451,
+        "confusion_matrix": {
+          "tn": 23,
+          "fp": 21,
+          "fn": 8,
+          "tp": 52
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.4945574106074754,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7060973436993846,
+          "knn": 0.7655813357088868,
+          "gaussian_nb": 0.6325608735557715,
+          "logreg": 0.6801156732534283,
+          "bagging": 0.7503135797969982,
+          "random_forest": 0.761169420149012,
+          "gradient_boosting": 0.746482088867293,
+          "adaboost": 0.7425286821077638
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 0,
+        "n": 105,
+        "sensitivity": 0.8,
+        "specificity": 0.4666666666666667,
+        "roc_auc": 0.7214814814814815,
+        "pr_auc": 0.7733144807537288,
+        "f1": 0.7272727272727273,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 24,
+          "fn": 12,
+          "tp": 48
+        },
+        "members": [
+          "random_forest",
+          "adaboost",
+          "bagging"
+        ],
+        "threshold": 0.44796202183770617,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": 8,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 0.6
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.678729686318972,
+          "knn": 0.7194567271352985,
+          "gaussian_nb": 0.650074438505561,
+          "logreg": 0.6877009772162834,
+          "bagging": 0.7202042503509339,
+          "random_forest": 0.7288903736097614,
+          "gradient_boosting": 0.7186968874851528,
+          "adaboost": 0.7261231238527157
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 1,
+        "n": 104,
+        "sensitivity": 0.7666666666666667,
+        "specificity": 0.6136363636363636,
+        "roc_auc": 0.7583333333333334,
+        "pr_auc": 0.8270366312048779,
+        "f1": 0.7479674796747967,
+        "confusion_matrix": {
+          "tn": 27,
+          "fp": 17,
+          "fn": 14,
+          "tp": 46
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "knn"
+        ],
+        "threshold": 0.5157519071790095,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 31,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6962384934132383,
+          "knn": 0.7343129791599179,
+          "gaussian_nb": 0.6255463097937588,
+          "logreg": 0.6548209561602418,
+          "bagging": 0.7457585911348666,
+          "random_forest": 0.7515879764604254,
+          "gradient_boosting": 0.7281262822589353,
+          "adaboost": 0.7216373096857792
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 2,
+        "n": 104,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.6590909090909091,
+        "roc_auc": 0.7882575757575757,
+        "pr_auc": 0.8212394848672256,
+        "f1": 0.8,
+        "confusion_matrix": {
+          "tn": 29,
+          "fp": 15,
+          "fn": 10,
+          "tp": 50
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "knn"
+        ],
+        "threshold": 0.5020096929839839,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7225125526401037,
+          "knn": 0.7716862379872584,
+          "gaussian_nb": 0.6388009529208508,
+          "logreg": 0.6594291923118454,
+          "bagging": 0.7774000512903574,
+          "random_forest": 0.7785862420364971,
+          "gradient_boosting": 0.7582783311737394,
+          "adaboost": 0.7653297430083144
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 3,
+        "n": 105,
+        "sensitivity": 0.8852459016393442,
+        "specificity": 0.5909090909090909,
+        "roc_auc": 0.8219076005961252,
+        "pr_auc": 0.8547177423934902,
+        "f1": 0.8120300751879699,
+        "confusion_matrix": {
+          "tn": 26,
+          "fp": 18,
+          "fn": 7,
+          "tp": 54
+        },
+        "members": [
+          "adaboost",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.5230749433905948,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7012582671957672,
+          "knn": 0.7347635582010581,
+          "gaussian_nb": 0.6281216931216931,
+          "logreg": 0.6477744708994709,
+          "bagging": 0.7409242724867725,
+          "random_forest": 0.7400958994708995,
+          "gradient_boosting": 0.7305125661375662,
+          "adaboost": 0.7413558201058201
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 4,
+        "n": 104,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.6590909090909091,
+        "roc_auc": 0.8287878787878787,
+        "pr_auc": 0.8580755301109907,
+        "f1": 0.8,
+        "confusion_matrix": {
+          "tn": 29,
+          "fp": 15,
+          "fn": 10,
+          "tp": 50
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "gradient_boosting"
+        ],
+        "threshold": 0.4757530925340759,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7139562749703054,
+          "knn": 0.7448221034445525,
+          "gaussian_nb": 0.6152066461505237,
+          "logreg": 0.646681783824641,
+          "bagging": 0.7508051573804124,
+          "random_forest": 0.7594081700140374,
+          "gradient_boosting": 0.7466754400172767,
+          "adaboost": 0.7361553827880358
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 0,
+        "n": 105,
+        "sensitivity": 0.85,
+        "specificity": 0.5555555555555556,
+        "roc_auc": 0.8362962962962962,
+        "pr_auc": 0.862036569474866,
+        "f1": 0.7786259541984732,
+        "confusion_matrix": {
+          "tn": 25,
+          "fp": 20,
+          "fn": 9,
+          "tp": 51
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5009172623278246,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6747327502429543,
+          "knn": 0.7850249028182701,
+          "gaussian_nb": 0.6266815813627039,
+          "logreg": 0.6414694012525646,
+          "bagging": 0.7646415748839217,
+          "random_forest": 0.7767622961883166,
+          "gradient_boosting": 0.730174454702516,
+          "adaboost": 0.735655301803261
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 1,
+        "n": 105,
+        "sensitivity": 0.819672131147541,
+        "specificity": 0.75,
+        "roc_auc": 0.8505961251862891,
+        "pr_auc": 0.8823206002131392,
+        "f1": 0.819672131147541,
+        "confusion_matrix": {
+          "tn": 33,
+          "fp": 11,
+          "fn": 11,
+          "tp": 50
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "knn"
+        ],
+        "threshold": 0.5125959856852711,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 31,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6771081349206349,
+          "knn": 0.7370701058201058,
+          "gaussian_nb": 0.6406150793650794,
+          "logreg": 0.6687169312169312,
+          "bagging": 0.7567046957671958,
+          "random_forest": 0.7644510582010582,
+          "gradient_boosting": 0.7329265873015872,
+          "adaboost": 0.7322354497354497
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 2,
+        "n": 104,
+        "sensitivity": 0.8666666666666667,
+        "specificity": 0.5454545454545454,
+        "roc_auc": 0.8041666666666667,
+        "pr_auc": 0.8408688442800799,
+        "f1": 0.7878787878787878,
+        "confusion_matrix": {
+          "tn": 24,
+          "fp": 20,
+          "fn": 8,
+          "tp": 52
+        },
+        "members": [
+          "bagging",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.4902196070595175,
+        "params": {
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7279564504373178,
+          "knn": 0.7618857642263255,
+          "gaussian_nb": 0.651917382032178,
+          "logreg": 0.6810320834683079,
+          "bagging": 0.7894073601662888,
+          "random_forest": 0.7837619789979484,
+          "gradient_boosting": 0.7603765792031099,
+          "adaboost": 0.7722013686426952
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 3,
+        "n": 104,
+        "sensitivity": 0.9166666666666666,
+        "specificity": 0.4772727272727273,
+        "roc_auc": 0.8287878787878789,
+        "pr_auc": 0.8506577311074989,
+        "f1": 0.7971014492753623,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 23,
+          "fn": 5,
+          "tp": 55
+        },
+        "members": [
+          "random_forest",
+          "knn",
+          "bagging"
+        ],
+        "threshold": 0.48201073138181505,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 31,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.67765660430839,
+          "knn": 0.7404840864917396,
+          "gaussian_nb": 0.6145207725947522,
+          "logreg": 0.6606187236799481,
+          "bagging": 0.7379152831767628,
+          "random_forest": 0.7436288602742686,
+          "gradient_boosting": 0.7168075126876147,
+          "adaboost": 0.7097619722492172
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 4,
+        "n": 104,
+        "sensitivity": 0.7333333333333333,
+        "specificity": 0.6136363636363636,
+        "roc_auc": 0.7446969696969697,
+        "pr_auc": 0.7937433282413926,
+        "f1": 0.7272727272727273,
+        "confusion_matrix": {
+          "tn": 27,
+          "fp": 17,
+          "fn": 16,
+          "tp": 44
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.47700901525821526,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 7,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7114175372529965,
+          "knn": 0.7760569187992659,
+          "gaussian_nb": 0.6391820200302344,
+          "logreg": 0.669847073750135,
+          "bagging": 0.7751644328366267,
+          "random_forest": 0.7746118804664724,
+          "gradient_boosting": 0.7485479429867186,
+          "adaboost": 0.7635369425547995
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 0,
+        "n": 105,
+        "sensitivity": 0.7666666666666667,
+        "specificity": 0.6888888888888889,
+        "roc_auc": 0.7866666666666666,
+        "pr_auc": 0.8401592012546679,
+        "f1": 0.7666666666666667,
+        "confusion_matrix": {
+          "tn": 31,
+          "fp": 14,
+          "fn": 14,
+          "tp": 46
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.4971734551860659,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6615895961559227,
+          "knn": 0.7637531381600258,
+          "gaussian_nb": 0.6068667665478891,
+          "logreg": 0.6267051344347263,
+          "bagging": 0.7494884799157758,
+          "random_forest": 0.7631967390130656,
+          "gradient_boosting": 0.7343874851527913,
+          "adaboost": 0.7355672308605982
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 1,
+        "n": 104,
+        "sensitivity": 0.8,
+        "specificity": 0.5681818181818182,
+        "roc_auc": 0.7625,
+        "pr_auc": 0.7979702822123983,
+        "f1": 0.7559055118110236,
+        "confusion_matrix": {
+          "tn": 25,
+          "fp": 19,
+          "fn": 12,
+          "tp": 48
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.4638981305181691,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 25,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6503989849908217,
+          "knn": 0.7563738392182271,
+          "gaussian_nb": 0.6252412671417773,
+          "logreg": 0.6612149740848721,
+          "bagging": 0.7320884286254185,
+          "random_forest": 0.7391393680488069,
+          "gradient_boosting": 0.7042467066191556,
+          "adaboost": 0.7386902062412266
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 2,
+        "n": 104,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.6363636363636364,
+        "roc_auc": 0.8541666666666666,
+        "pr_auc": 0.875765443390369,
+        "f1": 0.7936507936507936,
+        "confusion_matrix": {
+          "tn": 28,
+          "fp": 16,
+          "fn": 10,
+          "tp": 50
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "knn"
+        ],
+        "threshold": 0.49764337710782414,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 9,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7128135797969981,
+          "knn": 0.7664919757585574,
+          "gaussian_nb": 0.6381692716769247,
+          "logreg": 0.6658643774970306,
+          "bagging": 0.7700986327070511,
+          "random_forest": 0.7712803692905734,
+          "gradient_boosting": 0.7521969144800776,
+          "adaboost": 0.7544302721088434
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 3,
+        "n": 104,
+        "sensitivity": 0.7833333333333333,
+        "specificity": 0.4772727272727273,
+        "roc_auc": 0.7329545454545454,
+        "pr_auc": 0.7757424896025759,
+        "f1": 0.7230769230769231,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 23,
+          "fn": 13,
+          "tp": 47
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "knn"
+        ],
+        "threshold": 0.47325933729898584,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 31,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6956459885541518,
+          "knn": 0.7826610247273512,
+          "gaussian_nb": 0.6495578231292517,
+          "logreg": 0.6824231994385056,
+          "bagging": 0.7860804043839759,
+          "random_forest": 0.7883650186264981,
+          "gradient_boosting": 0.7618452380952381,
+          "adaboost": 0.7602900604686319
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 4,
+        "n": 105,
+        "sensitivity": 0.9016393442622951,
+        "specificity": 0.5454545454545454,
+        "roc_auc": 0.7716095380029806,
+        "pr_auc": 0.8144705768095946,
+        "f1": 0.8088235294117647,
+        "confusion_matrix": {
+          "tn": 24,
+          "fp": 20,
+          "fn": 6,
+          "tp": 55
+        },
+        "members": [
+          "random_forest",
+          "adaboost",
+          "bagging"
+        ],
+        "threshold": 0.4652011912571145,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7015046296296296,
+          "knn": 0.7779993386243386,
+          "gaussian_nb": 0.619890873015873,
+          "logreg": 0.6578373015873016,
+          "bagging": 0.7831828703703704,
+          "random_forest": 0.7948445767195768,
+          "gradient_boosting": 0.7664318783068783,
+          "adaboost": 0.7870701058201057
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 0,
+        "n": 105,
+        "sensitivity": 0.9166666666666666,
+        "specificity": 0.6444444444444445,
+        "roc_auc": 0.8685185185185185,
+        "pr_auc": 0.9032017362346322,
+        "f1": 0.8396946564885496,
+        "confusion_matrix": {
+          "tn": 29,
+          "fp": 16,
+          "fn": 5,
+          "tp": 55
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5012334570238844,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6909005169528128,
+          "knn": 0.7729365754238203,
+          "gaussian_nb": 0.6403714501673686,
+          "logreg": 0.6658987285390345,
+          "bagging": 0.7444057742144478,
+          "random_forest": 0.7535213867292949,
+          "gradient_boosting": 0.7408953541734153,
+          "adaboost": 0.7391514145340677
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 1,
+        "n": 105,
+        "sensitivity": 0.9344262295081968,
+        "specificity": 0.45454545454545453,
+        "roc_auc": 0.7593144560357675,
+        "pr_auc": 0.7976935923772503,
+        "f1": 0.8028169014084507,
+        "confusion_matrix": {
+          "tn": 20,
+          "fp": 24,
+          "fn": 4,
+          "tp": 57
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.47646901620168336,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 31,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 0.6
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6621825396825397,
+          "knn": 0.7329894179894181,
+          "gaussian_nb": 0.5922321428571429,
+          "logreg": 0.6569973544973544,
+          "bagging": 0.7187946428571428,
+          "random_forest": 0.7199603174603174,
+          "gradient_boosting": 0.6992956349206348,
+          "adaboost": 0.7024239417989417
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 2,
+        "n": 104,
+        "sensitivity": 0.8,
+        "specificity": 0.7954545454545454,
+        "roc_auc": 0.8678030303030303,
+        "pr_auc": 0.8698773337630095,
+        "f1": 0.8205128205128205,
+        "confusion_matrix": {
+          "tn": 35,
+          "fp": 9,
+          "fn": 12,
+          "tp": 48
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.5069780436188028,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7003354794298673,
+          "knn": 0.7586034175574993,
+          "gaussian_nb": 0.6279925224057876,
+          "logreg": 0.6523812898175143,
+          "bagging": 0.7526721263902386,
+          "random_forest": 0.7516303584926035,
+          "gradient_boosting": 0.7226872098045568,
+          "adaboost": 0.7425132275132275
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 3,
+        "n": 104,
+        "sensitivity": 0.85,
+        "specificity": 0.6590909090909091,
+        "roc_auc": 0.8465909090909091,
+        "pr_auc": 0.8743053470324321,
+        "f1": 0.8095238095238095,
+        "confusion_matrix": {
+          "tn": 29,
+          "fp": 15,
+          "fn": 9,
+          "tp": 51
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "knn"
+        ],
+        "threshold": 0.4859248484373315,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6855038940179246,
+          "knn": 0.756101831605658,
+          "gaussian_nb": 0.6117593942338841,
+          "logreg": 0.6339028587625526,
+          "bagging": 0.7663485989633949,
+          "random_forest": 0.7720753023431594,
+          "gradient_boosting": 0.7515095562034337,
+          "adaboost": 0.7521489984882843
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 4,
+        "n": 104,
+        "sensitivity": 0.8166666666666667,
+        "specificity": 0.5454545454545454,
+        "roc_auc": 0.740530303030303,
+        "pr_auc": 0.7472965696074071,
+        "f1": 0.7596899224806202,
+        "confusion_matrix": {
+          "tn": 24,
+          "fp": 20,
+          "fn": 11,
+          "tp": 49
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.4729675408447399,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 7,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6570416599179354,
+          "knn": 0.7469185293164886,
+          "gaussian_nb": 0.6617697197926791,
+          "logreg": 0.6826143909944931,
+          "bagging": 0.7404629629629629,
+          "random_forest": 0.7354578001835655,
+          "gradient_boosting": 0.7182096965770436,
+          "adaboost": 0.7299712504049239
+        }
+      }
+    ],
+    "fold_sens_floor_met": 0.76,
+    "members": {
+      "random_forest": 25,
+      "bagging": 23,
+      "adaboost": 7,
+      "knn": 19,
+      "gradient_boosting": 1
+    }
+  },
+  "nail": {
+    "fold_mean": {
+      "sensitivity": {
+        "value": 0.8032258064516128,
+        "sd": 0.05944447415993544,
+        "ci_low": 0.7371566385770546,
+        "ci_high": 0.869294974326171
+      },
+      "specificity": {
+        "value": 0.4836363636363636,
+        "sd": 0.06172731735616719,
+        "ci_low": 0.41502994478104416,
+        "ci_high": 0.552242782491683
+      },
+      "roc_auc": {
+        "value": 0.7224633431085045,
+        "sd": 0.048935957059715346,
+        "ci_low": 0.668073797103241,
+        "ci_high": 0.7768528891137679
+      },
+      "pr_auc": {
+        "value": 0.7836211722451161,
+        "sd": 0.03876135861064517,
+        "ci_low": 0.7405401164315432,
+        "ci_high": 0.826702228058689
+      },
+      "f1": {
+        "value": 0.7398235568365235,
+        "sd": 0.0392362617947035,
+        "ci_low": 0.6962146730181592,
+        "ci_high": 0.7834324406548877
+      }
+    },
+    "pooled": {
+      "sensitivity": {
+        "value": 0.7870967741935484,
+        "ci_low": 0.7401800266338051,
+        "ci_high": 0.8333333333333334
+      },
+      "specificity": {
+        "value": 0.5,
+        "ci_low": 0.4332929515418502,
+        "ci_high": 0.5645180583423368
+      },
+      "roc_auc": {
+        "value": 0.6991788856304986,
+        "ci_low": 0.6533068808044459,
+        "ci_high": 0.7439044807806527
+      },
+      "pr_auc": {
+        "value": 0.7530634226247749,
+        "ci_low": 0.6979422683647281,
+        "ci_high": 0.807601360748444
+      },
+      "f1": {
+        "value": 0.7349397590361446,
+        "ci_low": 0.6918152736344364,
+        "ci_high": 0.771995064742093
+      }
+    },
+    "confusion_matrix": {
+      "tn": 110,
+      "fp": 110,
+      "fn": 66,
+      "tp": 244
+    },
+    "folds": [
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 0,
+        "n": 106,
+        "sensitivity": 0.7258064516129032,
+        "specificity": 0.4772727272727273,
+        "roc_auc": 0.6392961876832844,
+        "pr_auc": 0.7286859892495542,
+        "f1": 0.6923076923076923,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 23,
+          "fn": 17,
+          "tp": 45
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "random_forest"
+        ],
+        "threshold": 0.5031801915125373,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6198071914480077,
+          "knn": 0.7467737609329446,
+          "gaussian_nb": 0.6109267249757047,
+          "logreg": 0.6280628441852931,
+          "bagging": 0.7024294136702299,
+          "random_forest": 0.7129256235827665,
+          "gradient_boosting": 0.6972234531908003,
+          "adaboost": 0.7164413346290898
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 1,
+        "n": 106,
+        "sensitivity": 0.7580645161290323,
+        "specificity": 0.5454545454545454,
+        "roc_auc": 0.6843841642228738,
+        "pr_auc": 0.7329785641339184,
+        "f1": 0.7286821705426356,
+        "confusion_matrix": {
+          "tn": 24,
+          "fp": 20,
+          "fn": 15,
+          "tp": 47
+        },
+        "members": [
+          "gradient_boosting",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.4975793063934969,
+        "params": {
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 100
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6452944606413993,
+          "knn": 0.6927813411078717,
+          "gaussian_nb": 0.5558814382896016,
+          "logreg": 0.5903604794298671,
+          "bagging": 0.7011782312925171,
+          "random_forest": 0.6982007774538387,
+          "gradient_boosting": 0.7042675736961451,
+          "adaboost": 0.6842491091674765
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 2,
+        "n": 106,
+        "sensitivity": 0.8225806451612904,
+        "specificity": 0.4090909090909091,
+        "roc_auc": 0.7445014662756598,
+        "pr_auc": 0.8044775301606522,
+        "f1": 0.7338129496402878,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 26,
+          "fn": 11,
+          "tp": 51
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.4902707719195059,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.612401166180758,
+          "knn": 0.6867670877874961,
+          "gaussian_nb": 0.5939139617751863,
+          "logreg": 0.6406839002267574,
+          "bagging": 0.6594784580498866,
+          "random_forest": 0.6818434726271461,
+          "gradient_boosting": 0.6397254292193068,
+          "adaboost": 0.6378267573696145
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 3,
+        "n": 106,
+        "sensitivity": 0.8387096774193549,
+        "specificity": 0.5909090909090909,
+        "roc_auc": 0.7668621700879765,
+        "pr_auc": 0.810664115927162,
+        "f1": 0.7878787878787878,
+        "confusion_matrix": {
+          "tn": 26,
+          "fp": 18,
+          "fn": 10,
+          "tp": 52
+        },
+        "members": [
+          "knn",
+          "gradient_boosting",
+          "adaboost"
+        ],
+        "threshold": 0.48952436611615946,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.03,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.5891672821509556,
+          "knn": 0.6871882086167801,
+          "gaussian_nb": 0.613377648202138,
+          "logreg": 0.6000496274700355,
+          "bagging": 0.6442699708454811,
+          "random_forest": 0.6483438937479754,
+          "gradient_boosting": 0.6632685455134435,
+          "adaboost": 0.6529313896987367
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 4,
+        "n": 106,
+        "sensitivity": 0.7903225806451613,
+        "specificity": 0.4772727272727273,
+        "roc_auc": 0.6950146627565983,
+        "pr_auc": 0.7649475491669947,
+        "f1": 0.7313432835820896,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 23,
+          "fn": 13,
+          "tp": 49
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.5182523308860321,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6423352769679301,
+          "knn": 0.7543431162941366,
+          "gaussian_nb": 0.6048816326530612,
+          "logreg": 0.6313206349206348,
+          "bagging": 0.7242178814382896,
+          "random_forest": 0.7179848396501457,
+          "gradient_boosting": 0.6979437641723356,
+          "adaboost": 0.7041312601230969
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 0,
+        "n": 106,
+        "sensitivity": 0.8548387096774194,
+        "specificity": 0.5454545454545454,
+        "roc_auc": 0.7591642228739003,
+        "pr_auc": 0.7995400832194417,
+        "f1": 0.7851851851851852,
+        "confusion_matrix": {
+          "tn": 24,
+          "fp": 20,
+          "fn": 9,
+          "tp": 53
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.4631921754536389,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6132267573696145,
+          "knn": 0.7142378360868158,
+          "gaussian_nb": 0.585603498542274,
+          "logreg": 0.5997343699384515,
+          "bagging": 0.6702927761580824,
+          "random_forest": 0.694410560414642,
+          "gradient_boosting": 0.6732181405895691,
+          "adaboost": 0.6862139293812763
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 1,
+        "n": 106,
+        "sensitivity": 0.7419354838709677,
+        "specificity": 0.45454545454545453,
+        "roc_auc": 0.6997800586510263,
+        "pr_auc": 0.7809330044402922,
+        "f1": 0.696969696969697,
+        "confusion_matrix": {
+          "tn": 20,
+          "fp": 24,
+          "fn": 16,
+          "tp": 46
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.507367231454718,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 7,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": 8,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6200920634920635,
+          "knn": 0.71177648202138,
+          "gaussian_nb": 0.6066920634920635,
+          "logreg": 0.627792938127632,
+          "bagging": 0.6856794946550049,
+          "random_forest": 0.6952193067703272,
+          "gradient_boosting": 0.6699231616456107,
+          "adaboost": 0.6803771946873988
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 2,
+        "n": 106,
+        "sensitivity": 0.7903225806451613,
+        "specificity": 0.45454545454545453,
+        "roc_auc": 0.7085777126099707,
+        "pr_auc": 0.7890863416489371,
+        "f1": 0.725925925925926,
+        "confusion_matrix": {
+          "tn": 20,
+          "fp": 24,
+          "fn": 13,
+          "tp": 49
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.4974492074139969,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 15,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": 8,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6453357304826692,
+          "knn": 0.6959336572724327,
+          "gaussian_nb": 0.603511111111111,
+          "logreg": 0.6283199222546162,
+          "bagging": 0.6818936831875607,
+          "random_forest": 0.6811677356656948,
+          "gradient_boosting": 0.6606603174603175,
+          "adaboost": 0.6710363459669583
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 3,
+        "n": 106,
+        "sensitivity": 0.7419354838709677,
+        "specificity": 0.5454545454545454,
+        "roc_auc": 0.7291055718475073,
+        "pr_auc": 0.7805421647545252,
+        "f1": 0.71875,
+        "confusion_matrix": {
+          "tn": 24,
+          "fp": 20,
+          "fn": 16,
+          "tp": 46
+        },
+        "members": [
+          "knn",
+          "adaboost",
+          "bagging"
+        ],
+        "threshold": 0.48720627652462123,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6259314544865566,
+          "knn": 0.7088042759961127,
+          "gaussian_nb": 0.6263800453514738,
+          "logreg": 0.6369720764496274,
+          "bagging": 0.684224165856819,
+          "random_forest": 0.6820996436669906,
+          "gradient_boosting": 0.6669678004535148,
+          "adaboost": 0.6926223517978619
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 4,
+        "n": 106,
+        "sensitivity": 0.8870967741935484,
+        "specificity": 0.4318181818181818,
+        "roc_auc": 0.7811583577712611,
+        "pr_auc": 0.8283070209023056,
+        "f1": 0.7746478873239436,
+        "confusion_matrix": {
+          "tn": 19,
+          "fp": 25,
+          "fn": 7,
+          "tp": 55
+        },
+        "members": [
+          "knn",
+          "gradient_boosting",
+          "random_forest"
+        ],
+        "threshold": 0.4916185047161678,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6222649821833496,
+          "knn": 0.6951909944930353,
+          "gaussian_nb": 0.5963127955944282,
+          "logreg": 0.6146801425332038,
+          "bagging": 0.6460342079689019,
+          "random_forest": 0.6527711046323291,
+          "gradient_boosting": 0.6581674117265953,
+          "adaboost": 0.644212374473599
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 0,
+        "n": 106,
+        "sensitivity": 0.8387096774193549,
+        "specificity": 0.5454545454545454,
+        "roc_auc": 0.755131964809384,
+        "pr_auc": 0.810386568583394,
+        "f1": 0.7761194029850746,
+        "confusion_matrix": {
+          "tn": 24,
+          "fp": 20,
+          "fn": 10,
+          "tp": 52
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5044782758495091,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6056872691933917,
+          "knn": 0.704153482345319,
+          "gaussian_nb": 0.5850439909297053,
+          "logreg": 0.5869207644962747,
+          "bagging": 0.6688731454486557,
+          "random_forest": 0.67417648202138,
+          "gradient_boosting": 0.6524580498866214,
+          "adaboost": 0.6525243926141886
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 1,
+        "n": 106,
+        "sensitivity": 0.9193548387096774,
+        "specificity": 0.45454545454545453,
+        "roc_auc": 0.7668621700879766,
+        "pr_auc": 0.753285905969117,
+        "f1": 0.7972027972027972,
+        "confusion_matrix": {
+          "tn": 20,
+          "fp": 24,
+          "fn": 5,
+          "tp": 57
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.4616375437008581,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 7,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6004907677356657,
+          "knn": 0.7152542921930677,
+          "gaussian_nb": 0.5917295756397798,
+          "logreg": 0.6161705215419502,
+          "bagging": 0.6655657920310982,
+          "random_forest": 0.6850421120829283,
+          "gradient_boosting": 0.664722384191772,
+          "adaboost": 0.6723565921606738
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 2,
+        "n": 106,
+        "sensitivity": 0.7580645161290323,
+        "specificity": 0.4318181818181818,
+        "roc_auc": 0.7052785923753665,
+        "pr_auc": 0.8060958309649408,
+        "f1": 0.7014925373134329,
+        "confusion_matrix": {
+          "tn": 19,
+          "fp": 25,
+          "fn": 15,
+          "tp": 47
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.5123587961272429,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6359319080012958,
+          "knn": 0.7409930677032718,
+          "gaussian_nb": 0.6180585681891805,
+          "logreg": 0.6375137026239067,
+          "bagging": 0.7260607061872368,
+          "random_forest": 0.736445286686103,
+          "gradient_boosting": 0.7315209588597343,
+          "adaboost": 0.7364406867508908
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 3,
+        "n": 106,
+        "sensitivity": 0.7419354838709677,
+        "specificity": 0.4772727272727273,
+        "roc_auc": 0.68841642228739,
+        "pr_auc": 0.7640410987901454,
+        "f1": 0.7022900763358778,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 23,
+          "fn": 16,
+          "tp": 46
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5084353250197147,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 0.6
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6381092970521542,
+          "knn": 0.7171602850664076,
+          "gaussian_nb": 0.5880658244250082,
+          "logreg": 0.5846973760932945,
+          "bagging": 0.6853133138969874,
+          "random_forest": 0.6975238095238097,
+          "gradient_boosting": 0.668927632005183,
+          "adaboost": 0.6565567865241334
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 4,
+        "n": 106,
+        "sensitivity": 0.7419354838709677,
+        "specificity": 0.36363636363636365,
+        "roc_auc": 0.6110703812316716,
+        "pr_auc": 0.7103252865628391,
+        "f1": 0.6764705882352942,
+        "confusion_matrix": {
+          "tn": 16,
+          "fp": 28,
+          "fn": 16,
+          "tp": 46
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.494886131310479,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 3
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 0.6
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6616165856818917,
+          "knn": 0.7231455782312924,
+          "gaussian_nb": 0.6273811467444119,
+          "logreg": 0.6340404275996113,
+          "bagging": 0.6982549400712666,
+          "random_forest": 0.7000334305150633,
+          "gradient_boosting": 0.6906214447683836,
+          "adaboost": 0.689290055069647
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 0,
+        "n": 106,
+        "sensitivity": 0.6774193548387096,
+        "specificity": 0.4772727272727273,
+        "roc_auc": 0.6697214076246334,
+        "pr_auc": 0.7292525376568433,
+        "f1": 0.6614173228346457,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 23,
+          "fn": 20,
+          "tp": 42
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.4844005332867589,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6274171039844509,
+          "knn": 0.7516593456430192,
+          "gaussian_nb": 0.6218140589569161,
+          "logreg": 0.6071231616456106,
+          "bagging": 0.6933844509232264,
+          "random_forest": 0.7040358276643991,
+          "gradient_boosting": 0.6652313573048267,
+          "adaboost": 0.6871432458697765
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 1,
+        "n": 106,
+        "sensitivity": 0.8548387096774194,
+        "specificity": 0.4318181818181818,
+        "roc_auc": 0.749266862170088,
+        "pr_auc": 0.8196839968314331,
+        "f1": 0.7571428571428571,
+        "confusion_matrix": {
+          "tn": 19,
+          "fp": 25,
+          "fn": 9,
+          "tp": 53
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5124649486878792,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6165226433430515,
+          "knn": 0.7577510204081632,
+          "gaussian_nb": 0.5795501133786848,
+          "logreg": 0.6181011985746679,
+          "bagging": 0.7219477810171687,
+          "random_forest": 0.7302069970845481,
+          "gradient_boosting": 0.7057333333333333,
+          "adaboost": 0.7062951733074183
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 2,
+        "n": 106,
+        "sensitivity": 0.8709677419354839,
+        "specificity": 0.5454545454545454,
+        "roc_auc": 0.7745601173020528,
+        "pr_auc": 0.8176584269911014,
+        "f1": 0.7941176470588235,
+        "confusion_matrix": {
+          "tn": 24,
+          "fp": 20,
+          "fn": 8,
+          "tp": 54
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.4990207417156427,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 15,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 3,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": 8,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.5984154195011337,
+          "knn": 0.6637392938127632,
+          "gaussian_nb": 0.5894452866861031,
+          "logreg": 0.6117193391642372,
+          "bagging": 0.6597420149011987,
+          "random_forest": 0.6548517006802721,
+          "gradient_boosting": 0.6370629089731131,
+          "adaboost": 0.6473091026886946
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 3,
+        "n": 106,
+        "sensitivity": 0.7903225806451613,
+        "specificity": 0.4318181818181818,
+        "roc_auc": 0.6994134897360703,
+        "pr_auc": 0.7573465654294481,
+        "f1": 0.7205882352941176,
+        "confusion_matrix": {
+          "tn": 19,
+          "fp": 25,
+          "fn": 13,
+          "tp": 49
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5050235886217005,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 3
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.679865889212828,
+          "knn": 0.7386763200518304,
+          "gaussian_nb": 0.6120019436345967,
+          "logreg": 0.6378433430515063,
+          "bagging": 0.7329404599935212,
+          "random_forest": 0.7361610625202462,
+          "gradient_boosting": 0.7302963394881762,
+          "adaboost": 0.7159735665694849
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 4,
+        "n": 106,
+        "sensitivity": 0.8709677419354839,
+        "specificity": 0.5,
+        "roc_auc": 0.7851906158357771,
+        "pr_auc": 0.8094414123353227,
+        "f1": 0.782608695652174,
+        "confusion_matrix": {
+          "tn": 22,
+          "fp": 22,
+          "fn": 8,
+          "tp": 54
+        },
+        "members": [
+          "knn",
+          "bagging",
+          "random_forest"
+        ],
+        "threshold": 0.4820800435514635,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6103810819565921,
+          "knn": 0.7135190152251376,
+          "gaussian_nb": 0.6140975704567542,
+          "logreg": 0.6140723032069971,
+          "bagging": 0.6792767735665695,
+          "random_forest": 0.6768712666018788,
+          "gradient_boosting": 0.6754187236799483,
+          "adaboost": 0.6527705863297701
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 0,
+        "n": 106,
+        "sensitivity": 0.8548387096774194,
+        "specificity": 0.45454545454545453,
+        "roc_auc": 0.7302052785923754,
+        "pr_auc": 0.8090043250994461,
+        "f1": 0.762589928057554,
+        "confusion_matrix": {
+          "tn": 20,
+          "fp": 24,
+          "fn": 9,
+          "tp": 53
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.4967993191147042,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": 8,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6031188856494979,
+          "knn": 0.7034386783284742,
+          "gaussian_nb": 0.6244253968253968,
+          "logreg": 0.6209956592160675,
+          "bagging": 0.6918567541302234,
+          "random_forest": 0.6964767087787496,
+          "gradient_boosting": 0.6858674441205054,
+          "adaboost": 0.6663124068675088
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 1,
+        "n": 106,
+        "sensitivity": 0.8225806451612904,
+        "specificity": 0.4090909090909091,
+        "roc_auc": 0.7287390029325512,
+        "pr_auc": 0.8110061646043325,
+        "f1": 0.7338129496402878,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 26,
+          "fn": 11,
+          "tp": 51
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.4777247501378698,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6377283446712019,
+          "knn": 0.7271614512471656,
+          "gaussian_nb": 0.5766590217039198,
+          "logreg": 0.6221184321347586,
+          "bagging": 0.6939911240686751,
+          "random_forest": 0.7051004859086493,
+          "gradient_boosting": 0.6690393262066732,
+          "adaboost": 0.6973392938127632
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 2,
+        "n": 106,
+        "sensitivity": 0.8064516129032258,
+        "specificity": 0.6136363636363636,
+        "roc_auc": 0.7914222873900293,
+        "pr_auc": 0.8490154779338692,
+        "f1": 0.7751937984496124,
+        "confusion_matrix": {
+          "tn": 27,
+          "fp": 17,
+          "fn": 12,
+          "tp": 50
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5047697770554792,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 0.6
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.618583479105928,
+          "knn": 0.6958453514739229,
+          "gaussian_nb": 0.6169619695497246,
+          "logreg": 0.5924895367670878,
+          "bagging": 0.6726392614188532,
+          "random_forest": 0.6851309361839975,
+          "gradient_boosting": 0.6653937155814706,
+          "adaboost": 0.6464267573696145
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 3,
+        "n": 106,
+        "sensitivity": 0.8225806451612904,
+        "specificity": 0.5454545454545454,
+        "roc_auc": 0.7576979472140762,
+        "pr_auc": 0.8137843735608642,
+        "f1": 0.7669172932330827,
+        "confusion_matrix": {
+          "tn": 24,
+          "fp": 20,
+          "fn": 11,
+          "tp": 51
+        },
+        "members": [
+          "gradient_boosting",
+          "knn",
+          "bagging"
+        ],
+        "threshold": 0.5005862560397486,
+        "params": {
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          },
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6176863621639133,
+          "knn": 0.6831744735989634,
+          "gaussian_nb": 0.582721218011014,
+          "logreg": 0.612789374797538,
+          "bagging": 0.6767282798833819,
+          "random_forest": 0.6759978620019436,
+          "gradient_boosting": 0.6853021056041464,
+          "adaboost": 0.6755146096533853
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 4,
+        "n": 106,
+        "sensitivity": 0.7580645161290323,
+        "specificity": 0.4772727272727273,
+        "roc_auc": 0.6407624633431085,
+        "pr_auc": 0.7100389712110217,
+        "f1": 0.7121212121212122,
+        "confusion_matrix": {
+          "tn": 21,
+          "fp": 23,
+          "fn": 15,
+          "tp": 47
+        },
+        "members": [
+          "knn",
+          "gradient_boosting",
+          "random_forest"
+        ],
+        "threshold": 0.48955083650460873,
+        "params": {
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 7,
+            "clf__weights": "distance"
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 2,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6741745383867832,
+          "knn": 0.7452797538062844,
+          "gaussian_nb": 0.6128151603498542,
+          "logreg": 0.6433924198250729,
+          "bagging": 0.69777065111759,
+          "random_forest": 0.7107455134434726,
+          "gradient_boosting": 0.7112104956268223,
+          "adaboost": 0.694779397473275
+        }
+      }
+    ],
+    "fold_sens_floor_met": 0.52,
+    "members": {
+      "knn": 24,
+      "adaboost": 7,
+      "random_forest": 22,
+      "gradient_boosting": 5,
+      "bagging": 17
+    }
+  },
+  "eye_extra": {
+    "fold_mean": {
+      "sensitivity": {
+        "value": 0.8054954954954957,
+        "sd": 0.062442171451081656,
+        "ci_low": 0.7360940600760675,
+        "ci_high": 0.8748969309149239
+      },
+      "specificity": {
+        "value": 0.7425730994152047,
+        "sd": 0.10913942614067074,
+        "ci_low": 0.62126993748162,
+        "ci_high": 0.8638762613487894
+      },
+      "roc_auc": {
+        "value": 0.8585514461830251,
+        "sd": 0.05628110387616228,
+        "ci_low": 0.79599773760395,
+        "ci_high": 0.9211051547621003
+      },
+      "pr_auc": {
+        "value": 0.9228879357419265,
+        "sd": 0.037421416593068184,
+        "ci_low": 0.8812958519524965,
+        "ci_high": 0.9644800195313565
+      },
+      "f1": {
+        "value": 0.8319401899253472,
+        "sd": 0.042996530102826155,
+        "ci_low": 0.7841516387291652,
+        "ci_high": 0.8797287411215293
+      }
+    },
+    "pooled": {
+      "sensitivity": {
+        "value": 0.8076923076923077,
+        "ci_low": 0.742087114337568,
+        "ci_high": 0.8628571428571429
+      },
+      "specificity": {
+        "value": 0.7282608695652174,
+        "ci_low": 0.6249362244897959,
+        "ci_high": 0.8205263157894737
+      },
+      "roc_auc": {
+        "value": 0.8591734352603918,
+        "ci_low": 0.8116961985143927,
+        "ci_high": 0.9026099151304069
+      },
+      "pr_auc": {
+        "value": 0.9178558161857392,
+        "ci_low": 0.8795240090631524,
+        "ci_high": 0.9511697742294962
+      },
+      "f1": {
+        "value": 0.8305084745762712,
+        "ci_low": 0.7839170692431563,
+        "ci_high": 0.8697975381299734
+      }
+    },
+    "confusion_matrix": {
+      "tn": 67,
+      "fp": 25,
+      "fn": 35,
+      "tp": 147
+    },
+    "folds": [
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 0,
+        "n": 55,
+        "sensitivity": 0.7567567567567568,
+        "specificity": 0.7222222222222222,
+        "roc_auc": 0.8393393393393394,
+        "pr_auc": 0.9070284742674508,
+        "f1": 0.8,
+        "confusion_matrix": {
+          "tn": 13,
+          "fp": 5,
+          "fn": 9,
+          "tp": 28
+        },
+        "members": [
+          "adaboost",
+          "gradient_boosting",
+          "random_forest"
+        ],
+        "threshold": 0.5977002322469593,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 100
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7323152709359606,
+          "knn": 0.8310016420361247,
+          "gaussian_nb": 0.707816091954023,
+          "logreg": 0.6985878489326766,
+          "bagging": 0.8320525451559935,
+          "random_forest": 0.8385221674876847,
+          "gradient_boosting": 0.8457471264367816,
+          "adaboost": 0.8495894909688013
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 1,
+        "n": 54,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.6666666666666666,
+        "roc_auc": 0.9058641975308641,
+        "pr_auc": 0.9498550617075577,
+        "f1": 0.8333333333333334,
+        "confusion_matrix": {
+          "tn": 12,
+          "fp": 6,
+          "fn": 6,
+          "tp": 30
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.5902632808419941,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 31,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": 8,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7278653530377668,
+          "knn": 0.8044991789819376,
+          "gaussian_nb": 0.6976683087027915,
+          "logreg": 0.7196223316912972,
+          "bagging": 0.7861986863711001,
+          "random_forest": 0.7954515599343186,
+          "gradient_boosting": 0.7739573070607554,
+          "adaboost": 0.7925944170771757
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 2,
+        "n": 55,
+        "sensitivity": 0.8055555555555556,
+        "specificity": 0.631578947368421,
+        "roc_auc": 0.8567251461988304,
+        "pr_auc": 0.927456096676462,
+        "f1": 0.8055555555555556,
+        "confusion_matrix": {
+          "tn": 12,
+          "fp": 7,
+          "fn": 7,
+          "tp": 29
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "gradient_boosting"
+        ],
+        "threshold": 0.533127700224505,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 100
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7406403940886699,
+          "knn": 0.8006403940886699,
+          "gaussian_nb": 0.6826272577996717,
+          "logreg": 0.700295566502463,
+          "bagging": 0.8355090311986864,
+          "random_forest": 0.8483497536945812,
+          "gradient_boosting": 0.8163382594417078,
+          "adaboost": 0.805008210180624
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 3,
+        "n": 55,
+        "sensitivity": 0.8055555555555556,
+        "specificity": 0.8947368421052632,
+        "roc_auc": 0.9137426900584795,
+        "pr_auc": 0.9579157109830517,
+        "f1": 0.8656716417910447,
+        "confusion_matrix": {
+          "tn": 17,
+          "fp": 2,
+          "fn": 7,
+          "tp": 29
+        },
+        "members": [
+          "adaboost",
+          "gradient_boosting",
+          "random_forest"
+        ],
+        "threshold": 0.5785069592538333,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.704376026272578,
+          "knn": 0.815320197044335,
+          "gaussian_nb": 0.6807224958949097,
+          "logreg": 0.6547783251231528,
+          "bagging": 0.8063136288998358,
+          "random_forest": 0.82123973727422,
+          "gradient_boosting": 0.8278489326765189,
+          "adaboost": 0.8344663382594417
+        }
+      },
+      {
+        "repeat": 0,
+        "seed": 42,
+        "fold": 4,
+        "n": 55,
+        "sensitivity": 0.8378378378378378,
+        "specificity": 0.7222222222222222,
+        "roc_auc": 0.8483483483483483,
+        "pr_auc": 0.9293639946585532,
+        "f1": 0.8493150684931506,
+        "confusion_matrix": {
+          "tn": 13,
+          "fp": 5,
+          "fn": 6,
+          "tp": 31
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.5786969600997851,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 7,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7458784893267654,
+          "knn": 0.8455500821018063,
+          "gaussian_nb": 0.6648275862068965,
+          "logreg": 0.6667651888341544,
+          "bagging": 0.8200656814449919,
+          "random_forest": 0.8354022988505747,
+          "gradient_boosting": 0.8088013136288998,
+          "adaboost": 0.8211822660098523
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 0,
+        "n": 55,
+        "sensitivity": 0.7567567567567568,
+        "specificity": 0.6111111111111112,
+        "roc_auc": 0.8438438438438438,
+        "pr_auc": 0.9319213879485444,
+        "f1": 0.7777777777777778,
+        "confusion_matrix": {
+          "tn": 11,
+          "fp": 7,
+          "fn": 9,
+          "tp": 28
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "adaboost"
+        ],
+        "threshold": 0.5971218893369712,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7766830870279146,
+          "knn": 0.8102627257799672,
+          "gaussian_nb": 0.7080459770114943,
+          "logreg": 0.7174384236453202,
+          "bagging": 0.8501806239737274,
+          "random_forest": 0.8557799671592774,
+          "gradient_boosting": 0.7997372742200328,
+          "adaboost": 0.8231198686371102
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 1,
+        "n": 55,
+        "sensitivity": 0.8888888888888888,
+        "specificity": 0.7894736842105263,
+        "roc_auc": 0.9473684210526316,
+        "pr_auc": 0.9754905225493462,
+        "f1": 0.8888888888888888,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 4,
+          "fn": 4,
+          "tp": 32
+        },
+        "members": [
+          "random_forest",
+          "adaboost",
+          "knn"
+        ],
+        "threshold": 0.5785323206566,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 25,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7299261083743842,
+          "knn": 0.788177339901478,
+          "gaussian_nb": 0.68,
+          "logreg": 0.6970114942528736,
+          "bagging": 0.7711001642036125,
+          "random_forest": 0.7991461412151067,
+          "gradient_boosting": 0.7674220032840722,
+          "adaboost": 0.7961412151067323
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 2,
+        "n": 54,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.6111111111111112,
+        "roc_auc": 0.8719135802469136,
+        "pr_auc": 0.9328920774750386,
+        "f1": 0.821917808219178,
+        "confusion_matrix": {
+          "tn": 11,
+          "fp": 7,
+          "fn": 6,
+          "tp": 30
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "adaboost"
+        ],
+        "threshold": 0.5369546999599207,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7136699507389163,
+          "knn": 0.8066502463054188,
+          "gaussian_nb": 0.6785385878489326,
+          "logreg": 0.6632019704433498,
+          "bagging": 0.8263546798029557,
+          "random_forest": 0.8268637110016421,
+          "gradient_boosting": 0.8010344827586205,
+          "adaboost": 0.8228243021346471
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 3,
+        "n": 55,
+        "sensitivity": 0.7837837837837838,
+        "specificity": 0.5555555555555556,
+        "roc_auc": 0.7387387387387387,
+        "pr_auc": 0.8461869883125952,
+        "f1": 0.7837837837837838,
+        "confusion_matrix": {
+          "tn": 10,
+          "fp": 8,
+          "fn": 8,
+          "tp": 29
+        },
+        "members": [
+          "adaboost",
+          "knn",
+          "random_forest"
+        ],
+        "threshold": 0.6745894313967424,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          },
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 11,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.780016420361248,
+          "knn": 0.8830213464696224,
+          "gaussian_nb": 0.7047947454844007,
+          "logreg": 0.7131362889983579,
+          "bagging": 0.8587356321839081,
+          "random_forest": 0.8802627257799672,
+          "gradient_boosting": 0.8635467980295566,
+          "adaboost": 0.8857799671592774
+        }
+      },
+      {
+        "repeat": 1,
+        "seed": 43,
+        "fold": 4,
+        "n": 55,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.8421052631578947,
+        "roc_auc": 0.8654970760233918,
+        "pr_auc": 0.9173463990761295,
+        "f1": 0.8695652173913043,
+        "confusion_matrix": {
+          "tn": 16,
+          "fp": 3,
+          "fn": 6,
+          "tp": 30
+        },
+        "members": [
+          "random_forest",
+          "adaboost",
+          "knn"
+        ],
+        "threshold": 0.5841464742484848,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          },
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 7,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7185221674876848,
+          "knn": 0.8342857142857143,
+          "gaussian_nb": 0.6617405582922824,
+          "logreg": 0.7108538587848934,
+          "bagging": 0.8183251231527094,
+          "random_forest": 0.8482266009852216,
+          "gradient_boosting": 0.8233825944170772,
+          "adaboost": 0.8413628899835797
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 0,
+        "n": 55,
+        "sensitivity": 0.7297297297297297,
+        "specificity": 0.7222222222222222,
+        "roc_auc": 0.8138138138138138,
+        "pr_auc": 0.905420937668832,
+        "f1": 0.782608695652174,
+        "confusion_matrix": {
+          "tn": 13,
+          "fp": 5,
+          "fn": 10,
+          "tp": 27
+        },
+        "members": [
+          "adaboost",
+          "knn",
+          "random_forest"
+        ],
+        "threshold": 0.646992258405733,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          },
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7595238095238095,
+          "knn": 0.860328407224959,
+          "gaussian_nb": 0.7092939244663382,
+          "logreg": 0.7158949096880132,
+          "bagging": 0.8371756978653531,
+          "random_forest": 0.8546798029556651,
+          "gradient_boosting": 0.8495894909688012,
+          "adaboost": 0.8715927750410509
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 1,
+        "n": 55,
+        "sensitivity": 0.8888888888888888,
+        "specificity": 0.631578947368421,
+        "roc_auc": 0.8026315789473684,
+        "pr_auc": 0.873405716829896,
+        "f1": 0.8533333333333334,
+        "confusion_matrix": {
+          "tn": 12,
+          "fp": 7,
+          "fn": 4,
+          "tp": 32
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.6217821332128239,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 11,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7337602627257799,
+          "knn": 0.8427093596059114,
+          "gaussian_nb": 0.678735632183908,
+          "logreg": 0.6429392446633826,
+          "bagging": 0.8210919540229884,
+          "random_forest": 0.832824302134647,
+          "gradient_boosting": 0.7941871921182266,
+          "adaboost": 0.8244663382594417
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 2,
+        "n": 55,
+        "sensitivity": 0.6388888888888888,
+        "specificity": 0.7894736842105263,
+        "roc_auc": 0.7865497076023391,
+        "pr_auc": 0.8712183802827169,
+        "f1": 0.7301587301587301,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 4,
+          "fn": 13,
+          "tp": 23
+        },
+        "members": [
+          "adaboost",
+          "random_forest",
+          "gradient_boosting"
+        ],
+        "threshold": 0.7011407352013643,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7975205254515599,
+          "knn": 0.8288013136288997,
+          "gaussian_nb": 0.7060919540229886,
+          "logreg": 0.7024630541871921,
+          "bagging": 0.8513957307060755,
+          "random_forest": 0.8615106732348112,
+          "gradient_boosting": 0.8558949096880131,
+          "adaboost": 0.8654844006568144
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 3,
+        "n": 55,
+        "sensitivity": 0.918918918918919,
+        "specificity": 0.7777777777777778,
+        "roc_auc": 0.9354354354354355,
+        "pr_auc": 0.969880244281109,
+        "f1": 0.9066666666666666,
+        "confusion_matrix": {
+          "tn": 14,
+          "fp": 4,
+          "fn": 3,
+          "tp": 34
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "gradient_boosting"
+        ],
+        "threshold": 0.5424710006324389,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "gradient_boosting": {
+            "clf__learning_rate": 0.1,
+            "clf__max_depth": 3,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.6980459770114942,
+          "knn": 0.7661083743842365,
+          "gaussian_nb": 0.6575697865353037,
+          "logreg": 0.6645320197044337,
+          "bagging": 0.7890476190476191,
+          "random_forest": 0.8061576354679802,
+          "gradient_boosting": 0.7775041050903119,
+          "adaboost": 0.7761576354679802
+        }
+      },
+      {
+        "repeat": 2,
+        "seed": 44,
+        "fold": 4,
+        "n": 54,
+        "sensitivity": 0.8055555555555556,
+        "specificity": 1.0,
+        "roc_auc": 0.9166666666666666,
+        "pr_auc": 0.9666327235592264,
+        "f1": 0.8923076923076924,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 0,
+          "fn": 7,
+          "tp": 29
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.6004110118493651,
+        "params": {
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 21,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 100
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7047126436781609,
+          "knn": 0.8309195402298851,
+          "gaussian_nb": 0.691871921182266,
+          "logreg": 0.7052216748768474,
+          "bagging": 0.80871921182266,
+          "random_forest": 0.8129967159277504,
+          "gradient_boosting": 0.8052873563218391,
+          "adaboost": 0.8087356321839081
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 0,
+        "n": 55,
+        "sensitivity": 0.75,
+        "specificity": 0.8947368421052632,
+        "roc_auc": 0.8523391812865497,
+        "pr_auc": 0.9269582798321306,
+        "f1": 0.8307692307692308,
+        "confusion_matrix": {
+          "tn": 17,
+          "fp": 2,
+          "fn": 9,
+          "tp": 27
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "adaboost"
+        ],
+        "threshold": 0.6523395530997355,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 7,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7925615763546798,
+          "knn": 0.8745155993431857,
+          "gaussian_nb": 0.7092282430213465,
+          "logreg": 0.703103448275862,
+          "bagging": 0.8433743842364532,
+          "random_forest": 0.8551313628899836,
+          "gradient_boosting": 0.8442200328407224,
+          "adaboost": 0.850968801313629
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 1,
+        "n": 55,
+        "sensitivity": 0.7222222222222222,
+        "specificity": 0.8947368421052632,
+        "roc_auc": 0.9137426900584795,
+        "pr_auc": 0.9535092571831367,
+        "f1": 0.8125,
+        "confusion_matrix": {
+          "tn": 17,
+          "fp": 2,
+          "fn": 10,
+          "tp": 26
+        },
+        "members": [
+          "adaboost",
+          "knn",
+          "random_forest"
+        ],
+        "threshold": 0.5970408293483604,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 3,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7723891625615764,
+          "knn": 0.8444663382594417,
+          "gaussian_nb": 0.6591133004926109,
+          "logreg": 0.6579146141215106,
+          "bagging": 0.8199507389162562,
+          "random_forest": 0.8434318555008211,
+          "gradient_boosting": 0.8228243021346471,
+          "adaboost": 0.8493760262725779
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 2,
+        "n": 55,
+        "sensitivity": 0.8108108108108109,
+        "specificity": 0.6666666666666666,
+        "roc_auc": 0.8378378378378378,
+        "pr_auc": 0.9246308524076312,
+        "f1": 0.821917808219178,
+        "confusion_matrix": {
+          "tn": 12,
+          "fp": 6,
+          "fn": 7,
+          "tp": 30
+        },
+        "members": [
+          "random_forest",
+          "bagging",
+          "adaboost"
+        ],
+        "threshold": 0.5630827452826871,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7739901477832511,
+          "knn": 0.7757963875205254,
+          "gaussian_nb": 0.6892610837438423,
+          "logreg": 0.7169786535303777,
+          "bagging": 0.8067323481116585,
+          "random_forest": 0.8264039408866996,
+          "gradient_boosting": 0.7774055829228244,
+          "adaboost": 0.7848932676518883
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 3,
+        "n": 55,
+        "sensitivity": 0.7567567567567568,
+        "specificity": 0.7222222222222222,
+        "roc_auc": 0.8033033033033034,
+        "pr_auc": 0.8736949216833148,
+        "f1": 0.8,
+        "confusion_matrix": {
+          "tn": 13,
+          "fp": 5,
+          "fn": 9,
+          "tp": 28
+        },
+        "members": [
+          "knn",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5962569325017659,
+        "params": {
+          "knn": {
+            "clf__metric": "euclidean",
+            "clf__n_neighbors": 15,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7530541871921181,
+          "knn": 0.8624302134646962,
+          "gaussian_nb": 0.7280131362889983,
+          "logreg": 0.7163546798029556,
+          "bagging": 0.8463711001642036,
+          "random_forest": 0.8471592775041049,
+          "gradient_boosting": 0.8440065681444991,
+          "adaboost": 0.8411165845648604
+        }
+      },
+      {
+        "repeat": 3,
+        "seed": 45,
+        "fold": 4,
+        "n": 54,
+        "sensitivity": 0.8888888888888888,
+        "specificity": 0.7222222222222222,
+        "roc_auc": 0.9228395061728395,
+        "pr_auc": 0.960921328116987,
+        "f1": 0.8767123287671232,
+        "confusion_matrix": {
+          "tn": 13,
+          "fp": 5,
+          "fn": 4,
+          "tp": 32
+        },
+        "members": [
+          "random_forest",
+          "knn",
+          "bagging"
+        ],
+        "threshold": 0.5895969875921034,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 5,
+            "clf__weights": "distance"
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7258620689655173,
+          "knn": 0.8363054187192119,
+          "gaussian_nb": 0.6554022988505748,
+          "logreg": 0.6779310344827586,
+          "bagging": 0.8322577996715929,
+          "random_forest": 0.8451642036124796,
+          "gradient_boosting": 0.8150738916256157,
+          "adaboost": 0.8220689655172414
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 0,
+        "n": 55,
+        "sensitivity": 0.8055555555555556,
+        "specificity": 0.7368421052631579,
+        "roc_auc": 0.8304093567251463,
+        "pr_auc": 0.8729910824787024,
+        "f1": 0.8285714285714286,
+        "confusion_matrix": {
+          "tn": 14,
+          "fp": 5,
+          "fn": 7,
+          "tp": 29
+        },
+        "members": [
+          "random_forest",
+          "knn",
+          "adaboost"
+        ],
+        "threshold": 0.5854208951297262,
+        "params": {
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 15,
+            "clf__weights": "distance"
+          },
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 300
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7051888341543513,
+          "knn": 0.8280131362889984,
+          "gaussian_nb": 0.6957799671592775,
+          "logreg": 0.7178325123152709,
+          "bagging": 0.8128735632183908,
+          "random_forest": 0.8314039408866997,
+          "gradient_boosting": 0.8038916256157635,
+          "adaboost": 0.8244499178981938
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 1,
+        "n": 55,
+        "sensitivity": 0.8648648648648649,
+        "specificity": 0.8333333333333334,
+        "roc_auc": 0.9114114114114115,
+        "pr_auc": 0.9587786526039712,
+        "f1": 0.8888888888888888,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 3,
+          "fn": 5,
+          "tp": 32
+        },
+        "members": [
+          "bagging",
+          "random_forest",
+          "knn"
+        ],
+        "threshold": 0.593286065640861,
+        "params": {
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "knn": {
+            "clf__metric": "chebyshev",
+            "clf__n_neighbors": 25,
+            "clf__weights": "distance"
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7179146141215107,
+          "knn": 0.8185878489326764,
+          "gaussian_nb": 0.6624958949096881,
+          "logreg": 0.6874876847290641,
+          "bagging": 0.8257471264367817,
+          "random_forest": 0.825615763546798,
+          "gradient_boosting": 0.815993431855501,
+          "adaboost": 0.8163875205254516
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 2,
+        "n": 55,
+        "sensitivity": 0.7777777777777778,
+        "specificity": 0.7368421052631579,
+        "roc_auc": 0.8347953216374269,
+        "pr_auc": 0.9058792242765327,
+        "f1": 0.8115942028985508,
+        "confusion_matrix": {
+          "tn": 14,
+          "fp": 5,
+          "fn": 8,
+          "tp": 28
+        },
+        "members": [
+          "adaboost",
+          "knn",
+          "random_forest"
+        ],
+        "threshold": 0.6346018069019876,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 1.0,
+            "clf__n_estimators": 100
+          },
+          "knn": {
+            "clf__metric": "manhattan",
+            "clf__n_neighbors": 25,
+            "clf__weights": "distance"
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": 0.5,
+            "clf__min_samples_leaf": 1
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7582840722495895,
+          "knn": 0.8218719211822659,
+          "gaussian_nb": 0.6936124794745485,
+          "logreg": 0.7472413793103448,
+          "bagging": 0.8029392446633828,
+          "random_forest": 0.8142528735632185,
+          "gradient_boosting": 0.7923809523809524,
+          "adaboost": 0.8270114942528736
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 3,
+        "n": 55,
+        "sensitivity": 0.8378378378378378,
+        "specificity": 0.7777777777777778,
+        "roc_auc": 0.9129129129129129,
+        "pr_auc": 0.9608942953703135,
+        "f1": 0.8611111111111112,
+        "confusion_matrix": {
+          "tn": 14,
+          "fp": 4,
+          "fn": 6,
+          "tp": 31
+        },
+        "members": [
+          "adaboost",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5512531413754181,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 300
+          },
+          "random_forest": {
+            "clf__max_depth": 8,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.7332676518883415,
+          "knn": 0.813776683087028,
+          "gaussian_nb": 0.6897536945812808,
+          "logreg": 0.7163875205254515,
+          "bagging": 0.8202463054187191,
+          "random_forest": 0.8259113300492611,
+          "gradient_boosting": 0.8189490968801312,
+          "adaboost": 0.8273563218390805
+        }
+      },
+      {
+        "repeat": 4,
+        "seed": 46,
+        "fold": 4,
+        "n": 54,
+        "sensitivity": 0.8055555555555556,
+        "specificity": 0.6111111111111112,
+        "roc_auc": 0.757716049382716,
+        "pr_auc": 0.8719257833189349,
+        "f1": 0.8055555555555556,
+        "confusion_matrix": {
+          "tn": 11,
+          "fp": 7,
+          "fn": 7,
+          "tp": 29
+        },
+        "members": [
+          "adaboost",
+          "random_forest",
+          "bagging"
+        ],
+        "threshold": 0.5789164121918036,
+        "params": {
+          "adaboost": {
+            "clf__estimator__max_depth": 3,
+            "clf__learning_rate": 0.5,
+            "clf__n_estimators": 100
+          },
+          "random_forest": {
+            "clf__max_depth": null,
+            "clf__max_features": "sqrt",
+            "clf__min_samples_leaf": 1
+          },
+          "bagging": {
+            "clf__estimator__max_depth": null,
+            "clf__estimator__min_samples_leaf": 1,
+            "clf__max_samples": 1.0
+          }
+        },
+        "inner_roc_auc": {
+          "decision_tree": 0.712553366174056,
+          "knn": 0.814088669950739,
+          "gaussian_nb": 0.6928899835796388,
+          "logreg": 0.678735632183908,
+          "bagging": 0.8296798029556649,
+          "random_forest": 0.8561165845648604,
+          "gradient_boosting": 0.8269786535303776,
+          "adaboost": 0.8567323481116584
+        }
+      }
+    ],
+    "fold_sens_floor_met": 0.64,
+    "members": {
+      "adaboost": 20,
+      "gradient_boosting": 5,
+      "random_forest": 25,
+      "knn": 15,
+      "bagging": 10
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "palm": {
+    "originals": 524,
+    "duplicate_clusters": 15,
+    "dropped": {
+      "duplicate_conflicting_label": 2
+    },
+    "kept_images": 522,
+    "cv_groups": 501,
+    "anaemic": 301,
+    "normal": 221
+  },
+  "nail": {
+    "originals": 533,
+    "duplicate_clusters": 10,
+    "dropped": {
+      "low_tissue": 3
+    },
+    "kept_images": 530,
+    "cv_groups": 514,
+    "anaemic": 310,
+    "normal": 220
+  },
+  "label_agreement": {
+    "cp_images": 251,
+    "cp_images_matched": 220,
+    "matched_with_one_label": 220,
+    "agree": 214,
+    "agreement": 0.9727272727272728,
+    "label_noise_estimate": 0.027272727272727226,
+    "confusion_who_rows_ghana_cols": {
+      "who_0": {
+        "ghana_0": 122,
+        "ghana_1": 1
+      },
+      "who_1": {
+        "ghana_0": 5,
+        "ghana_1": 92
+      }
+    },
+    "disagreements": [
+      {
+        "cp_id": "Image_258",
+        "ghana": 0,
+        "who": 1
+      },
+      {
+        "cp_id": "Image_332",
+        "ghana": 0,
+        "who": 1
+      },
+      {
+        "cp_id": "Image_389",
+        "ghana": 0,
+        "who": 1
+      },
+      {
+        "cp_id": "Image_442",
+        "ghana": 0,
+        "who": 1
+      },
+      {
+        "cp_id": "Image_483",
+        "ghana": 1,
+        "who": 0
+      },
+      {
+        "cp_id": "Image_490",
+        "ghana": 0,
+        "who": 1
+      }
+    ],
+    "note": "Ghana file-name label vs WHO label (Hb < 11 g/dL) on CP-AnemiC images that also appear in ghana_eye; used as the label-noise estimate for the folder-labelled Ghana sets."
+  },
+  "eye_extra": {
+    "originals": 517,
+    "duplicate_clusters": 24,
+    "dropped": {
+      "in_cp_anemic": 241,
+      "duplicate_conflicting_label": 2
+    },
+    "kept_images": 274,
+    "cv_groups": 263,
+    "anaemic": 182,
+    "normal": 92
+  }
+}

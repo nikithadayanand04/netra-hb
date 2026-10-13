@@ -1,0 +1,25 @@
+{
+  "acquisition_only_roc_auc": {
+    "palm": 0.4977234834685655,
+    "nail": 0.5128445747800587,
+    "eye_extra": 0.45298201710482416
+  },
+  "cp_model_transfer": {
+    "palm": {
+      "roc_auc": 0.4364711895491649,
+      "sensitivity": 0.7342192691029901,
+      "specificity": 0.22171945701357465
+    },
+    "nail": {
+      "roc_auc": 0.5128958944281524,
+      "sensitivity": 0.5838709677419355,
+      "specificity": 0.41818181818181815
+    },
+    "eye_extra": {
+      "roc_auc": 0.6252388915432394,
+      "sensitivity": 0.6538461538461539,
+      "specificity": 0.5
+    }
+  },
+  "note": "acquisition_only: fixed RF on tissue_px + glare_frac only (no colour), 5x5 grouped CV; ~0.5 = no acquisition shortcut. cp_model_transfer: P6 final model (CP-AnemiC, Hb labels) applied unchanged."
+}
