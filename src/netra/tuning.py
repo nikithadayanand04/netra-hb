@@ -77,6 +77,9 @@ class TunedScreen(ClassifierMixin, BaseEstimator):
         inner = list(StratifiedGroupKFold(self.n_inner, shuffle=True, random_state=self.seed).split(X, y, groups))
         self.search_ = {}
         for name, (pipe, grid) in self.candidates.items():
+            if len(self.candidates) == 1 and not grid:   # fixed model: nothing to search or rank
+                self.search_[name] = {"params": {}, "inner_roc_auc": float("nan")}
+                continue
             gs = GridSearchCV(clone(pipe), grid, scoring="roc_auc", cv=inner, n_jobs=self.n_jobs, refit=False)
             gs.fit(X, y)
             self.search_[name] = {"params": gs.best_params_, "inner_roc_auc": float(gs.best_score_)}
@@ -87,7 +90,8 @@ class TunedScreen(ClassifierMixin, BaseEstimator):
 
         oof = cross_val_predict(model, X, y, cv=inner, method="predict_proba", n_jobs=self.n_jobs)[:, 1]
         self.calibrator_ = LogisticRegression(C=1e6).fit(_logit(oof), y)
-        self.threshold_ = sens_floor_threshold(y, self.calibrator_.predict_proba(_logit(oof))[:, 1], self.sens_floor)
+        self.oof_ = self.calibrator_.predict_proba(_logit(oof))[:, 1]
+        self.threshold_ = sens_floor_threshold(y, self.oof_, self.sens_floor)
         self.model_ = model.fit(X, y)
         self.classes_ = np.array([0, 1])
         return self
@@ -107,3 +111,29 @@ class TunedScreen(ClassifierMixin, BaseEstimator):
     def kept_features(self) -> list[str]:
         steps = [self.model_] if not isinstance(self.model_, VotingClassifier) else self.model_.estimators_
         return sorted({f for s in steps for f in s.named_steps["prune"].keep_})
+
+
+class LateFusion(ClassifierMixin, BaseEstimator):
+    """Average of per-site calibrated probabilities. Each block is its own TunedScreen on its own columns (so each
+    keeps its own <= 15-feature budget); the fused threshold is set on the mean of their inner out-of-fold
+    probabilities, which share inner splits because the inner CV depends only on y and groups."""
+
+    def __init__(self, blocks=None, sens_floor: float = config.SENS_FLOOR):
+        self.blocks = blocks
+        self.sens_floor = sens_floor
+
+    def fit(self, X, y, groups=None) -> "LateFusion":
+        X = np.asarray(X, float)
+        self.models_ = [clone(m).fit(X[:, idx], y, groups) for idx, m in self.blocks]
+        self.threshold_ = sens_floor_threshold(np.asarray(y), np.mean([m.oof_ for m in self.models_], axis=0),
+                                               self.sens_floor)
+        self.classes_ = np.array([0, 1])
+        return self
+
+    def predict_proba(self, X):
+        X = np.asarray(X, float)
+        p = np.mean([m.predict_proba(X[:, idx])[:, 1] for (idx, _), m in zip(self.blocks, self.models_)], axis=0)
+        return np.column_stack([1 - p, p])
+
+    def predict(self, X):
+        return (self.predict_proba(X)[:, 1] >= self.threshold_).astype(int)

@@ -65,3 +65,29 @@ MODEL_FEATURES = [
     "erythema_index_p90",
 ]
 EXCLUDED_FEATURES = ["glare_frac", "tissue_px"]
+
+# ---- Ghana Mendeley sets (children <= 5 y; labels from file names only, no Hb) ----
+# Only base-named files are originals; "(n)", "- Copy", FV/RA/R and trailing-digit names are rotated or exact copies.
+_GH = ROOT / "data"
+GHANA_SITES = {
+    "palm": {"archive": _GH / "ghana_palm" / "Anemia Detection using Palpable Palm Image Datasets from Ghana" / "Palm.rar",
+             "images": _GH / "ghana_palm" / "extracted" / "Palm",
+             "csv": OUT_DIR / "features_ghana_palm.csv"},
+    "nail": {"archive": _GH / "ghana_nail" / "Detection of Anemia using Colour of the Fingernails Image Datasets from Ghana"
+                        / "Fingernails.rar",
+             "images": _GH / "ghana_nail" / "extracted" / "Fingernails",
+             "csv": OUT_DIR / "features_ghana_nail.csv"},
+    # SECONDARY only: Ghana eye originals that are NOT CP-AnemiC images (folder labels, no Hb)
+    "eye_extra": {"images": _GH / "ghana_eye" / "Application of Machine Learning in Detecting Iron Deficiency Anemia "
+                                                "Using  Conjunctiva image Dataset from Ghana",
+                  "csv": OUT_DIR / "features_ghana_eye_extra.csv"},
+}
+GHANA_LOG = OUT_DIR / "ghana_cleaning_log.csv"
+GHANA_DUP_HAMMING = 4      # rotation/mirror-invariant pHash distance for duplicate re-crops ...
+GHANA_DUP_COLOUR = 6.0     # ... and max per-channel difference of median tissue RGB
+
+# ---- Site comparison ----
+EQUAL_N = 220              # every site subsampled to the CP-AnemiC primary size
+N_SUBSAMPLES = 10
+LC_SIZES = (60, 100, 150, 220, 300, 400)
+FUSION_SHIFTS = (0, -1, 1)   # palm n paired with nail n + shift; non-zero shifts are the same-child control

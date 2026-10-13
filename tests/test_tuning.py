@@ -66,3 +66,16 @@ def test_soft_vote_ensemble_fits_and_keeps_feature_list():
     p = m.predict_proba(X)[:, 1]
     assert ((p > 0) & (p < 1)).all()
     assert (y[p >= m.threshold_] == 1).sum() / y.sum() >= 0.7
+
+
+def test_late_fusion_averages_blocks_and_sets_its_own_threshold():
+    from netra.tuning import LateFusion
+    X, y, g = _data()
+    lr = lambda: TunedScreen(candidates(COLS, ["logreg"]), n_jobs=1)
+    X2 = np.column_stack([X, X + np.random.default_rng(2).normal(0, 1, X.shape)])
+    m = LateFusion([([0, 1, 2], lr()), ([3, 4, 5], lr())]).fit(X2, y, g)
+    parts = [s.predict_proba(X2[:, idx])[:, 1] for (idx, _), s in zip(m.blocks, m.models_)]
+    assert np.allclose(m.predict_proba(X2)[:, 1], np.mean(parts, axis=0))
+    assert 0 < m.threshold_ < 1
+    res = cross_validate(m, X2, y, g, n_repeats=1, n_boot=10)
+    assert not np.isnan(res.proba).any()
